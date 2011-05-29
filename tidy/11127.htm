@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+
+  <title></title>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <td colspan="2" class="statText">
+        <h3>Problem Statement</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">Elly's evil teacher assistant Torb has
+      given her the following puzzle: 42 -&gt; 1, 1337 -&gt; 0, 669
+      -&gt; 3, 1882 -&gt; 4, 688 -&gt; 5, 12345 -&gt; 1, 67890
+      -&gt; 5, 123 -&gt; 0, 456 -&gt; 2, 789 -&gt; 3. Given this
+      information, 45678 -&gt; ? Thanks to her fast thinking and
+      problem-solving intuition she has found the solution: Google.
+      The answer turned out to be the total number of "holes" in
+      the digits of the number's decimal representation (with no
+      extra leading zeroes). We can see that the digits 1, 2, 3, 5,
+      and 7 contain no holes, 0, 4, 6, and 9 each has one hole, and
+      8 contains two holes. Therefore the answer to the puzzle is
+      45678 -&gt; 1 + 0 + 1 + 0 + 2 = 4.<br>
+      <br>
+      You want to impress Elly, so you decide to write a program
+      that will find the correct answer for certain integers. Given
+      an int <b>number</b>, return the total number of holes in
+      that number.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">
+        <h3>Definition</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">Class:</td>
+
+            <td class="statText">DigitHoles</td>
+          </tr>
+
+          <tr>
+            <td class="statText">Method:</td>
+
+            <td class="statText">numHoles</td>
+          </tr>
+
+          <tr>
+            <td class="statText">Parameters:</td>
+
+            <td class="statText">int</td>
+          </tr>
+
+          <tr>
+            <td class="statText">Returns:</td>
+
+            <td class="statText">int</td>
+          </tr>
+
+          <tr>
+            <td class="statText">Method signature:</td>
+
+            <td class="statText">int numHoles(int number)</td>
+          </tr>
+
+          <tr>
+            <td colspan="2" class="statText">(be sure your method
+            is public)</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">
+        <h3>Notes</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" valign="top" class="statText">-</td>
+
+      <td class="statText">In some fonts, the digit '4' might not
+      contain an enclosed hole, but for this problem you should
+      assume it does.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">
+        <h3>Constraints</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" valign="top" class="statText">-</td>
+
+      <td class="statText"><b>number</b> will be between 1 and
+      1000, inclusive.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="statText">
+        <h3>Examples</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">0)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+42
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 1
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td colspan="2" class="statText">4 has one hole,
+                  and 2 has no holes.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">1)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+669
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 3
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td colspan="2" class="statText">Both sixes are
+                  counted.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">2)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+688
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 5
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td colspan="2" class="statText">Note that 8 is
+                  the only digit that has 2 holes.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">3)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+123
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 0
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td colspan="2" class="statText">A number without
+                  holes.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">4)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+456
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 2
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td colspan="2" class="statText"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" nowrap="true" class="statText">5)</td>
+
+      <td class="statText"></td>
+    </tr>
+
+    <tr>
+      <td class="statText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+      <td class="statText">
+        <table>
+          <tr>
+            <td class="statText">
+              <table>
+                <tr>
+                  <td class="statText">
+                    <pre>
+789
+</pre>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText">
+              <pre>
+Returns: 3
+</pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="statText"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
