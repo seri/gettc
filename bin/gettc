@@ -1,0 +1,52 @@
+#! /usr/bin/ruby
+
+require 'topcoder' 
+include TopCoder
+
+require 'fileutils' 
+require 'yaml' 
+
+def load_config
+    config_d = File.join File.expand_path('~'), '.gettc'    
+    if not Dir.exists? config_d then
+        FileUtils.mkdir config_d
+        default_d = File.join File.dirname(__FILE__), '..'
+        FileUtils.cp File.join(default_d, 'config.yml'), 
+                File.join(config_d, 'config.yml')
+        FileUtils.cp_r File.join(default_d, 'template'),
+                       File.join(config_d, 'template')
+    end
+    config = YAML.load_file File.join(config_d, 'config.yml')
+    account = Account.new config['username'], config['password']
+    source_d = File.join config_d, 'template'
+    return account, source_d
+end 
+
+def main
+    prog = File.basename __FILE__
+    usage = "Usage: #{prog} <id>\nWhere <id> is the problem ID, eg 11138" 
+    if ARGV.empty?  
+        puts usage 
+    else
+        id = ARGV[0].to_i
+        puts "You have given ID = #{id}" 
+        account, source_d = load_config 
+        
+        print 'Downloading problem to raw HTML ... '
+        html = download_problem account, id
+        puts 'Done'
+        
+        print 'Parsing problem spec from raw HTML ... '
+        prob, images = parse html
+        puts 'Done'
+        
+        print "Generating files for #{prob.name} ... "
+        generate source_d, Dir.getwd, prob, images
+        puts 'Done'
+    end        
+rescue => err
+    $stderr.puts err
+    exit -1
+end
+
+main
