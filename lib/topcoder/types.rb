@@ -132,7 +132,11 @@ module TopCoder
             @subtype = subtype
         end
         def to_cpp
-            return "vector<#{subtype}>"
+            if subtype.is_a? TArray then
+                return "vector<#{subtype} >" 
+            else
+                return "vector<#{subtype}>"
+            end 
         end
         def to_hs
             return "[#{subtype.to_hs}]"

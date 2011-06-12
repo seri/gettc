@@ -1,13 +1,16 @@
 default: cc
 
-cc: <%= @name %>.cc
-	g++ <%= @name %>.cc -o out.cc/<%= @name %> -std=gnu++0x
+test: test.cc
+	g++ test.cc -o test -std=gnu++0x
+
+cc: solve.cc test
+	g++ solve.cc -o out.cc/solve -std=gnu++0x
 	sh test.sh out.cc
 
-hs: <%= @name %>.hs
-	ghc <%= @name %>.hs -o out.hs/<%= @name %>
+hs: solve.hs test
+	ghc solve.hs -o out.hs/solve
 	sh test.sh out.hs
-	rm <%= @name %>.{hi,o}
+	rm test.{hi,o}
 
 clean:
-	rm -f out.cc/* out.hs/*
+	rm -f out.cc/* out.hs/* test test.exe

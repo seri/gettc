@@ -38,7 +38,7 @@ class TypesTest < Test::Unit::TestCase
     def test_to_s
         assert_equal 'int', TInt.instance.to_s
         assert_equal 'vector<long>', TArray.new(TLong.instance).to_s
-        assert_equal 'vector<vector<double>>', 
+        assert_equal 'vector<vector<double> >', 
                      TArray.new(TArray.new(TDouble.instance)).to_s
     end
 end

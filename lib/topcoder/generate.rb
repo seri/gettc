@@ -106,7 +106,7 @@ module TopCoder
             end 
             input = temp.join "\n"
 
-            output = '    hPutStrLn hOut $ show $ '
+            output = '    hPutStr hOut $ show $ '
             output << call
 
             return method, input, output
