@@ -2,12 +2,12 @@
 using namespace TopCoder; 
 #include <fstream>
 using namespace std;
-
+<% require 'topcoder/langs/cpp' %>
 int main(int argc, char *argv[])
 { 
     try
     { 
-        <%= func.type.to_cpp %> output, result;
+        <%= TopCoder::Langs::Cpp.type_to_s func.type %> output, result;
         ifstream ifs;
         
         ifs.open(argv[1]);

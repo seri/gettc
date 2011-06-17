@@ -2,19 +2,25 @@
 using namespace TopCoder;
 #include <fstream>
 using namespace std;
-
-<%= cpp_method %>
+<% require 'topcoder/langs/cpp' 
+engine = TopCoder::Langs::Cpp.new func, vars %>
+<%= engine.declare %>
+{
+    <%= engine.class.type_to_s func.type %> ret = <%= engine.class.dumb_value func.type %>;
+    // Calculate ret here
+    return ret;
+}
 
 int main(int argc, char const *argv[])
 {
     try
     {
         ifstream ifs(argv[1]);
-<%= cpp_input %>
+<%= engine.input %>
         ifs.close();
 
         ofstream ofs(argv[2]);
-<%= cpp_output %>
+        show(ofs, <%= func.name %>(<%= engine.var_names.join ', ' %>));
         ofs.close();    
     }
     catch (exception &e)

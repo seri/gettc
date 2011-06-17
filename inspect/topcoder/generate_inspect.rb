@@ -23,7 +23,7 @@ prob.definitions = {
     'Method' => 'leastBorders',
     'Parameters' => 'int[], int[], int[], int, int, int, int',
     'Returns' => 'int',
-    'Method signature' => 'int[] funnyCalculation(String name, String[] addresses, double[] grades, char gender, float[] heights, float[] weights, long[][] matrix)'
+    'Method signature' => 'int[] funnyCalculation(String name, String[] addresses, double[] MyGrades, char gender, float[] heights, float[] weights, long[][] matrix)'
 }
 prob.notes = []
 prob.constraints = [

@@ -48,5 +48,4 @@ rescue => err
     $stderr.puts err
     exit -1
 end
-
 main

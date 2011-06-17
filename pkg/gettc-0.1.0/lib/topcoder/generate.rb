@@ -59,63 +59,16 @@ module TopCoder
                 end 
             end
         end
-        def gen_cpp_sig sig
-            type, name = sig.type, sig.name
-            ret  = type.to_cpp + ' '
-            ret << 'const &' if type.obj?
-            ret << name 
-            return ret
-        end
-        def gen_cpp_context func, vars
-            method = func.type.to_cpp + ' ' + func.name + '('
-            temp = vars.map do |var| gen_cpp_sig var end 
-            indent = ' ' * method.size
-            method << temp.join(",\n#{indent}")
-            method << ")\n{\n    return " << func.type.dumb_cpp << ";\n}"
-
-            indent = '        '
-            input = indent
-            temp = vars.map do |var|
-                var.type.to_cpp + ' ' + var.name + '; read(ifs, ' + var.name + ');'
-            end
-            input << temp.join("\n#{indent}")
-
-            output = '        '
-            output << 'show(ofs, ' << func.name << '('
-            indent = ' ' * output.size
-            temp = vars.map do |var| var.name end 
-            output << temp.join(",\n#{indent}") << '));'
-
-            return method, input, output
-        end
-        def gen_haskell_context func, vars
-            method = func.name + ' :: '
-            temp = vars.map do |var| var.type.to_hs end 
-            method << temp.join(' -> ')
-            method << ' -> ' << func.type.to_hs << "\n"
-
-            call = func.name + ' ' 
-            temp = vars.map do |var| var.name end
-            call << temp.join(' ')
-            method << call << ' = ' << func.type.dumb_hs
-
-            temp = vars.map do |var|
-                ret  = "    line <- hGetLine hIn\n"
-                ret << '    let ' << var.name << ' = read line :: '
-                ret << var.type.to_hs
-            end 
-            input = temp.join "\n"
-
-            output = '    hPutStrLn hOut $ show $ '
-            output << call
-
-            return method, input, output
-        end
         def gen_template source, target
             before = File.open source, 'r' do |f| 
                 f.read 
             end
-            after = ERB.new(before).result @context
+            begin
+                after = ERB.new(before).result @context
+            rescue StandardError => err
+                puts "Template error (#{File.expand_path source}): "
+                puts err.backtrace.join "\n"
+            end
             File.open target, 'w' do |f| 
                 f.write after
             end
@@ -140,21 +93,19 @@ module TopCoder
             if File.exists? @target_d
                 raise ProblemDirExists.new nil, @target_d
             end
-            FileUtils.mkdir @target_d
+            FileUtils.mkdir @target_d 
 
             gen_images
-            gen_test_cases
+            gen_test_cases 
 
             method_sig = @prob.definitions['Method signature']
             if method_sig.nil? then 
                 $stderr.puts 'No definition for method signature found'
             else
-                sigs = parse_method_signature method_sig
-                func = sigs.shift
-                cpp_method, cpp_input, cpp_output = gen_cpp_context func, sigs
-                hs_method, hs_input, hs_output = gen_haskell_context func, sigs
+                vars = parse_method_signature method_sig
+                func = vars.shift
             end
-            @context = binding
+            @context = binding 
 
             walk @source_d, @target_d
         end

@@ -1,13 +1,16 @@
-default: cc
+test: test.cc
+	g++ -std=gnu++0x -o test test.cc 
 
-cc: <%= @name %>.cc
-	g++ <%= @name %>.cc -o out.cc/<%= @name %> -std=gnu++0x
+cc: solve.cc test
+	if [ ! -d out.cc ]; then mkdir out.cc; fi
+	g++ -std=gnu++0x -o out.cc/solve solve.cc 
 	sh test.sh out.cc
 
-hs: <%= @name %>.hs
-	ghc <%= @name %>.hs -o out.hs/<%= @name %>
+hs: solve.hs test
+	if [ ! -d out.hs ]; then mkdir out.hs; fi
+	ghc -i$$HASKELL_INCLUDE_PATH -o out.hs/solve solve.hs 
 	sh test.sh out.hs
-	rm <%= @name %>.{hi,o}
+	rm solve.{hi,o}
 
 clean:
-	rm -f out.cc/* out.hs/*
+	rm -rf out.cc out.hs test test.exe

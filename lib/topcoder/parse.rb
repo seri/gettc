@@ -81,11 +81,11 @@ module TopCoder
         def parse_input html
             text = nil
             Hpricot(html).search '/table/tr/td.statText' do |td|
-                input = td.to_plain_text
+                input = td.to_plain_text.strip
                 if text.nil? then
                     text = input
                 else
-                    text << "\n" << input
+                    text << ",\n" << input
                 end 
             end
             text.gsub! '{', '['

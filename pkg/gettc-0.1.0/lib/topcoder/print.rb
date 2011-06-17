@@ -39,8 +39,12 @@ module TopCoder
                 @examples.each_index do |i|
                     example = @examples[i]
                     out << "### Example #{i + 1}\n"
-                    out << "#### Input\n<c>#{example.input}</c>\n"
-                    out << "#### Output\n<c>#{example.output}</c>\n"
+                    out << "#### Input\n<c>"
+                    out << example.input.gsub("\n", '<br />')
+                    out << "</c>\n"
+                    out << "#### Output\n<c>"
+                    out << example.output.gsub("\n", '<br />')
+                    out << "</c>\n"
                     if not example.reason.empty? then
                         out << "#### Reason\n#{example.reason}\n\n"
                     end 

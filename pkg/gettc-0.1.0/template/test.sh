@@ -1,9 +1,17 @@
+export TIME="Time: %es - Memory: %MK"
+export TIMEFORMAT=%3lR
+
 for fi in input/*
 do 
     base=`basename $fi`
     echo -n "Test $base ... "
-    $1/<%= @name %> $fi $1/$base
-    diff $1/$base output/$base &> /dev/null
+    if [ -x /usr/bin/time ]
+    then
+        /usr/bin/time $1/solve $fi $1/base
+    else
+        time $1/solve $fi $1/$base
+    fi
+    ./test $1/$base output/$base
     if [ $? -ne 0 ]
     then
         echo 'Failed'
@@ -21,6 +29,6 @@ do
         echo '>'
         echo
     else
-        echo 'Passed'        
+        echo 'Passed'
     fi
 done
