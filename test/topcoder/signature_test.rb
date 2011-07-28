@@ -2,7 +2,7 @@ require 'test/unit'
 require 'topcoder/signature'
 include TopCoder
 
-class SignatureTest < Types::est::Unit::TestCase
+class SignatureTest < Test::Unit::TestCase
     def test_parse_signature
         assert_raise CannotParseSignature do parse_signature 'invalid_signature' end
         assert_raise UnrecognizedType do parse_signature 'strange_type name' end
@@ -28,11 +28,11 @@ class SignatureTest < Types::est::Unit::TestCase
         assert_equal 8, sigs.size
         assert_equal Types::Int.instance, sigs[0].type
         assert_equal 'leastBorders', sigs[0].name
-        assert_equal Types::Array.new(TString.instance), sigs[1].type
+        assert_equal Types::Array.new(Types::String.instance), sigs[1].type
         assert_equal 'X', sigs[1].name
-        assert_equal Types::ypes::Array.new(TInt.instance), sigs[2].type
+        assert_equal Types::Array.new(Types::Int.instance), sigs[2].type
         assert_equal 'Y', sigs[2].name
-        assert_equal Types::ypes::Array.new(TDouble.instance), sigs[3].type
+        assert_equal Types::Array.new(Types::Double.instance), sigs[3].type
         assert_equal 'R', sigs[3].name
         assert_equal Types::Char.instance, sigs[4].type
         assert_equal 'my_x1', sigs[4].name
@@ -40,7 +40,8 @@ class SignatureTest < Types::est::Unit::TestCase
         assert_equal 'y1', sigs[5].name
         assert_equal Types::Float.instance, sigs[6].type
         assert_equal 'x2', sigs[6].name
-        assert_equal Types::ypes::Array.new(Types::Array.new(TInt.instance)), sigs[7].type
+        assert_equal Types::Array.new(Types::Array.new(Types::Int.instance)), 
+                     sigs[7].type
         assert_equal 'y2', sigs[7].name
     end
 end
