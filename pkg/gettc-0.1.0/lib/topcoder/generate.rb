@@ -84,7 +84,7 @@ module TopCoder
             elsif name == '{systests_d}' then
                 gen_cases @prob.systests, target_d
             else
-                target_n = name.gsub /{(\w*)}/ do |match|
+                target_n = name.gsub /\{(\w*)\}/ do |match|
                     @prob.name if $1 == 'name'
                 end 
                 return target_n

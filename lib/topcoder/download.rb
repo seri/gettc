@@ -39,9 +39,9 @@ module TopCoder
             uri = URI.parse 'https://www.topcoder.com/tc?&module=Login'
 
             req = Net::HTTP::Post.new uri.request_uri
-            req.set_form_data ({'username' => @account.username,
-                                'password' => @account.password,
-                                'rem' => 'on' })
+            req.set_form_data({'username' => @account.username,
+                               'password' => @account.password,
+                               'rem' => 'on' })
 
             https = Net::HTTP.new uri.host, uri.port
             https.use_ssl = true
