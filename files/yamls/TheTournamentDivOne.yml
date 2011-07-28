@@ -1,0 +1,71 @@
+--- !ruby/object:TopCoder::Problem 
+constraints: 
+- "*points* will contain between 2 and 50 elements, inclusive."
+- Each element of *points* will be between 0 and 10,000, inclusive.
+- "*w* will be between 1 and 10,000, inclusive."
+- "*d* will be between 1 and *w*, inclusive."
+definitions: 
+  Class: TheTournamentDivOne
+  Method: find
+  Parameters: int[], int, int
+  Returns: int
+  Method signature: int find(int[] points, int w, int d)
+examples: 
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [10, 1, 1],
+    2,
+    1
+  output: "6"
+  reason: |-
+    The first team has five wins or four wins and two draws.
+    The second and the third teams each has one draw.
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1, 1, 1],
+    2,
+    1
+  output: "-1"
+  reason: |-
+    These standings are impossible.
+    For each of the three teams to have one point, each one must have played in a game that resulted in a draw.
+    There is no way for three teams to have each played in exactly one game.
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1, 4, 0, 2],
+    3,
+    1
+  output: "3"
+  reason: The only win goes to the second team.
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [8, 3, 8, 5, 9, 2, 7, 11],
+    3,
+    2
+  output: "15"
+  reason: ""
+images: []
+
+name: TheTournamentDivOne
+notes: []
+
+source: Single Round Match 453 Round 1 - Division I, Level Two
+statement: |-
+  John and Brus have an interest in team sports tournaments.
+  They are currently investigating the intermediate standings of a tournament.
+  They don't know which games have been played so far.
+  They only know that the tournament is played using the following rules:
+  
+  Each game is played between two teams and results in either a victory for one team or a draw.
+  If a team wins a game, it gains *w* points and its opponent gains no points.
+  In case of a draw, each team gains *d* points.
+  The score of a team is the sum of all the points it has gained from all its games.
+  There are no restrictions on which teams can play against each other, and each pair of teams can play against each other any number of times (possibly zero).
+  
+  You are given a int[] *points* representing the intermediate standings of the tournament.
+  The i-th element of *points* is the score of the i-th team.
+  Return the minimum number of games that could have been played to achieve those standings.
+  If *points* doesn't represent a valid state, return -1 instead.
+systests: []
+
+url: http://www.topcoder.com/tc?module=ProblemDetail&rd=13907&pm=10685

@@ -55,7 +55,7 @@ module Types
     end
 end
     def parse_type str
-        return Types::Array.new parse_type(str[0 .. -3]) if str[-2 .. -1] == '[]'
+        return Types::Array.new parse_type str[0 .. -3] if str[-2 .. -1] == '[]'
         case str
             when 'int'
                 return Types::Int.instance

@@ -30,18 +30,22 @@ def main
     else
         id = ARGV[0].to_i
         puts "You have given ID = #{id}" 
+
         account, source_d = load_config 
+        robot = Downloader.new account
+        parser = Parser.new robot
+        generator = Generator.new source_d, Dir.getwd
         
         print 'Downloading problem to raw HTML ... '
-        html = download_problem account, id
+        html = robot.download_problem id
         puts 'Done'
         
-        print 'Parsing problem spec from raw HTML ... '
-        prob, images = parse html
+        print 'Parsing problem from raw HTML ... '
+        prob = parser.parse html
         puts 'Done'
         
-        print "Generating files for #{prob.name} ... "
-        generate source_d, Dir.getwd, prob, images
+        print "Generating problem diectory for #{prob.name} ... "
+        generator.generate prob
         puts 'Done'
     end        
 rescue => err

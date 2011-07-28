@@ -1,28 +1,31 @@
 require 'test/unit' 
-require 'topcoder/generate' 
 require 'fileutils'
 require 'tmpdir'
+
+require 'topcoder/generate' 
 include TopCoder
 
 class GenerateTest < Test::Unit::TestCase
     def setup
-        @srcdir = File.join File.dirname(__FILE__), '../../template'
-        @tmpdir = File.join Dir.tmpdir, 'gettc-test'
-        if not File.directory? @tmpdir
-            Dir.mkdir @tmpdir            
+        @source_d = File.join File.dirname(__FILE__), '../../template'
+        @target_d = File.join Dir.tmpdir, 'gettc'
+        FileUtils.mkdir @target_d if not File.directory? @target_d
+        @generator = Generator.new @source_d, @target_d
+    end
+    def test_initialize
+        assert_raise SourceDirNotExist do 
+            Generator.new 'this_directory_must_not_exist', @target_d
+        end
+        assert_raise TargetDirNotExist do 
+            Generator.new @source_d, 'this_directory_must_not_exist'
         end
     end
-    def test_problem_dir_exists
+    def test_prob_dir_exists
         prob = Problem.new
         prob.name = 'JustATest'
-        probdir = File.join @tmpdir, prob.name
-        if not File.exists? probdir
-            FileUtils.mkdir probdir
-        end
-        assert_raise ProblemDirExists do
-            generator = Generator.new @srcdir, @tmpdir, prob, []   
-            generator.generate
-        end
-        FileUtils.rmdir probdir
+        prob_d = File.join @target_d, prob.name
+        FileUtils.mkdir prob_d if not File.exists? prob_d
+        assert_raise ProblemDirExists do @generator.generate prob end
+        FileUtils.rmdir prob_d
     end
 end

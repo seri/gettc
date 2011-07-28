@@ -1,10 +1,15 @@
-require 'topcoder/problem.rb'
+require 'topcoder/problem'
+require 'topcoder/download' 
+
+require 'uri' 
+require 'pathname' 
 require 'hpricot'
 require 'pathname' 
 
 module TopCoder
     class Parser 
-        def initialize
+        def initialize downloader
+            @downloader = downloader
             @images = []            
         end
 
@@ -27,8 +32,12 @@ module TopCoder
             html.gsub! '&nbsp;', ' '
             text = Hpricot(html).to_plain_text
             text.gsub! /\[img:(http:\/\/.*)\]/ do |match|
-                @images << $1
-                "![image](images/#{Pathname.new($1).basename})"
+                url = $1
+                image = Image.new
+                image.name = Pathname.new(url).basename
+                image.content = @downloader.download url
+                @images << image
+                "![image](images/#{image.name})"
             end 
             return text
         end
@@ -76,8 +85,13 @@ module TopCoder
             return parse_notes html
         end
 
-        ## @section Parse examples
+        ## @section Parse cases
 
+        def filter_inout text
+            text.gsub! '{', '['
+            text.gsub! '}', ']'
+            return text.strip
+        end
         def parse_input html
             text = nil
             Hpricot(html).search '/table/tr/td.statText' do |td|
@@ -88,16 +102,12 @@ module TopCoder
                     text << ",\n" << input
                 end 
             end
-            text.gsub! '{', '['
-            text.gsub! '}', ']'
-            return text
+            return filter_inout text
         end
         def parse_output html
             text = Hpricot(html).to_plain_text
             text.sub! 'Returns: ', ''
-            text.gsub! '{', '['
-            text.gsub! '}', ']'
-            return text.strip
+            return filter_inout text
         end
         def parse_reason html
             return filter html
@@ -107,7 +117,7 @@ module TopCoder
             tds = Hpricot(html).search('/tr/td.statText/table/tr/td.statText')
             i = 0
             while i < tds.size do
-                example = Example.new
+                example = Case.new
                 example.input = parse_input tds[i].html
                 example.output = parse_output tds[i += 1].html
                 example.reason = parse_reason tds[i += 1].html
@@ -115,6 +125,21 @@ module TopCoder
                 i += 1
             end
             return examples
+        end
+        def parse_systests html
+            systests = []
+            _, y = indexes html, '<!-- System Testing -->'
+            z, _ = indexes html, '<!-- End System Testing -->'
+            Hpricot(html[y .. z]).search '/table/tr[@valign=top]' do |tr|
+                tds = tr.search '/td.statText'    
+                if tds.size == 3 then
+                    test = Case.new
+                    test.input = filter_inout tds[0].to_plain_text
+                    test.output = filter_inout tds[1].to_plain_text
+                    systests << test 
+                end 
+            end 
+            return systests
         end
 
         ## @section Main method
@@ -180,11 +205,16 @@ module TopCoder
                 prob.examples = parse_examples html[x .. -2]
             end 
 
-            return prob, @images
+            html = @downloader.download prob.url
+            link = Hpricot(html).at 'a[@href^=/stat?c=problem_solution]'
+            if not link.nil? then
+                html = @downloader.download link.attributes['href']
+                prob.systests = parse_systests html 
+            end 
+
+            prob.images = @images
+
+            return prob
         end    
-    end
-    def parse html
-        parser = Parser.new
-        return parser.parse html
     end
 end

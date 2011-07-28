@@ -1,0 +1,68 @@
+--- !ruby/object:TopCoder::Problem 
+constraints: 
+- "*A* will contain between 2 and 34 elements, inclusive."
+- "*A*, *B* and *C* will all contain the same number of elements."
+- Each element of *A* will be between 1 and 1,000,000,000, inclusive.
+- Each element of *B* will be between 1 and 1,000,000,000, inclusive.
+- Each element of *C* will be between 1 and 1,000,000,000, inclusive.
+- "*k* will be between 1 and min(7, number of elements in *A*), inclusive."
+definitions: 
+  Class: FunnyGames
+  Method: countWays
+  Parameters: int[], int[], int[], int
+  Returns: long
+  Method signature: long countWays(int[] A, int[] B, int[] C, int k)
+examples: 
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1,1,2],
+    [1,1,1],
+    [1,1,1],
+    2
+  output: "3"
+  reason: The set of chosen games can be {0,2}, {1,2} or {0,1,2}.
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1,2,2],
+    [2,1,2],
+    [2,2,1],
+    1
+  output: "1"
+  reason: The second and the third games should be chosen.
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1000000000,1,1,1],
+    [1,1,1,1],
+    [1,1,1,1],
+    3
+  output: "4"
+  reason: ""
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [2,3,4,5],
+    [2,3,4,5],
+    [1,2,3,5],
+    1
+  output: "0"
+  reason: ""
+- !ruby/object:TopCoder::Case 
+  input: |-
+    [1000,2000,3000,1000,2000,3000],
+    [2000,3000,1000,3000,1000,2000],
+    [3000,1000,2000,2000,3000,1000],
+    2
+  output: "14"
+  reason: ""
+images: []
+
+name: FunnyGames
+notes: []
+
+source: 2010 TCO Algorithm Semifinal 2 - Division I, Level Three
+statement: |-
+  In a popular TV show, three teams, A, B and C, play some funny games. There are several different games that can be used for the show and for each of them we know beforehand the number of points each team will get. For the i-th game the number of points received by teams A, B and C will be *A*[i], *B*[i] and *C*[i], correspondingly.
+  
+  The show consists of several games. A team's score is defined as the total number of points received in all games used for the show. The winner of the show is the team that has a strictly greater score than each of the other teams. The director wants to choose at least *k* games for the next show so that team A will be the winner. The order of the chosen games does not matter. Return the number of ways this is possible.
+systests: []
+
+url: http://www.topcoder.com/tc?module=ProblemDetail&rd=14285&pm=11120

@@ -3,27 +3,13 @@ require 'topcoder/types'
 include TopCoder
 
 class TypesTest < Test::Unit::TestCase
-    def test_array_type_error
-        assert_raise UnrecognizedType do
-            array = Types::Array.new 123
-        end
-    end
     def test_parse_type
-        assert_raise UnrecognizedType do
-            type = parse_type ''
-        end
-        assert_raise UnrecognizedType do
-            type = parse_type ' '
-        end
-        assert_raise UnrecognizedType do
-            type = parse_type '[]'
-        end       
-        assert_raise UnrecognizedType do
-            type = parse_type 'vector'
-        end       
-        assert_raise UnrecognizedType do
-            type = parse_type 'vector[]'
-        end       
+        assert_raise UnrecognizedType do array = Types::Array.new 123 end
+        assert_raise UnrecognizedType do type = parse_type '' end
+        assert_raise UnrecognizedType do type = parse_type ' ' end
+        assert_raise UnrecognizedType do type = parse_type '[]' end       
+        assert_raise UnrecognizedType do type = parse_type 'vector' end       
+        assert_raise UnrecognizedType do type = parse_type 'vector[]' end       
         assert_equal Types::Int.instance, parse_type('int')
         assert_equal Types::Long.instance, parse_type('long')
         assert_equal Types::Float.instance, parse_type('float')

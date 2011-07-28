@@ -48,9 +48,7 @@ module TopCoder
         str.chop!      
 
         parts = str.split ','
-        parts.each do |sig| 
-            sigs << parse_signature(sig) 
-        end
+        parts.each do |sig| sigs << parse_signature(sig) end
 
         return sigs
     end

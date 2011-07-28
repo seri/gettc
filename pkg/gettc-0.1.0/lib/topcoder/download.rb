@@ -58,6 +58,9 @@ module TopCoder
             return raw
         end 
         def download url
+            if not url.start_with? 'http' then
+                url = 'http://www.topcoder.com' + url
+            end 
             uri = URI.parse url 
             req = Net::HTTP::Get.new uri.request_uri
             req['cookie'] = @raw
@@ -78,13 +81,5 @@ module TopCoder
             end 
             return body
         end
-    end
-    def download account, id
-        downloader = Downloader.new account
-        return downloader.download id
-    end
-    def download_problem account, id
-        downloader = Downloader.new account
-        return downloader.download_problem id
     end
 end
