@@ -10,8 +10,8 @@ module TopCoder
     class Image
         attr_accessor :name, :content
         def initialize
-            @name = name
-            @content = content
+            @name = ''
+            @content = ''
         end
     end
     class Problem
