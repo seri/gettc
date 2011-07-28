@@ -51,16 +51,15 @@ module TopCoder
             raw = res['set-cookie']
 
             cookie = CGI::Cookie.parse raw
-            if cookie['main_user_id_1'].empty? or cookie['main_tcsso_1'].empty? then
+            if cookie['main_user_id_1'].empty? or 
+               cookie['main_tcsso_1'].empty? then
                 raise LoginFailed.new @account, cookie
             end
 
             return raw
         end 
         def download url
-            if not url.start_with? 'http' then
-                url = 'http://www.topcoder.com' + url
-            end 
+            url = 'http://www.topcoder.com' + url if not url.start_with? 'http'
             uri = URI.parse url 
             req = Net::HTTP::Get.new uri.request_uri
             req['cookie'] = @raw

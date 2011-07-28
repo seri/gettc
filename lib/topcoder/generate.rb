@@ -21,9 +21,7 @@ module TopCoder
     class SourceDirNotExist < GenerateError
         attr_accessor :dir
         def initialize dir, msg = nil
-            if msg.nil? then
-                msg = 'Source directory does not exist'
-            end 
+            msg = 'Source directory does not exist' if msg.nil?
             @dir = dir
             super "#{msg} (#{dir})"
         end
@@ -31,9 +29,7 @@ module TopCoder
     class TargetDirNotExist < GenerateError
         attr_accessor :dir
         def initialize dir, msg = nil
-            if msg.nil? then
-                msg = 'Target directory does not exist'
-            end 
+            msg = 'Target directory does not exist' if msg.nil?
             @dir = dir
             super "#{msg} (#{dir})"
         end
@@ -41,9 +37,7 @@ module TopCoder
     class ProblemDirExists < GenerateError
         attr_accessor :dir
         def initialize dir, msg
-            if msg.nil? then
-                msg = 'Target directory does not exist'
-            end 
+            msg = 'Target directory does not exist' if msg.nil?
             @dir = dir
             super "#{msg} (#{dir})"
         end
@@ -73,9 +67,7 @@ module TopCoder
             end 
         end
         def gen_template source, target
-            before = File.open source, 'r' do |f| 
-                f.read 
-            end
+            before = File.open source, 'r' do |f| f.read end
             begin
                 after = ERB.new(before).result @context
             rescue StandardError => err
@@ -93,10 +85,7 @@ module TopCoder
                 gen_cases @prob.systests, target_d
             else
                 target_n = name.gsub /{(\w*)}/ do |match|
-                    case $1
-                    when 'name' then
-                        @prob.name
-                    end
+                    @prob.name if $1 == 'name'
                 end 
                 return target_n
             end
@@ -122,9 +111,7 @@ module TopCoder
         def generate prob
             @prob = prob
             @prob_d = File.join @target_d, prob.name
-            if File.exists? @prob_d
-                raise ProblemDirExists.new nil, @prob_d
-            end
+            raise ProblemDirExists.new nil, @prob_d if File.exists? @prob_d
             FileUtils.mkdir @prob_d
 
             method_sig = @prob.definitions['Method signature']

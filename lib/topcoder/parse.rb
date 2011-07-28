@@ -4,7 +4,6 @@ require 'topcoder/download'
 require 'uri' 
 require 'pathname' 
 require 'hpricot'
-require 'pathname' 
 
 module TopCoder
     class Parser 
@@ -22,12 +21,8 @@ module TopCoder
             return from - 1, to
         end
         def filter html
-            html.gsub! /<b>(\w*)<\/b>/ do |match|
-                "*#{$1}*"
-            end 
-            html.gsub! /<sup>(\w*)<\/sup>/ do |match|
-                "^(#{$1})"
-            end 
+            html.gsub! /<b>(\w*)<\/b>/ do |match| "*#{$1}*" end 
+            html.gsub! /<sup>(\w*)<\/sup>/ do |match| "^(#{$1})" end 
             html.gsub! '&#160;', ''
             html.gsub! '&nbsp;', ' '
             text = Hpricot(html).to_plain_text
@@ -75,9 +70,7 @@ module TopCoder
             notes = []
             Hpricot(html).search '/tr' do |tr|
                 tds = tr.search '/td.statText'
-                if tds.size == 2 then
-                    notes << filter(tds[1].html)
-                end 
+                notes << filter(tds[1].html) if tds.size == 2
             end 
             return notes
         end

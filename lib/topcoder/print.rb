@@ -12,17 +12,13 @@ module TopCoder
 
             if not @definitions.empty? then
                 out << "## Definitions\n"
-                @definitions.each do |k, v|
-                    out << "- *#{k}*: `#{v}`\n"
-                end 
+                @definitions.each do |k, v| out << "- *#{k}*: `#{v}`\n" end 
                 out << "\n"
             end 
 
             if not @notes.empty? then
                 out << "## Notes\n"
-                @notes.each do |note|
-                    out << "- #{note}\n"
-                end 
+                @notes.each do |note| out << "- #{note}\n" end 
                 out << "\n"
             end 
 

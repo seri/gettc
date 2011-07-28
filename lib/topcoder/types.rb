@@ -40,9 +40,7 @@ module Types
     class Array < Type
         attr_accessor :subtype
         def initialize subtype
-            if not subtype.is_a? Type then
-                raise UnrecognizedType.new subtype
-            end 
+            raise UnrecognizedType.new subtype if not subtype.is_a? Type
             @subtype = subtype
         end
         def == ary

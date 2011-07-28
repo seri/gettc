@@ -70,12 +70,8 @@ module Langs
         def initialize func, vars
             @func = func
             @vars = vars            
-            @var_types = @vars.map do |var| 
-                self.class.type_to_s var.type
-            end
-            @var_names = @vars.map do |var|
-                var.name.uncapitalize
-            end
+            @var_types = @vars.map do |var| self.class.type_to_s var.type end
+            @var_names = @vars.map do |var| var.name.uncapitalize end
         end
         def input
             ret = 'getVars = do '

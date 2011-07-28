@@ -17,11 +17,9 @@ module Langs
             elsif type.is_a? Types::String then
                 return 'string'
             elsif type.is_a? Types::Array then
-                ret = "vector<" << self.type_to_s(type.subtype)
-                if type.subtype.is_a? Types::Array then
-                    ret << " "
-                end 
-                ret << ">"
+                ret = 'vector<' << self.type_to_s(type.subtype)
+                ret << ' ' if type.subtype.is_a? Types::Array
+                ret << '>'
                 return ret
             else
                 return 'unknown'
@@ -50,9 +48,7 @@ module Langs
             type, name = sig.type, sig.name
             ret = self.type_to_s type
             ret << ' '
-            if declaring and type.obj? then
-                ret << 'const &'
-            end 
+            ret << 'const &' if declaring and type.obj?
             ret << name 
             return ret
         end
@@ -60,12 +56,8 @@ module Langs
         def initialize func, vars
             @func = func
             @vars = vars            
-            @var_types = @vars.map do |var| 
-                self.class.sig_to_s var, true
-            end
-            @var_names = @vars.map do |var|
-                var.name
-            end 
+            @var_types = @vars.map do |var| self.class.sig_to_s var, true end
+            @var_names = @vars.map do |var| var.name end 
         end
         def declare
             ret = self.class.sig_to_s @func
