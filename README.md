@@ -41,7 +41,7 @@ If you want to challenge the code against system tests:
 
 The output will look something like:
 
-    $ 57 cases checked, 57 failed
+    57 cases checked, 57 failed
 
 Of course most of the cases will fail because you haven't written anything yet. Please write a solution in `solve.hh`. Don't cheat!
 
