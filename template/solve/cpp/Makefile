@@ -19,10 +19,13 @@ test : test.cc solve.hh setup
 	$(BUILD_D)/test
 
 demo : main
-	$(call run,-v,demo) 
+	$(call run,verbose,demo) 
 
 sys : main
-	$(call run,-q,sys)
+	$(call run,quiet,sys)
+
+sysv : main
+	$(call run,verbose,sys)
 
 clean :
 	rm -rf $(BUILD_D)

@@ -9,7 +9,7 @@ timeit ()
     if [ -x /usr/bin/time ]
     then
         /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
-    elif [ $mode == '-v' ]
+    elif [ $mode == 'verbose' ]
     then
         time "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
     else
@@ -45,10 +45,10 @@ init ()
         mkdir "$output_d"
     fi 
 
-    if [ "$mode" == '-v' ]
+    if [ "$mode" == 'verbose' ]
     then
         ostream=/dev/stdout
-    elif [ "$mode" == '-f' ]
+    elif [ "$mode" == 'file' ]
     then
         ostream=log
     fi
