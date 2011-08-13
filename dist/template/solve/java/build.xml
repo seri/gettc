@@ -59,7 +59,7 @@ java -cp "`dirname $0`${path.separator}${lib}" <%= prob.name %>Runner $$*
         <javac srcdir="." destdir="${output.dir}" 
                includes="<%= prob.name %>.java,<%= prob.name %>Test.java"
                includeantruntime="yes">
-            <classpath refid="classpath"/>
+            <classpath location="${output.dir}"/>
         </javac>
     </target>
     <target name="test" depends="compile-test">
