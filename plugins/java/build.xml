@@ -1,0 +1,32 @@
+<project name="TopCoder" basedir="." default="compile">
+    <property name="output.dir" value="../../dist/include/java"/>
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+    <target name="compile">
+        <mkdir dir="class"/>
+        <javac srcdir="src" destdir="class" includeantruntime="no"/>
+    </target>
+    <target name="compile-test" depends="compile">
+        <javac srcdir="test" destdir="class" includeantruntime="yes"/>
+    </target>
+    <target name="clean-test">
+        <delete>
+            <fileset dir="class" includes="**/*Test*.class" />
+        </delete>
+    </target>
+    <target name="test" depends="compile,compile-test">
+        <junit fork="yes" haltonfailure="yes">
+            <classpath location="class"/>
+            <formatter type="plain" usefile="false" />
+            <test name="org.topcoder.TopcoderReaderTest"/>
+            <test name="org.topcoder.TopcoderWriterTest"/>
+        </junit>
+    </target>
+    <target name="dist" depends="compile,clean-test">
+        <mkdir dir="${output.dir}"/>
+        <jar destfile="${output.dir}/TopCoder.jar" 
+             basedir="class"/>
+        <copy file="engine.rb" todir="${output.dir}"/>
+    </target>
+</project>

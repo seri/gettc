@@ -10,11 +10,8 @@ def load_config
     config_d = File.join File.expand_path('~'), '.gettc'    
     if not Dir.exists? config_d then
         FileUtils.mkdir config_d
-        default_d = File.join File.dirname(__FILE__), '..'
-        FileUtils.cp File.join(default_d, 'config.yml'), 
-                File.join(config_d, 'config.yml')
-        FileUtils.cp_r File.join(default_d, 'template'),
-                       File.join(config_d, 'template')
+        default_d = File.join File.dirname(__FILE__), '../dist/.'
+        FileUtils.cp_r default_d, config_d
     end
     config = YAML.load_file File.join(config_d, 'config.yml')
     account = Account.new config['username'], config['password']
@@ -30,7 +27,7 @@ def main
     else
         id = ARGV[0].to_i
         puts "You have given ID = #{id}" 
-
+    begin
         account, source_d = load_config 
         robot = Downloader.new account
         parser = Parser.new robot
@@ -47,9 +44,10 @@ def main
         print "Generating problem diectory for #{prob.name} ... "
         generator.generate prob
         puts 'Done'
+    rescue => err
+        $stderr.puts err
+        exit -1
+    end
     end        
-rescue => err
-    $stderr.puts err
-    exit -1
 end
 main

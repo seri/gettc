@@ -1,0 +1,7 @@
+= 1.0.0
+=== 12 August, 2011
+* Important: Change download.rb code due to TopCoder's changes
+* No longer need to export anything in bashrc
+* Add Java support
+* Put language supports into plugins, Ruby code into core
+* Refactor the types and signatures API
