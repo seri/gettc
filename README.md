@@ -69,7 +69,7 @@ Now a directory called PickAndDelete was generated with the following content:
             `-- PickAndDeleteRunner.hs
             `-- PickAndDeleteTest.hs
         `-- java
-            `-- Makefile
+            `-- build.xml
             `-- PickAndDelete.java
             `-- PickAndDeleteRunner.java
             `-- PickAndDeleteTest.java
