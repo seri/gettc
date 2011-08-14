@@ -4,8 +4,8 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.topcoder.TopCoderReader;
-import org.topcoder.TopCoderWriter;
+import org.topcoder.TopcoderReader;
+import org.topcoder.TopcoderWriter;
 import org.topcoder.TypeRef;
 <%
     engine = JavaEngine.new func, vars 
