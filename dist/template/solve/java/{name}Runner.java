@@ -1,6 +1,12 @@
-import java.io.*;
-import java.util.*;
-import org.topcoder.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import org.topcoder.TopCoderReader;
+import org.topcoder.TopCoderWriter;
+import org.topcoder.TypeRef;
 <%
     engine = JavaEngine.new func, vars 
 %>
@@ -19,8 +25,8 @@ public class <%= prob.name %>Runner {
     engine.output.gsub(/^/, ' ' * 8)
 %>
         writer.close();
-    } catch (IOException ioe) {
-        ioe.printStackTrace(System.err);
+    } catch (Exception err) {
+        err.printStackTrace(System.err);
     }
     }    
 }
