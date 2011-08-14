@@ -1,7 +1,9 @@
 <project name="<%= prob.name %>" basedir="." default="demo">
+    <property environment="env"/>
+    
     <property name="data.dir" value="${basedir}/../../data"/>
     <property name="output.dir" value="${basedir}/../../build/java"/>
-    <property name="lib" value="${user.home}/.gettc/include/java/TopCoder.jar"/>
+    <property name="lib" value="${env.HOME}/.gettc/include/java/TopCoder.jar"/>
     <property name="java.sh" value="${output.dir}/java.sh"/>
     <property name="runner.sh" value="${basedir}/../../bin/runner.sh"/>
 
