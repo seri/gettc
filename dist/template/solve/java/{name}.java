@@ -1,9 +1,6 @@
-import java.io.*;
-import java.util.*;
 <%
     engine = JavaEngine.new func, vars 
-%>
-public class <%= prob.name %> {
+%>public class <%= prob.name %> {
 <%= 
     engine.declare.gsub(/^/, ' ' * 4) 
 %> {
