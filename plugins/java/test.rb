@@ -13,9 +13,9 @@ class JavaEngineTest < Test::Unit::TestCase
     end
     def test_declare
         result = <<-eos.gsub(/^ {12}/, '')
-            double[] getMaxMin(int[][] numbers,
-                               String name,
-                               int pivot)
+            public double[] getMaxMin(int[][] numbers,
+                                      String name,
+                                      int pivot)
         eos
         assert_equal result.rstrip, @engine.declare
     end

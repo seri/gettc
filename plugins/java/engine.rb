@@ -152,8 +152,8 @@ module TopCoder
             @vars = vars            
         end
         def declare 
-            ret = @func.to_java
-            ret << '('
+            ret = 'public '
+            ret << @func.to_java << '('
                 indent = ' ' * ret.size
                 temp = @vars.map do |var| var.to_java end
                 ret << temp.join(",\n#{indent}")
