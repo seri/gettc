@@ -4,25 +4,34 @@ Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and sy
 
 TopCoder is a heaven for programmers. Solving algorithmic problems is a great way to embrace the passion for programming. There are problems for all levels. A strong academic background is not required to enjoy it. If you like Project Euler, you will probably love TopCoder.
 
-However, you normally have to paste the solution into TopCoder's online arena where it will be checked for correctness. This tool gives you another choice: check your solution completely offline.
+However, you normally have to paste the solution into TopCoder's online arena where it will be checked for correctness. Even then the online arena only supports C++, Java, and C#.
 
-# Prerequisites
+# Get started
+
+## Prerequisites
 
 The following packages are hard dependencies. They are required no matter what language you plan to use gettc for.
 
-1. [Ruby](http://www.ruby-lang.org/en/downloads/): The [Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
-2. [RubyGems](http://rubygems.org/pages/download): Many Ruby installations already bundle RubyGems.
-3. The standard GCC toolset: Most Unix systems have it bundled. Windows users may use [MinGW](http://www.mingw.org).
+- [Ruby](http://www.ruby-lang.org/en/downloads/): The [Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
+- [RubyGems](http://rubygems.org/pages/download): Many Ruby installations already bundle RubyGems.
+- The standard GCC toolset: Most Unix systems have it bundled. Windows users may use [MinGW](http://www.mingw.org).
 
-# Installation 
+## Installation 
 
-Suppse gettc has been downloaded and unpacked to ~/download/gettc:
+- Without Git: Download and unpack to somewhere, say ~/download/gettc:
 
     $ cd ~/download/gettc
     $ rake gem
     $ sudo gem i pkg/gettc-1.0.0.gem
 
-# Get started
+- With Git: For an ease of being up-to-date:
+
+    $ git clone git@github.com:seri/gettc.git
+    $ cd gettc
+    $ rake gem
+    $ sudo gem i pkg/gettc-1.0.0.gem
+
+## Try out
 
 Now try running it for the first time:
 
@@ -78,20 +87,18 @@ Now a directory called PickAndDelete was generated with the following content:
             `-- check.cpp
             `-- Makefile
 
-Don't be put down by the number of generated files. You'll only need to touch the PickAndDelete.*X* file, where *X* is your language of choice. And it's possible to tweak the template so that less files are generated next time.
+Don't get upset by the number of generated files. It's possible to tweak the template so that less files are generated next time.
 
 # Usage
 
-## For C++
-
-### Requirements
-
-C++ users don't need to do anything extra.
-
-### Try out
+Suppose C++ is your language of choice. The standard process of solving a problem called *PickAndDelete* will be like:
 
     $ cd PickAndDelete/solve/cpp
-    $ make 
+    $ vim PickAndDelete.cpp
+
+Write some code and then:
+
+    $ make
 
 The output will look something like:
 
@@ -127,7 +134,9 @@ The output should be:
     57 cases checked, 57 failed
     Failed cases: 0 1 10 11 12 13 14 15 16 17 18 19 2 20 21 22 23 24 25 26 27 28 29 3 30 31 32 33 34 35 36 37 38 39 4 40 41 42 43 44 45 46 47 48 49 5 50 51 52 53 54 55 56 6 7 8 9
 
-### Unit test
+This process is the same for all languages that gettc supports. Below are some specific deteails for each language.
+
+- C++
 
 The [Boost](http://www.boost.org/) library is required if you wish to apply TDD:
 
@@ -135,20 +144,12 @@ The [Boost](http://www.boost.org/) library is required if you wish to apply TDD:
 
 If you don't write tests, there is no need to install Boost.
 
-## For Haskell
-
-### Requirements
+- For Haskell
 
 [Cabal](http://www.haskell.org/cabal/download.html) is required. But it could have been bundled by your Haskell installer. Now:
 
     $ sudo cabal update
     $ sudo cabal install parsec
-
-### Try out
-
-Refer to the C++ section. It's exactly the same.
-
-### Unit test
 
 HUnit is required if you wish to apply TDD:
 
@@ -156,15 +157,11 @@ HUnit is required if you wish to apply TDD:
 
 If you don't write tests, there is no need to install HUnit.
 
-## For Java
-
-### Requirements
+- For Java
 
 [Apache Ant](http://ant.apache.org/) is required. This should come as no surprise to most Java programmers.
 
-### Try out
-
-It's like C++, except that you use *ant* instead of *make*. So:
+In Java, you use *ant* instead of *make*. So:
 
     $ ant
 
@@ -174,37 +171,35 @@ Will run against the examples. And:
 
 Will run against the system tests.
 
-### Unit test
+[JUnit](https://github.com/KentBeck/junit/downloads) is required if you wish to run unit tests. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. 
 
-[JUnit](https://github.com/KentBeck/junit/downloads) is required. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. 
+# Further information
 
-If you don't write unit tests, just ignore this section.
+## FAQ
 
-# FAQ
-
-## I only use Java
+- I only use Java
 
     $ cd ~/.gettc/template/solve
     $ rm -rf haskell cpp
 
 If you want them back, copy from the project's Gem directory.
 
-## I want to see input/output for the failed cases in system tests
+- I want to see input/output for the failed cases in system tests
 
     $ make sysv
 
-## I never write unit tests
+- I never write unit tests
 
     $ cd ~/.gettc/template/solve/
     $ rm {cpp,haskell,java}/*Test.*
 
-## The output of make is too verbose
+- The output of make is too verbose
     
 Use *make --quiet* instead. Here is what I do in my bashrc:
 
     alias mk=`make --quiet`
 
-## But I use C&#35;
+- But I use C&#35;
 
 You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. 
 
@@ -221,20 +216,16 @@ As what happens in gettc's generator is:
 
 Once you have done the hard work, please make a fork or something for other people to use.
 
-## Wrong username or password when trying to download
+- Wrong username or password when trying to download
 
 You should provide your own username/password in ~/.gettc/config.yml
 
-# Tips
+## Tips
 
-1. You may `rm -rf build` after you're done solving to save some disk space.
+- You may `rm -rf build` after you're done solving to save some disk space.
 
-# Known Issues
+## Known Issues
 
-## Ambiguous function names
+- Ambiguous function names: Sometimes the solution method has the same name with a standard library function, such as *filter*. In this case, you'll have to manually change the function name to something else in the runner and solution files.
 
-Sometimes the solution method has the same name with a standard library function, such as *filter*. In this case, you'll have to manually change the function name to something else in the runner and solution files.
-
-## String parsing error
-
-TopCoder allows a string to be like: "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
+- String parsing error: TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
