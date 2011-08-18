@@ -6,8 +6,6 @@ However, you normally have to paste the solution into TopCoder's online arena wh
 
 # Get started
 
-## Prerequisites
-
 The following packages are hard dependencies. They are required no matter what language you plan to use gettc for.
 
 - [Ruby](http://www.ruby-lang.org/en/downloads/): The [Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
@@ -234,4 +232,4 @@ Sometimes the solution method has the same name with a standard library function
 
 #### String parsing error
 
-TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
+ TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
