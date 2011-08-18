@@ -1,5 +1,3 @@
-# Purpose
-
 Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and system tests, then finally generate a basic template for C++, Haskell, and Java. You write the function definition and the generated template will take care of running it against input and output files.
 
 TopCoder is a heaven for programmers. Solving algorithmic problems is a great way to embrace the passion for programming. There are problems for all levels. A strong academic background is not required to enjoy it. If you like Project Euler, you will probably love TopCoder.
@@ -18,13 +16,17 @@ The following packages are hard dependencies. They are required no matter what l
 
 ## Installation 
 
-- Without Git: Download and unpack to somewhere, say ~/download/gettc:
+#### Without Git
+
+Download and unpack to somewhere, say ~/download/gettc:
 
     $ cd ~/download/gettc
     $ rake gem
     $ sudo gem i pkg/gettc-1.0.0.gem
 
-- With Git: For an ease of being up-to-date:
+#### With Git
+
+For an ease of being up-to-date:
 
     $ git clone git@github.com:seri/gettc.git
     $ cd gettc
@@ -136,7 +138,7 @@ The output should be:
 
 This process is the same for all languages that gettc supports. Below are some specific deteails for each language.
 
-- C++
+#### C++
 
 The [Boost](http://www.boost.org/) library is required if you wish to apply TDD:
 
@@ -144,7 +146,7 @@ The [Boost](http://www.boost.org/) library is required if you wish to apply TDD:
 
 If you don't write tests, there is no need to install Boost.
 
-- For Haskell
+#### Haskell
 
 [Cabal](http://www.haskell.org/cabal/download.html) is required. But it could have been bundled by your Haskell installer. Now:
 
@@ -157,7 +159,7 @@ HUnit is required if you wish to apply TDD:
 
 If you don't write tests, there is no need to install HUnit.
 
-- For Java
+#### Java
 
 [Apache Ant](http://ant.apache.org/) is required. This should come as no surprise to most Java programmers.
 
@@ -177,46 +179,46 @@ Will run against the system tests.
 
 ## FAQ
 
-- I only use Java
+#### I only use Java
 
     $ cd ~/.gettc/template/solve
     $ rm -rf haskell cpp
 
 If you want them back, copy from the project's Gem directory.
 
-- I want to see input/output for the failed cases in system tests
+#### I want to see input/output for the failed cases in system tests
 
     $ make sysv
 
-- I never write unit tests
+#### I never write unit tests
 
     $ cd ~/.gettc/template/solve/
     $ rm {cpp,haskell,java}/*Test.*
 
-- The output of make is too verbose
+#### The output of make is too verbose
     
 Use *make --quiet* instead. Here is what I do in my bashrc:
 
     alias mk=`make --quiet`
 
-- But I use C&#35;
+#### But I use C&#35;
 
 You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. 
 
 I would appreciate if you roll your own, too. First refer to gettc/plugins to see what I did for the supported languages. There are a few things you need to do:
 
-1. Write a generic parser that parses the generated input files into variables.
-2. Write an engine in Ruby that acts a helper to generate code.
-3. Write the template files in ERuby.
+- Write a generic parser that parses the generated input files into variables.
+- Write an engine in Ruby that acts a helper to generate code.
+- Write the template files in ERuby.
 
 As what happens in gettc's generator is:
 
-1. It will automatically require ~/.gettc/include/*/engine.rb.
-2. It will walk through ~/.gettc/template, read each file as an ERuby template, and copy to the target directory.
+- It will automatically require ~/.gettc/include/*/engine.rb.
+- It will walk through ~/.gettc/template, read each file as an ERuby template, and copy to the target directory.
 
 Once you have done the hard work, please make a fork or something for other people to use.
 
-- Wrong username or password when trying to download
+#### Wrong username or password when trying to download
 
 You should provide your own username/password in ~/.gettc/config.yml
 
@@ -226,6 +228,10 @@ You should provide your own username/password in ~/.gettc/config.yml
 
 ## Known Issues
 
-- Ambiguous function names: Sometimes the solution method has the same name with a standard library function, such as *filter*. In this case, you'll have to manually change the function name to something else in the runner and solution files.
+#### Ambiguous function names
 
-- String parsing error: TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
+Sometimes the solution method has the same name with a standard library function, such as *filter*. In this case, you'll have to manually change the function name to something else in the runner and solution files.
+
+#### String parsing error
+
+TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
