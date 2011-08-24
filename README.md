@@ -146,7 +146,7 @@ If you don't write tests, there is no need to install Boost.
 
 #### Haskell
 
-[Cabal](http://www.haskell.org/cabal/download.html) is required. But it could have been bundled by your Haskell installer. Now:
+Besides GHC, [Cabal](http://www.haskell.org/cabal/download.html) is required. But it could have been bundled by your Haskell installer. Now:
 
     $ sudo cabal update
     $ sudo cabal install parsec
@@ -159,7 +159,7 @@ If you don't write tests, there is no need to install HUnit.
 
 #### Java
 
-[Apache Ant](http://ant.apache.org/) is required. This should come as no surprise to most Java programmers.
+Besides JDK, [Apache Ant](http://ant.apache.org/) is required. This should come as no surprise to most Java programmers.
 
 In Java, you use *ant* instead of *make*. So:
 
@@ -177,29 +177,29 @@ Will run against the system tests.
 
 ## FAQ
 
-#### I only use Java
+> I only use Java
 
     $ cd ~/.gettc/template/solve
     $ rm -rf haskell cpp
 
 If you want them back, copy from the project's Gem directory.
 
-#### I want to see input/output for the failed cases in system tests
+> I want to see input/output for the failed cases in system tests
 
     $ make sysv
 
-#### I never write unit tests
+> I never write unit tests
 
     $ cd ~/.gettc/template/solve/
     $ rm {cpp,haskell,java}/*Test.*
 
-#### The output of make is too verbose
+> The output of make is too verbose
     
 Use *make --quiet* instead. Here is what I do in my bashrc:
 
     alias mk=`make --quiet`
 
-#### But I use C&#35;
+> But I use C&#35;
 
 You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. 
 
@@ -216,9 +216,20 @@ As what happens in gettc's generator is:
 
 Once you have done the hard work, please make a fork or something for other people to use.
 
+> How do I uninstall?
+
+    $ sudo gem uni gettc
+    $ rm -rf ~/.gettc
+
+Besides getting rid of gettc, you may also want to do this to get a clean upgrade.
+
+####
+
 #### Wrong username or password when trying to download
 
-You should provide your own username/password in ~/.gettc/config.yml
+- You should provide your own username/password in ~/.gettc/config.yml
+- If this doesn't work, try grabbing the latest version
+- If that still doesn't work, make an issue or email me
 
 ## Tips
 
@@ -233,3 +244,7 @@ Sometimes the solution method has the same name with a standard library function
 #### String parsing error
 
  TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
+
+## Future plans
+
+- Support for more interesting languages (Golang is on the way)
