@@ -177,29 +177,29 @@ Will run against the system tests.
 
 ## FAQ
 
-> I only use Java
+#### I only use Java
 
     $ cd ~/.gettc/template/solve
     $ rm -rf haskell cpp
 
 If you want them back, copy from the project's Gem directory.
 
-> I want to see input/output for the failed cases in system tests
+#### I want to see input/output for the failed cases in system tests
 
     $ make sysv
 
-> I never write unit tests
+#### I never write unit tests
 
     $ cd ~/.gettc/template/solve/
     $ rm {cpp,haskell,java}/*Test.*
 
-> The output of make is too verbose
+#### The output of make is too verbose
     
 Use *make --quiet* instead. Here is what I do in my bashrc:
 
     alias mk=`make --quiet`
 
-> But I use C&#35;
+#### But I use C&#35;
 
 You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. 
 
@@ -216,14 +216,12 @@ As what happens in gettc's generator is:
 
 Once you have done the hard work, please make a fork or something for other people to use.
 
-> How do I uninstall?
+#### How do I uninstall?
 
     $ sudo gem uni gettc
     $ rm -rf ~/.gettc
 
 Besides getting rid of gettc, you may also want to do this to get a clean upgrade.
-
-####
 
 #### Wrong username or password when trying to download
 
