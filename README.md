@@ -26,7 +26,7 @@ Download and unpack to somewhere, say ~/download/gettc:
 
 For an ease of being up-to-date:
 
-    $ git clone git@github.com:seri/gettc.git
+    $ git clone git://github.com/seri/gettc.git
     $ cd gettc
     $ rake gem
     $ sudo gem i pkg/gettc-1.0.0.gem
