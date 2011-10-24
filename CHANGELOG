@@ -1,4 +1,6 @@
 = 1.0.0
+=== 24 October, 2011
+* Change Haskell template to work with GHC7.2.1 (thanks Muskesh)
 === 12 August, 2011
 * Important: Change download.rb code due to TopCoder's changes
 * No longer need to export anything in bashrc

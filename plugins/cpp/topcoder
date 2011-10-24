@@ -21,7 +21,7 @@ namespace TopCoder
     private:
         std::string message;
         void buildMessage(std::string const &required, char actual, 
-                                  std::string const &rest) { 
+                          std::string const &rest) { 
             std::ostringstream oss;
             oss << required << " at: <" << rest << ">";
             oss << " (got '" << actual << "')";
@@ -59,24 +59,20 @@ namespace TopCoder
         } 
         return oss.str();
     }
-    void _spaces(std::istream &is)
-    {
+    void _spaces(std::istream &is) {
         while (is.good()) {
             int i = is.peek();
             if (isspace(i)) is.ignore(1);
             else break;
         } 
     } 
-    void _expect(std::istream &is, char expected)
-    {
+    void _expect(std::istream &is, char expected) {
         _spaces(is); char actual = is.peek();
         if (expected != actual) 
             throw ParseException(expected, actual, _rest(is));
         is.ignore(1);
     }
-    void next(std::istream &is)
-    {
-        _spaces(is);
+    void next(std::istream &is) {
         _expect(is, ',');
     } 
 
@@ -84,15 +80,13 @@ namespace TopCoder
     void read(std::istream &is, int64 &l) { is >> l; }
     void read(std::istream &is, float &f) { is >> f; }
     void read(std::istream &is, double &d) { is >> d; }
-    void read(std::istream &is, char &c)
-    { 
+    void read(std::istream &is, char &c) {
         _expect(is, '\'');
         is.get(c);
         if (c == '\'') c = 0;
                   else _expect(is, '\'');
     }
-    void read(std::istream &is, std::string &s) 
-    { 
+    void read(std::istream &is, std::string &s) {
         _expect(is, '"');
         std::ostringstream oss;    
         while (is.good())
@@ -111,8 +105,7 @@ namespace TopCoder
         throw ParseException('"');
     }
     template <typename T>
-    void read(std::istream &is, std::vector<T> &v)
-    {
+    void read(std::istream &is, std::vector<T> &v) {
         v.clear();
         _expect(is, '['); 
         _spaces(is);
@@ -133,27 +126,22 @@ namespace TopCoder
 
     void show(std::ostream &os, int i) { os << i; }
     void show(std::ostream &os, int64 l) { os << l; }
-    void show(std::ostream &os, float f) 
-    { 
+    void show(std::ostream &os, float f) {
         os.precision(8);
         os << f; 
     }
-    void show(std::ostream &os, double d) 
-    { 
+    void show(std::ostream &os, double d) {
         os.precision(16);
         os << d; 
     }
-    void show(std::ostream &os, char c) 
-    { 
+    void show(std::ostream &os, char c) {
         os << '\'' << c << '\'';
     }
-    void show(std::ostream &os, std::string const &s)
-    { 
+    void show(std::ostream &os, std::string const &s) {
         os << '"' << s << '"';
     }
     template <typename T>
-    void show(std::ostream &os, std::vector<T> const &v)
-    {
+    void show(std::ostream &os, std::vector<T> const &v) {
         typedef typename std::vector<T>::const_iterator Iterator;
         bool first = true;
         os << '[';
@@ -169,17 +157,14 @@ namespace TopCoder
     bool same(int64 i, int64 j) { return i == j; }
     bool same(char i, char j) { return i == j; }
     bool same(std::string const &x, std::string const &y) { return x == y; }
-    bool same(float x, float y) 
-    { 
+    bool same(float x, float y) {
         return std::abs(x - y) < 1e-5;
     }
-    bool same(double x, double y)
-    { 
+    bool same(double x, double y) {
         return std::abs(x - y) < 1e-9;
     } 
     template <typename T>
-    bool same(std::vector<T> const &v1, std::vector<T> const &v2)
-    { 
+    bool same(std::vector<T> const &v1, std::vector<T> const &v2) {
         typedef typename std::vector<T>::const_iterator Iterator;
         Iterator i1 = v1.begin(),
                  i2 = v2.begin();

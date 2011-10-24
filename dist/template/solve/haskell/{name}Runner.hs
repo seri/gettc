@@ -1,6 +1,6 @@
 import TopCoder
-import System (getArgs)
-import IO
+import System.Environment (getArgs)
+import System.IO
 import <%= prob.name %>
 <% 
     engine = HaskellEngine.new func, vars 
