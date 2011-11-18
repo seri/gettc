@@ -19,9 +19,7 @@ spec = Gem::Specification.new do |s|
     s.email = 'seritrinh@gmail.com'
     s.homepage = 'http://seriessays.blogspot.com'
 
-    s.files  = FileList["{bin,dist}/**/*"].to_a
-    s.files << FileList["core/lib/**/*"].to_a
-    s.files << ['Rakefile']
+    s.files  = FileList["{bin,dist,core/lib}/**/*"].to_a + ['Rakefile']
     s.test_files = FileList["core/test/**/*_test.rb"].to_a
     s.require_path = 'core/lib'
     s.has_rdoc = false
