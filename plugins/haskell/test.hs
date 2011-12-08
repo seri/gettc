@@ -35,7 +35,7 @@ getVars = do handle <- spaces >> parseString ; next
 
 testRealLife :: Test
 testRealLife = TestCase
-    (do let ret = parse getVars "" "\n\t\"Seri\",\t'M'\n\t,\n24\t, \n[\"Quoc\",\n\"Anh\",\"Trinh\"]"
+    (do let ret = parse getVars "" "\n\t\"Seri\",\t'M'\n\t,\n24\t, \n[\"Quoc\",\n\"Anh\"\n,\"Trinh\"]"
         let Right (handle, gender, age, names) = ret
         assertEqual "" "Seri" handle
         assertEqual "" 'M' gender

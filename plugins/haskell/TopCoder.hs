@@ -62,6 +62,7 @@ parseDouble = do char '-'
 
 parseElems :: Read a => Parser a -> Parser [a]
 parseElems f = do x <- f
+                  spaces
                   do next
                      xs <- parseElems f
                      return (x:xs)
