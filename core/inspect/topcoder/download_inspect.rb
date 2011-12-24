@@ -26,17 +26,21 @@ end
 
 def main
     $robot = Downloader.new Account.new 'gettc', 'algorithm'
-    download_all 10297, 'CirclesCountry', 
-                 '/tc?module=ProblemDetail&rd=13751&pm=10297',
-                 '/stat?c=problem_solution&cr=22504795&rd=13751&pm=10297'
-    download_all 10329, 'PageNumbers',
-                '/tc?module=ProblemDetail&rd=13757&pm=10329',
-                '/stat?c=problem_solution&cr=16063200&rd=13757&pm=10329'
-    download_all 10685, 'TheTournamentDivOne', 
-                '/tc?module=ProblemDetail&rd=13907&pm=10685'
-    download_all 11120, 'FunnyGames',
-                '/tc?module=ProblemDetail&rd=14285&pm=11120'
-    download_all 10737, 'BuildingRoads',
-                 '/tc?module=ProblemDetail&rd=14153&pm=10737'
+    #download_all 10297, 'CirclesCountry', 
+                 #'/tc?module=ProblemDetail&rd=13751&pm=10297',
+                 #'/stat?c=problem_solution&cr=22504795&rd=13751&pm=10297'
+    #download_all 10329, 'PageNumbers',
+                #'/tc?module=ProblemDetail&rd=13757&pm=10329',
+                #'/stat?c=problem_solution&cr=16063200&rd=13757&pm=10329'
+    #download_all 10685, 'TheTournamentDivOne', 
+                #'/tc?module=ProblemDetail&rd=13907&pm=10685'
+    #download_all 11120, 'FunnyGames',
+                #'/tc?module=ProblemDetail&rd=14285&pm=11120'
+    #download_all 10737, 'BuildingRoads',
+                 #'/tc?module=ProblemDetail&rd=14153&pm=10737'
+    #download_all 4589, 'Acronyms',
+                 #'/tc?module=ProblemDetail&rd=7225&pm=4589'
+    download_all 6620, 'BackyardTrees',
+                 '/tc?module=ProblemDetail&rd=10008&pm=6620'
 end
 main

@@ -1,3 +1,6 @@
+= 1.0.2
+=== 24 December, 2011
+* Fix some bugs in the parser (thanks bokertov)
 = 1.0.0
 === 24 October, 2011
 * Change Haskell template to work with GHC7.2.1 (thanks Muskesh)

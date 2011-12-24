@@ -1,0 +1,270 @@
+--- !ruby/object:TopCoder::Problem
+name: Acronyms
+url: http://www.topcoder.com/tc?module=ProblemDetail&rd=7225&pm=4589
+source: Single Round Match 250 Round 1 - Division II, Level Three
+statement: ! 'Acronyms are commonly used to make documents more concise.  Your task
+  in this problem is to develop a program that automates the conversion of sequences
+  of words into acronyms in a String[], *document*.  A sequence of words must meet
+  all of the following criteria before it can be converted to an acronym:
+
+  The words in the sequence must all be within one sentence.
+
+  The sequence must not include the first word in a sentence.
+
+  At least two words in the sequence must begin with uppercase letters.
+
+  The first and last words in the sequence must begin with uppercase letters.
+
+  There may not be two adjacent words that do not begin with uppercase letters in
+  the sequence.
+
+  The sequence must be as long as possible.  It may not be a subsequence of any longer
+  sequence meeting the five criteria above.
+
+  A word is defined as a sequence of characters surrounded on both sides by spaces
+  or edges of the element of *document*.  Note that a word may include non-letter
+  characters.  A new sentence, in this problem, always starts at the beginning of
+  the input and after two consecutive spaces, where a new line (new element of *document*)
+  counts as one space.
+
+
+  For each sequence of words meeting the criteria as defined above, you should convert
+  it to an acronym by replacing the whole sequence of words with all the uppercase
+  letters in the words that start with uppercase letters (in order).  The only caveat
+  to this is that if there are non-letter characters at the end of the last word in
+  the sequence, you should not replace them.
+
+
+  For example, "TopCoder, Inc." would become "TCI.".  Note that the ''.'' at the end
+  of "Inc." remains in the acronym but the '','' at the end of "TopCoder," is removed.  Also,
+  "United States of America" would be converted to "USA"; there is no ''o'' because
+  "of" does not start with an uppercase letter.
+
+
+  After inserting the acronyms, you should return a String representing the entire
+  document.  A new line in the input always counts as one space, and this should be
+  represented in the output.'
+definitions:
+  Class: Acronyms
+  Method: acronize
+  Parameters: String[]
+  Returns: String
+  Method signature: String acronize(String[] document)
+notes:
+- Since new lines count as spaces, the input is identical in function to a single
+  String that is the concatenation of all the elements of *document* with single spaces
+  inserted between them.
+constraints:
+- ! '*document* will contain between 1 and 50 elements, inclusive.'
+- Each element of *document* will contain between 1 and 50 characters, inclusive.
+- Each character in *document* will have ASCII values between 32 and 122 inclusive.
+- No element of *document* will have leading spaces.
+- No element of *document* will have more than one trailing space.
+- The last element of *document* will not have trailing spaces.
+- There will not be two adjacent non-letter characters other than spaces.
+- There will never be more than 2 consecutive spaces in *document*
+examples:
+- !ruby/object:TopCoder::Case
+  input: ! '["We the people of the United States of America."]'
+  output: ! '"We the people of the USA."'
+  reason: ! '"of" is not include in the acronym since it starts with a lowercase letter.'
+- !ruby/object:TopCoder::Case
+  input: ! '["Don''t","worry.","Be","Happy!"]'
+  output: ! '"Don''t worry. BH!"'
+  reason: Even though there is a period, there is only one sentence according to the
+    rules of this problem.
+- !ruby/object:TopCoder::Case
+  input: ! '["Entering contests at TopCoder, Inc.", "is a good way to develop your
+    skills."]'
+  output: ! '"Entering contests at TCI. is a good way to develop your skills."'
+  reason: Be sure to include the period after "TCI" in your return.
+- !ruby/object:TopCoder::Case
+  input: ! "[\"Working at the United States Postal Service\",\n \"in the United States
+    of America\",\n \"is a satisfying experience.\"]"
+  output: ! '"Working at the USPS in the USA is a satisfying experience."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["a A & a & a B"]'
+  output: ! '"a A & a & a B"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["The First word can''t be included.  In","A sequence, that is."]'
+  output: ! '"The First word can''t be included.  In A sequence, that is."'
+  reason: ! '"The" and "In" are both the first words in sentences.'
+- !ruby/object:TopCoder::Case
+  input: ! '["A Test & Test & & TEst"]'
+  output: ! '"A TT & & TEst"'
+  reason: Note that "&" counts as a word.
+- !ruby/object:TopCoder::Case
+  input: ! '["This is a TEST tEST Test. ", ".Go Test"]'
+  output: ! '"This is a TESTT.  .Go Test"'
+  reason: ''
+systests:
+- !ruby/object:TopCoder::Case
+  input: ! '["We the people of the United States of America."]'
+  output: ! '"We the people of the USA."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Don''t", "worry.", "Be", "Happy!"]'
+  output: ! '"Don''t worry. BH!"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Entering contests at TopCoder, Inc.", "is a good way to develop your
+    skills."]'
+  output: ! '"Entering contests at TCI. is a good way to develop your skills."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Afternoon Tea"]'
+  output: ! '"Afternoon Tea"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Working for the Environmental Protection Agency", "is hard work."]'
+  output: ! '"Working for the EPA is hard work."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Working at the United States Postal Service", "in the United States
+    of America", "is a satisfying experience."]'
+  output: ! '"Working at the USPS in the USA is a satisfying experience."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["I would like a Bacon, Lettuce, and Tomato", "sandwich.  I don''t", "like
+    Pickles, Onions, and Tomatoes."]'
+  output: ! '"I would like a BLT sandwich.  I don''t like POT."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["a A & a & a B"]'
+  output: ! '"a A & a & a B"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["The First word can''t be included.  In", "A sequence, that is."]'
+  output: ! '"The First word can''t be included.  In A sequence, that is."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["A Test & Test & & TEst"]'
+  output: ! '"A TT & & TEst"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["This is a TEST tEST Test. ", ".Go Test"]'
+  output: ! '"This is a TESTT.  .Go Test"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["This is A Hard cAse Indeed"]'
+  output: ! '"This is AHI"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["fg"]'
+  output: ! '"fg"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["V"]'
+  output: ! '"V"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["djq. u E. ", "absrcsal.xRirSupI."]'
+  output: ! '"djq. u E.  absrcsal.xRirSupI."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["yVvm aZOv InhHx", "sXnh MHzjfbrfv k s .xks hxlYfPNf B"]'
+  output: ! '"yVvm aZOv IHMH k s .xks hxlYfPNf B"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["ibmpdncxUopXk"]'
+  output: ! '"ibmpdncxUopXk"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["hSMF uyxV.Q WQXPb", "wP"]'
+  output: ! '"hSMF uyxV.Q WQXPb wP"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["O y fou ", "zpubbdbkp"]'
+  output: ! '"O y fou  zpubbdbkp"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Ejc", "GjIFMyI"]'
+  output: ! '"Ejc GjIFMyI"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["PELL NM AS .XHOJAXYQZgRXRuXMR VX  EZ"]'
+  output: ! '"PELL NMASVX  EZ"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["WGDC.XQCBUW"]'
+  output: ! '"WGDC.XQCBUW"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["fX  e MG LYI IMa DfOn FNJd qVEOUFFVJIV.OB  Kj"]'
+  output: ! '"fX  e MGLYIIMDOFNJ qVEOUFFVJIV.OB  Kj"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["f he.fh a p Ej Yf  vzthcuwD"]'
+  output: ! '"f he.fh a p EY  vzthcuwD"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["vtr vwqjnpgorf ab UdGBq. n  D  kczf Vt", "meoQf.tyxrjlP.v.ha ch vs hv
+    oxtSxE. b yhk .v s K", "Timvz"]'
+  output: ! '"vtr vwqjnpgorf ab UdGBq. n  D  kczf Vt meoQf.tyxrjlP.v.ha ch vs hv oxtSxE.
+    b yhk .v s KT"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["VCifY MVir. csg  YUKM  vcT Pf ql M.nY. kn I nbDY", "osSRk.yDG"]'
+  output: ! '"VCifY MVir. csg  YUKM  vcT PMYI nbDY osSRk.yDG"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["o.mg U NZFPVF.Knw  j ErFE rOlP XaKVqEcTsW C bfUwX", "Q .a br TEVIA  Ban.J"]'
+  output: ! '"o.mg UNZFPVFK  j EFEXKVETWCQ .a br TEVIA  Ban.J"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["HKt uQXGXAWTGWMH dNHGYpTC CrMYXLTBLw LT C ORUDUT.", ".A Wt  F.JUGF"]'
+  output: ! '"HKt uQXGXAWTGWMH dNHGYpTC CMYXLTBLLTCORUDUTW  F.JUGF"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["PK xnJHdmjOlKTnc Xw H OD  L"]'
+  output: ! '"PK xnJHdmjOlKTnc XHOD  L"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Vm.R  iEN .v f ugM VQcojs nujGPsuaqRH kjIGby  M", "zSJ F utHRv P XHFfUbq
+    phNy"]'
+  output: ! '"Vm.R  iEN .v f ugM VQcojs nujGPsuaqRH kjIGby  M zSJ FPXHFU phNy"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Y  a T  jwpW.UxbkJXO .D.G. gCJjRg pY CnC iGO Q", "Fr.m T Y  XsyBdY qDxNMEMq"]'
+  output: ! '"Y  a T  jwpW.UxbkJXO .D.G. gCJjRg pY CCQFTY  XsyBdY qDxNMEMq"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["S.zEovnLdg.qh  i EG QLd uFLaHxVl ePP YlYb.q.o", "crOeVTn.iuCLj e  P
+    c vF iPvR wjcz.wgxomhx"]'
+  output: ! '"S.zEovnLdg.qh  i EGQL uFLaHxVl ePP YlYb.q.o crOeVTn.iuCLj e  P c vF
+    iPvR wjcz.wgxomhx"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["co. uk N X.aUkxZM. MG A.QBHU pZEIJOD  olZ.JbSJGY"]'
+  output: ! '"co. uk NXUZMMGAQBHU pZEIJOD  olZ.JbSJGY"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["p nlQUGIht  TAAnuRa.pCKea.  . XAYbL  tABSwO.NbH", "uf T. quBlnhYU jm
+    . Hn pTGMRPGoC E. KK guAVFfb", "Pk.Q"]'
+  output: ! '"p nlQUGIht  TAAnuRa.pCKea.  . XAYbL  tABSwO.NbH uf T. quBlnhYU jm .
+    HEKKPQ"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["zgd  t fvonY q wbSysrogk WoUd uiu hj ldvr H", "bcyHt. z  . ."]'
+  output: ! '"zgd  t fvonY q wbSysrogk WoUd uiu hj ldvr H bcyHt. z  . ."'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["OObj I.l.WH.Q d W zzgYHXVeJiHjX  hwCT usay.mw t", "f  N q.m P n IX.  WTPPx.kR"]'
+  output: ! '"OObj IWHQW zzgYHXVeJiHjX  hwCT usay.mw t f  N q.m PIX.  WTPPx.kR"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["TWG PAWN CQjbOYZ S SL SD. IGV  PHRB V x.ESA.XmCX", ".B BY HIII.W V a
+    .zQ CQPIysPHYNFBBWMSK", "FGUIRObUWaSYNP  T"]'
+  output: ! '"TWG PAWNCQOYZSSLSDIGV  PHRB V x.ESA.XmCX .B BYHIIIWV a .zQ CQPIPHYNFBBWMSKFGUIROUWSYNP  T"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["Don''t", "worry.", "Be", "Happy!"]'
+  output: ! '"Don''t worry. BH!"'
+  reason: ''
+- !ruby/object:TopCoder::Case
+  input: ! '["A Test & Test & & TEst"]'
+  output: ! '"A TT & & TEst"'
+  reason: ''
+images: []

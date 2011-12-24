@@ -26,10 +26,12 @@ def main
     downloader = Downloader.new Account.new 'gettc', 'algorithm'
     $parser = Parser.new downloader
 
-    parse_all 'CirclesCountry'
-    parse_all 'PageNumbers'
-    parse_all 'TheTournamentDivOne'
-    parse_all 'FunnyGames'
-    parse_all 'BuildingRoads'
+    #parse_all 'CirclesCountry'
+    #parse_all 'PageNumbers'
+    #parse_all 'TheTournamentDivOne'
+    #parse_all 'FunnyGames'
+    #parse_all 'BuildingRoads'
+    #parse_all 'Acronyms'
+    parse_all 'BackyardTrees'
 end
 main

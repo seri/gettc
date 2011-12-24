@@ -26,7 +26,7 @@ module TopCoder
             html.gsub! '&#160;', ''
             html.gsub! '&nbsp;', ' '
             text = Hpricot(html).to_plain_text
-            text.gsub! /\[img:(http:\/\/.*)\]/ do |match|
+            text.gsub! /\[img:(http:\/\/[^\]]*)\]/ do |match|
                 url = $1
                 image = Image.new
                 image.name = Pathname.new(url).basename
@@ -123,6 +123,7 @@ module TopCoder
             systests = []
             _, y = indexes html, '<!-- System Testing -->'
             z, _ = indexes html, '<!-- End System Testing -->'
+            return systests if not y or not z
             Hpricot(html[y .. z]).search '/table/tr[@valign=top]' do |tr|
                 tds = tr.search '/td.statText'    
                 if tds.size == 3 then
@@ -133,6 +134,15 @@ module TopCoder
                 end 
             end 
             return systests
+        end
+        def download_systests detail_url
+            detail = @downloader.download detail_url
+            Hpricot(detail).search 'a[@href^=/stat?c=problem_solution]' do |url|
+                solution = @downloader.download url.attributes['href']
+                systests = parse_systests solution
+                return systests if not systests.empty?
+            end 
+            return []
         end
 
         ## @section Main method
@@ -198,13 +208,7 @@ module TopCoder
                 prob.examples = parse_examples html[x .. -2]
             end 
 
-            html = @downloader.download prob.url
-            link = Hpricot(html).at 'a[@href^=/stat?c=problem_solution]'
-            if not link.nil? then
-                html = @downloader.download link.attributes['href']
-                prob.systests = parse_systests html 
-            end 
-
+            prob.systests = download_systests prob.url
             prob.images = @images
 
             return prob
