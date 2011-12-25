@@ -4,12 +4,14 @@ require 'topcoder/download'
 require 'uri' 
 require 'pathname' 
 require 'hpricot'
+require 'iconv' 
 
 module TopCoder
     class Parser 
         def initialize downloader
             @downloader = downloader
             @images = []            
+            @iconv = Iconv.new 'UTF-8//IGNORE', 'UTF-8'
         end
 
         ## @section Utils
@@ -21,6 +23,9 @@ module TopCoder
             return from - 1, to
         end
         def filter html
+            unless html.valid_encoding? then
+                html = @iconv.conv html
+            end
             html.gsub! /<b>(\w*)<\/b>/ do |match| "*#{$1}*" end 
             html.gsub! /<sup>(\w*)<\/sup>/ do |match| "^(#{$1})" end 
             html.gsub! '&#160;', ''
@@ -30,9 +35,13 @@ module TopCoder
                 url = $1
                 image = Image.new
                 image.name = Pathname.new(url).basename
-                image.content = @downloader.download url
-                @images << image
-                "![image](images/#{image.name})"
+                begin
+                    image.content = @downloader.download url
+                    @images << image
+                    "![image](images/#{image.name})"
+                rescue StandardError
+                    "![image](#{url})"
+                end
             end 
             return text
         end
@@ -45,11 +54,6 @@ module TopCoder
         def parse_name html
             html.sub! 'Problem Statement for', ''
             return filter html
-        end
-        def parse_source elem
-            url = 'http://www.topcoder.com' + elem.attributes['href']
-            source = filter elem.html
-            return url, source
         end
         def parse_statement html
             return filter html
@@ -144,6 +148,21 @@ module TopCoder
             end 
             return []
         end
+        def parse_details doc
+            url, source, systests = '', '', []
+            doc.search 'a[@href^=/tc?module=ProblemDetail]' do |elem|
+                url = URI.join(Downloader::ROOT, elem.attributes['href']).to_s
+                source = filter elem.html
+                begin
+                    systests = download_systests url
+                    unless systests.empty? then
+                        return url, source, systests
+                    end 
+                rescue DownloadError
+                end
+            end 
+            return url, source, systests
+        end
 
         ## @section Main method
 
@@ -153,9 +172,6 @@ module TopCoder
             doc = Hpricot(html)
 
             prob.name = parse_name doc.search('tr/td.statTextBig').html
-            prob.url, prob.source = 
-                parse_source doc.at 'a[@href^=/tc?module=ProblemDetail]'
-
             prob.notes = nil
             prob.constraints = nil
             prob.examples = nil 
@@ -208,8 +224,8 @@ module TopCoder
                 prob.examples = parse_examples html[x .. -2]
             end 
 
-            prob.systests = download_systests prob.url
             prob.images = @images
+            prob.url, prob.source, prob.systests = parse_details doc
 
             return prob
         end    

@@ -40,7 +40,12 @@ def main
                  #'/tc?module=ProblemDetail&rd=14153&pm=10737'
     #download_all 4589, 'Acronyms',
                  #'/tc?module=ProblemDetail&rd=7225&pm=4589'
-    download_all 6620, 'BackyardTrees',
-                 '/tc?module=ProblemDetail&rd=10008&pm=6620'
+    #download_all 6620, 'BackyardTrees',
+                 #'/tc?module=ProblemDetail&rd=10008&pm=6620'
+    #download_all 520, 'Bits',
+                 #'/tc?module=ProblemDetail&rd=5852&pm=520'
+    #download_all 2412, 'CircularSequence'
+    #download_all 10380, 'PalindromeFactory'
+    download_all 10638, 'TwistedMatrix'
 end
 main

@@ -7,7 +7,7 @@ ostream=/dev/null
 timeit () {
     if [ -x /usr/bin/time ]; then
         /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
-    elif [ $mode == 'verbose' ]; then
+    elif [ $mode = 'verbose' ]; then
         time "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
     else
         "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
@@ -37,9 +37,9 @@ init () {
         mkdir "$output_d"
     fi 
 
-    if [ "$mode" == 'verbose' ]; then
+    if [ "$mode" = 'verbose' ]; then
         ostream=/dev/stdout
-    elif [ "$mode" == 'file' ]; then
+    elif [ "$mode" = 'file' ]; then
         ostream=log
     fi
 

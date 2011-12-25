@@ -38,7 +38,7 @@ module TopCoder
             @raw = get_cookie
         end
         def get_cookie
-            uri = URI.parse "#{ROOT}/tc?&module=Login"
+            uri = URI.join(ROOT, 'tc?&module=Login')
 
             req = Net::HTTP::Post.new uri.request_uri
             req.set_form_data({'username' => @account.username,
@@ -58,11 +58,11 @@ module TopCoder
             return raw
         end 
         def download url
-            url = ROOT + url if not url.start_with? 'http'
-
-            LIMIT.times do |i|
-                uri = URI.parse url 
-
+            uri = url
+            unless uri.is_a? URI then
+                uri = url.start_with?('http') ? URI.parse(url) : URI.join(ROOT, url) 
+            end 
+            LIMIT.times do
                 req = Net::HTTP::Get.new uri.request_uri
                 req['cookie'] = @raw
 
@@ -70,10 +70,10 @@ module TopCoder
                 res = http.request req   
                 
                 return res.body if res.is_a? Net::HTTPSuccess
-                if not res.is_a? Net::HTTPMovedPermanently then
+                unless res.is_a? Net::HTTPMovedPermanently then
                     raise DownloadError.new res.class.to_s 
                 end
-                url = res['location']
+                uri = URI.parse res['location']
             end
             raise DownloadError.new "Tried #{LIMIT} times without success"
         end

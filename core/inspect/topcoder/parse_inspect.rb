@@ -32,6 +32,10 @@ def main
     #parse_all 'FunnyGames'
     #parse_all 'BuildingRoads'
     #parse_all 'Acronyms'
-    parse_all 'BackyardTrees'
+    #parse_all 'BackyardTrees'
+    #parse_all 'Bits'
+    #parse_all 'CircularSequence'
+    #parse_all 'PalindromeFactory'
+    parse_all 'TwistedMatrix'
 end
 main
