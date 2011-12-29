@@ -34,6 +34,12 @@ public class TopcoderReaderTest {
     }
 
     @Test(expected = ParseException.class) 
+    public void corruptedBoolean() throws IOException {
+        source("truz");
+        boolean b = (Boolean) reader.next(Boolean.class);
+    }
+
+    @Test(expected = ParseException.class) 
     public void corruptedArray1() throws IOException {
         source("[1,2");
         List a = (List) reader.next(new TypeRef<List<Integer>>(){}.getType());
@@ -61,6 +67,10 @@ public class TopcoderReaderTest {
         source("\"Hello World\"");
         String s = (String) reader.next(String.class);
         assertEquals("Hello World", s);
+
+        source("  True  ");
+        boolean b = (Boolean) reader.next(Boolean.class);
+        assertEquals(true, b);
     }
 
     @Test public void arrays() throws IOException {
@@ -90,9 +100,10 @@ public class TopcoderReaderTest {
     }
 
     @Test public void realLife() throws IOException {
-        source("\"Seri\", 'M', 24, [\"Hello\",\n \"Good World!!!\",\n \"\"]");
+        source("\"Seri\", 'M',\tfaLSe\t,24, [\"Hello\",\n \"Good World!!!\",\n \"\"]");
         String name = (String) reader.next(String.class); reader.next();
         char gender = (Character) reader.next(Character.class); reader.next();
+        boolean passed = (Boolean) reader.next(Boolean.class); reader.next();
         int age = (Integer) reader.next(Integer.class); reader.next();
         List<String> textsBoxed = (List<String>) reader.next(new TypeRef<List<String>>(){}.getType());
 
@@ -102,6 +113,7 @@ public class TopcoderReaderTest {
 
         assertEquals("Seri", name);
         assertEquals('M', gender);
+        assertEquals(false, passed);
         assertEquals(24, age);
         assertEquals(3, texts.length);
         assertEquals("Hello", texts[0]);

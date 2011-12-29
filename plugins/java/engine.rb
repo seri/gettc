@@ -15,6 +15,8 @@ module TopCoder
                 return 'char'
             elsif self == TString then
                 return 'String'
+            elsif self == TBoolean then
+                return 'boolean'
             elsif is_a? TArray then
                 return "#{subtype.to_java}[]"
             else
@@ -34,6 +36,8 @@ module TopCoder
                 return 'Character'
             elsif self == TString then
                 return 'String'
+            elsif self == TBoolean then
+                return 'Boolean'
             elsif self.is_a? TArray then
                 return "List<#{subtype.to_java_boxed}>"
             else
@@ -53,6 +57,8 @@ module TopCoder
                 return "'$'"
             elsif self == TString then
                 return '"$"'
+            elsif self == TBoolean then
+                return 'true'
             elsif self.is_a? TArray then
                 return "new #{subtype.to_java}[1]"
             else

@@ -46,6 +46,12 @@ public class TopcoderWriterTest {
     @Test public void writeChar() throws IOException {
         write('c'); expect("'c'");
     }
+    @Test public void writeFalse() throws IOException {
+        write(false); expect("false");
+    }
+    @Test public void writeTrue() throws IOException {
+        write(true); expect("true");
+    }
     @Test public void writeArray() throws IOException {
         List a = new ArrayList<Integer>();
         a.add(123); a.add(4); a.add(56789);

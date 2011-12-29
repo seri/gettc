@@ -8,14 +8,16 @@ class JavaEngineTest < Test::Unit::TestCase
         func = Signature.new TArray.new(TDouble), 'getMaxMin'
         vars = [ Signature.new(TArray.new(TArray.new(TInt)), 'numbers'),
                  Signature.new(TString, 'name'),
-                 Signature.new(TInt, 'pivot') ]
+                 Signature.new(TInt, 'pivot'),
+                 Signature.new(TBoolean, 'rounded') ]
         @engine = JavaEngine.new func, vars
     end
     def test_declare
         result = <<-eos.gsub(/^ {12}/, '')
             public double[] getMaxMin(int[][] numbers,
                                       String name,
-                                      int pivot)
+                                      int pivot,
+                                      boolean rounded)
         eos
         assert_equal result.rstrip, @engine.declare
     end
@@ -36,6 +38,9 @@ String name = (String) reader.next(String.class);
 reader.next();
 
 int pivot = (Integer) reader.next(Integer.class);
+reader.next();
+
+boolean rounded = (Boolean) reader.next(Boolean.class);
         eos
         assert_equal result.rstrip, @engine.input
     end
@@ -56,7 +61,7 @@ for (int _i = 0; _i < matrix.length; ++_i) {
     end
     def test_output_array
         result = <<-eos
-double[] result = solver.getMaxMin(numbers, name, pivot);
+double[] result = solver.getMaxMin(numbers, name, pivot, rounded);
 List<Double> resultBoxed = new ArrayList<Double>();
 for (int _i = 0; _i < result.length; ++_i) {
     resultBoxed.add(result[_i]);

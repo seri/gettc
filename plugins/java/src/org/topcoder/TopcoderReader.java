@@ -88,6 +88,25 @@ public class TopcoderReader {
                 buffer.append(c);
         return buffer.toString();
     }
+    private Boolean nextBoolean() throws IOException {
+        StringBuffer buffer = new StringBuffer();
+        for (char c = nextChar(); c != ENDF; c = token()) 
+            if (Character.isLetter(c)) 
+                buffer.append(c);
+            else {
+                reset(); 
+                break;
+            }
+        String s = buffer.toString().toLowerCase();
+        if (s.equals("true"))
+            return true;
+        else if (s.equals("false"))
+            return false;
+        else
+            throw new ParseException("Expect a boolean value (true or false, got " 
+                                      + s + ")", rest());
+    }
+
     private Object nextArray(Type type) throws IOException {
         ArrayList list = new ArrayList();
         expect('['); char c = nextChar(); if (c == ']') return list; reset();
@@ -114,6 +133,8 @@ public class TopcoderReader {
             return nextCharacter();
         else if (type.equals(String.class))
             return nextString();
+        else if (type.equals(Boolean.class))
+            return nextBoolean();
         else if (type instanceof ParameterizedType) {
             ParameterizedType temp = (ParameterizedType) type;
             if (temp.getRawType().equals(List.class)) 

@@ -1,6 +1,7 @@
 module TopCoder ( next
                 , parseChar
                 , parseString
+                , parseBool
                 , parseInt
                 , parseLong
                 , parseFloat
@@ -14,6 +15,7 @@ module TopCoder ( next
 import Text.Parsec
 import Text.Parsec.String (Parser)
 import Text.Parsec.Token
+import Data.Char
 
 next :: Parser ()
 next = do char ','
@@ -30,6 +32,10 @@ parseString = do char '\"'
                  ret <- many1 (noneOf "\"")
                  char '\"'
                  return ret
+
+parseBool :: Parser Bool
+parseBool = do s <- many1 letter
+               return ((map toLower s) == "true")
 
 parseInt :: Parser Int
 parseInt = do char '-'

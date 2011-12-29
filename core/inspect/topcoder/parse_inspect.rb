@@ -36,6 +36,7 @@ def main
     #parse_all 'Bits'
     #parse_all 'CircularSequence'
     #parse_all 'PalindromeFactory'
-    parse_all 'TwistedMatrix'
+    #parse_all 'TwistedMatrix'
+    parse_all 'Checker'
 end
 main

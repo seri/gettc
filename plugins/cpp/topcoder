@@ -1,6 +1,7 @@
 #ifndef GETTC_TOPCODER_H 
 #define GETTC_TOPCODER_H
 
+#include <algorithm>
 #include <exception>
 #include <string>
 #include <vector>
@@ -42,6 +43,11 @@ namespace TopCoder
             std::ostringstream oss;
             oss << "Expect '" << expected << "'";
             buildMessage(oss.str(), actual, rest);
+        }
+        ParseException(std::string const &required, std::string const &rest) {
+            std::ostringstream oss;
+            oss << required << " at: <" << rest << ">";
+            message = oss.str();
         }
         ParseException(char expected) {
             std::ostringstream oss;
@@ -89,8 +95,7 @@ namespace TopCoder
     void read(std::istream &is, std::string &s) {
         _expect(is, '"');
         std::ostringstream oss;    
-        while (is.good())
-        {
+        while (is.good()) {
             char c; is.get(c);
             if (c == '\\') {
                 char cc; is.get(cc);
@@ -103,6 +108,27 @@ namespace TopCoder
             else oss << c;
         }
         throw ParseException('"');
+    }
+    void read(std::istream &is, bool &b) { 
+        _spaces(is);
+        std::ostringstream oss;
+        while (is.good()) {
+            int i = is.peek();
+            if (!isalpha(i)) {
+                break;
+            }
+            oss.put(i);
+            is.ignore(1);
+        } 
+        std::string s = oss.str();
+        std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+        if (s == "true")  {
+            b = true;
+        } else if (s == "false") {
+            b = false;
+        } else {
+            throw ParseException("Expect a boolean value (true or false)", _rest(is));
+        }
     }
     template <typename T>
     void read(std::istream &is, std::vector<T> &v) {
@@ -140,6 +166,9 @@ namespace TopCoder
     void show(std::ostream &os, std::string const &s) {
         os << '"' << s << '"';
     }
+    void show(std::ostream &os, bool b) {
+        os << (b ? "true" : "false");
+    }
     template <typename T>
     void show(std::ostream &os, std::vector<T> const &v) {
         typedef typename std::vector<T>::const_iterator Iterator;
@@ -153,6 +182,7 @@ namespace TopCoder
         os << ']';
     }
 
+    bool same(bool i, bool j) { return i == j; }
     bool same(int i, int j) { return i == j; }
     bool same(int64 i, int64 j) { return i == j; }
     bool same(char i, char j) { return i == j; }

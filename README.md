@@ -19,8 +19,7 @@ The following packages are hard dependencies. They are required no matter what l
 Download and unpack to somewhere, say ~/download/gettc:
 
     $ cd ~/download/gettc
-    $ rake gem
-    $ sudo gem i pkg/gettc-1.0.0.gem
+    $ rake
 
 #### With Git
 
@@ -28,8 +27,15 @@ For an ease of being up-to-date:
 
     $ git clone git://github.com/seri/gettc.git
     $ cd gettc
-    $ rake gem
-    $ sudo gem i pkg/gettc-1.0.0.gem
+    $ rake
+
+#### Troubleshooting
+
+In case you get an error, try:
+
+    $ rake install --trace
+
+And then post an issue where you paste the output of the above command.
 
 ## Try out
 
@@ -46,7 +52,7 @@ Now try running it for the first time:
      Generating problem diectory for PickAndDelete ... Done
 
 Now a directory called PickAndDelete was generated with the following content:
-    
+
     PickAndDelete
     `-- bin
         `-- runner.sh
@@ -64,8 +70,8 @@ Now a directory called PickAndDelete was generated with the following content:
             `-- 1.out
             ...
     `-- prob
-        `-- prob.html
-        `-- prob.md
+        `-- PickAndDelete.html
+        `-- PickAndDelete.md
     `-- solve
         `-- cpp
             `-- Makefile
@@ -194,7 +200,7 @@ If you want them back, copy from the project's Gem directory.
     $ rm {cpp,haskell,java}/*Test.*
 
 #### The output of make is too verbose
-    
+   
 Use *make --quiet* instead. Here is what I do in my bashrc:
 
     alias mk=`make --quiet`

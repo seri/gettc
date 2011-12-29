@@ -15,7 +15,9 @@ testParsePrims = TestCase
         let y = parse parseDouble "" "123.456"
         assertEqual "" (Right 123.456) y
         let c = parse parseChar "" "'c'"
-        assertEqual "" (Right 'c') c)
+        assertEqual "" (Right 'c') c
+        let b = parse parseBool "" "false"
+        assertEqual "" (Right False) b)
 
 testParseArray :: Test
 testParseArray = TestCase
@@ -26,19 +28,21 @@ testParseArray = TestCase
         let ss = parse (parseList parseString) "" "[\"Hello\",\"World\"]"
         assertEqual "" (Right ["Hello", "World"]) ss)
 
-getVars :: Parser (String, Char, Int, [String])
+getVars :: Parser (String, Char, Bool, Int, [String])
 getVars = do handle <- spaces >> parseString ; next
              gender <- spaces >> parseChar ; next
+             passed <- spaces >> parseBool ; next
              age <- spaces >> parseInt ; next  
              names <- spaces >> (parseList parseString)
-             return (handle, gender, age, names)
+             return (handle, gender, passed, age, names)
 
 testRealLife :: Test
 testRealLife = TestCase
-    (do let ret = parse getVars "" "\n\t\"Seri\",\t'M'\n\t,\n24\t, \n[\"Quoc\",\n\"Anh\"\n,\"Trinh\"]"
-        let Right (handle, gender, age, names) = ret
+    (do let ret = parse getVars "" "\n\t\"Seri\",\t'M'\n\t,\n\tfalse,\n24\t, \n[\"Quoc\",\n\"Anh\"\n,\"Trinh\"]"
+        let Right (handle, gender, passed, age, names) = ret
         assertEqual "" "Seri" handle
         assertEqual "" 'M' gender
+        assertEqual "" False passed
         assertEqual "" 24 age
         assertEqual "" ["Quoc", "Anh", "Trinh"] names)
 

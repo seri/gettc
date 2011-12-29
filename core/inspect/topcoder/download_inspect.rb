@@ -46,6 +46,7 @@ def main
                  #'/tc?module=ProblemDetail&rd=5852&pm=520'
     #download_all 2412, 'CircularSequence'
     #download_all 10380, 'PalindromeFactory'
-    download_all 10638, 'TwistedMatrix'
+    #download_all 10638, 'TwistedMatrix'
+    download_all 358, 'Checker'
 end
 main

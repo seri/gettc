@@ -21,10 +21,10 @@ public class TopcoderWriter {
             return;
         }
         Class type = obj.getClass();
-            if (type.equals(Integer.class) ||
-            type.equals(Long.class) || 
-            type.equals(Float.class) || 
-            type.equals(Double.class))
+        if (type.equals(Integer.class) || type.equals(Long.class)
+                                       || type.equals(Float.class)
+                                       || type.equals(Double.class)
+                                       || type.equals(Boolean.class))
             source.write(obj.toString());            
         else if (type.equals(Character.class)) {
             source.write('\'');

@@ -18,6 +18,7 @@ module TopCoder
             return @is_object
         end
     end
+    TBoolean = Type.new false
     TInt = Type.new false
     TLong = Type.new false
     TFloat = Type.new false
@@ -41,18 +42,20 @@ module TopCoder
     def parse_type str
         return TArray.new parse_type str[0 .. -3] if str[-2 .. -1] == '[]'
         case str
-            when 'int'
-                return TInt
-            when 'long'
-                return TLong
-            when 'float'
-                return TFloat
-            when 'double'
-                return TDouble
-            when 'char'
-                return TChar
-            when 'String'
-                return TString
+        when 'boolean'
+            return TBoolean
+        when 'int'
+            return TInt
+        when 'long'
+            return TLong
+        when 'float'
+            return TFloat
+        when 'double'
+            return TDouble
+        when 'char'
+            return TChar
+        when 'String'
+            return TString
         end
         raise UnrecognizedType.new str
     end

@@ -15,6 +15,8 @@ module TopCoder
                 return 'char'
             elsif self == TString then
                 return 'string'
+            elsif self == TBoolean then
+                return 'bool'
             elsif is_a? TArray then
                 ret = 'vector<' << subtype.to_cpp
                 ret << ' ' if subtype.is_a? TArray
@@ -37,6 +39,8 @@ module TopCoder
                 return "'$'"
             elsif self == TString then
                 return '"$"'
+            elsif self == TBoolean then
+                return 'true'
             elsif is_a? TArray then
                 return "#{to_cpp}()"
             else

@@ -19,6 +19,8 @@ module TopCoder
                 return 'Char'
             elsif self == TString then
                 return 'String'
+            elsif self == TBoolean then
+                return 'Bool'
             elsif is_a? TArray then
                 return '[' + subtype.to_haskell + ']'
             else
@@ -38,6 +40,8 @@ module TopCoder
                 return 'parseChar'
             elsif self == TString then
                 return 'parseString'
+            elsif self == TBoolean then
+                return 'parseBool'
             elsif is_a? TArray then
                 return '(parseList ' + subtype.get_haskell_parser + ')'
             else
@@ -57,6 +61,8 @@ module TopCoder
                 return "'$'"
             elsif self == TString then
                 return '"$"'
+            elsif self == TBoolean then
+                return 'True'
             elsif is_a? TArray then
                 return '[]'
             else
@@ -67,7 +73,7 @@ module TopCoder
     class HaskellEngine
         attr_accessor :func, :vars
         def initialize func, vars
-            @func = func
+            @func = Signature.new func.type, func.name.uncapitalize
             @vars = vars.map do |var|
                 Signature.new var.type, var.name.uncapitalize
             end

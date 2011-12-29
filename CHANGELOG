@@ -1,3 +1,7 @@
+= 1.1.0
+=== 28 December, 2001
+* Add boolean as a valid TopCoder type (thanks bokertov)
+* Write a Raketask to automate re-installation, simply run `rake` now
 = 1.0.2
 === 24 December, 2011
 * Fix some bugs in the parser (thanks bokertov)
