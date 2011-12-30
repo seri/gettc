@@ -45,7 +45,7 @@ end
 task :install do
     `rake repackage --quiet`
 
-    wizard = Gem::Installer.new spec.file_name
+    wizard = Gem::Installer.new "pkg/#{spec.file_name}"
     begin
         wizard.install
     rescue Gem::FilePermissionError
