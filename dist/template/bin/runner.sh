@@ -69,11 +69,11 @@ main () {
                 fails=$(( fails + 1 ))
                 failstr="$failstr $test_case"
                 puts 'Failed'
-                write 'Input: '
+                write '    Input: '
                 view_file "$data_d/$test_case.in"
-                write 'Expected: '
+                write '    Expected: '
                 view_file "$data_d/$test_case.out"
-                write 'Received: '
+                write '    Received: '
                 view_file "$output_d/$test_case.out"
             else
                 puts 'Passed'

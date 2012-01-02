@@ -1,5 +1,5 @@
 import Test.HUnit
-import Solve
+import <%= prob.name %>
 <% test_name = func.name[0].upcase + func.name[1..-1] %>
 test<%= test_name %> :: Test
 test<%= test_name %> = TestCase 
