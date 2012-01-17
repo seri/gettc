@@ -37,6 +37,11 @@ In case you get an error, try:
 
 And then post an issue where you paste the output of the above command.
 
+    The newest version of bluecloth, which gettc depends on, is reported to have
+    problems compiling on Windows under MinGW. You may manually install an older
+    version:
+        $ gem install bluecloth -v2.0.7
+
 ## Try out
 
 Now try running it for the first time:
