@@ -2,6 +2,7 @@
 using namespace TopCoder;
 #include "<%= prob.name %>.cpp"
 #include <fstream>
+using namespace std;
 <%
     engine = CppEngine.new func, vars
 %>
