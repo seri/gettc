@@ -189,12 +189,12 @@ namespace TopCoder
     bool same(float x, float y) {
         float p = x * (1.0 - 1e-5);
         float q = x * (1.0 + 1e-5);
-        return y > std::min(p, q) && y < std::max(p, q);
+        return y >= std::min(p, q) && y <= std::max(p, q);
     }
     bool same(double x, double y) {
         double p = x * (1.0 - 1e-9);
         double q = x * (1.0 + 1e-9);
-        return y > std::min(p, q) && y < std::max(p, q);
+        return y >= std::min(p, q) && y <= std::max(p, q);
     } 
     template <typename T>
     bool same(std::vector<T> const &v1, std::vector<T> const &v2) {

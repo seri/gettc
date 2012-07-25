@@ -182,16 +182,19 @@ namespace TopCoder
         os << ']';
     }
 
-    bool same(bool i, bool j) { return i == j; }
     bool same(int i, int j) { return i == j; }
     bool same(int64 i, int64 j) { return i == j; }
     bool same(char i, char j) { return i == j; }
     bool same(std::string const &x, std::string const &y) { return x == y; }
     bool same(float x, float y) {
-        return std::abs(x - y) < 1e-5;
+        float p = x * (1.0 - 1e-5);
+        float q = x * (1.0 + 1e-5);
+        return y >= std::min(p, q) && y <= std::max(p, q);
     }
     bool same(double x, double y) {
-        return std::abs(x - y) < 1e-9;
+        double p = x * (1.0 - 1e-9);
+        double q = x * (1.0 + 1e-9);
+        return y >= std::min(p, q) && y <= std::max(p, q);
     } 
     template <typename T>
     bool same(std::vector<T> const &v1, std::vector<T> const &v2) {

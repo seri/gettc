@@ -5,10 +5,8 @@ using namespace std;
 <% 
     engine = CppEngine.new func, vars
 %>
-int main(int argc, char *argv[])
-{ 
-    try
-    { 
+int main(int argc, char *argv[]) { 
+    try { 
         <%= engine.func.type.to_cpp %> output, result;
         ifstream ifs;
         
@@ -21,9 +19,7 @@ int main(int argc, char *argv[])
         ifs.close();
 
         return same(output, result) ? 0 : 1;
-    }
-    catch (exception &e)
-    {
+    } catch (exception &e) {
         cerr << e.what() << endl;       
     }
     return -1;
