@@ -14,32 +14,14 @@ The following packages are hard dependencies. They are required no matter what l
 
 ## Installation 
 
-#### Without Git
-
-Download and unpack to somewhere, say ~/download/gettc:
-
-    $ cd ~/download/gettc
-    $ rake
-
-#### With Git
-
-For an ease of being up-to-date:
-
     $ git clone git://github.com/seri/gettc.git
     $ cd gettc
-    $ rake
-
-#### Troubleshooting
-
-In case you get an error, try:
-
-    $ rake install --trace
-
-And then post an issue where you paste the output of the above command.
+    $ rake gem
+    $ gem install pkg/gettc-1.2
 
     The newest version of bluecloth, which gettc depends on, is reported to have
     problems compiling on Windows under MinGW. You may manually install an older
-    version:
+    version before running `gem install pkg/gettc-1.2`:
         $ gem install bluecloth -v2.0.7
 
 ## Try out
@@ -142,7 +124,7 @@ The default action of *make* is to run against the examples given in problem sta
 
 The output should be:
 
-    57 cases checked, 57 failed
+    57 cases checked, 57 failed, 0 errored
     Failed cases: 0 1 10 11 12 13 14 15 16 17 18 19 2 20 21 22 23 24 25 26 27 28 29 3 30 31 32 33 34 35 36 37 38 39 4 40 41 42 43 44 45 46 47 48 49 5 50 51 52 53 54 55 56 6 7 8 9
 
 This process is the same for all languages that gettc supports. Below are some specific deteails for each language.

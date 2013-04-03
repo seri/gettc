@@ -1,5 +1,9 @@
+= 1.2.0
+=== 3 April, 2013
+* Report cases whose outputs are not wrong but invalid (cannot be parsed, that is)
+* Remove `rake install` (the shortcut doesn't work on Windows sometimes so just not worth it)
 = 1.1.0
-=== 28 December, 2001
+=== 28 December, 2011
 * Add boolean as a valid TopCoder type (thanks bokertov)
 * Write a Raketask to automate re-installation, simply run `rake` now
 = 1.0.2
