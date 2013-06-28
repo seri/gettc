@@ -4,14 +4,12 @@ require 'topcoder/download'
 require 'uri' 
 require 'pathname' 
 require 'hpricot'
-require 'iconv' 
 
 module TopCoder
     class Parser 
         def initialize downloader
             @downloader = downloader
             @images = []            
-            @iconv = Iconv.new 'UTF-8//IGNORE', 'UTF-8'
         end
 
         ## @section Utils
@@ -24,7 +22,7 @@ module TopCoder
         end
         def filter html
             unless html.valid_encoding? then
-                html = @iconv.conv html
+                html = html.encode Encoding::UTF_8, invaid: :replace, undef: :replace, replace: ''
             end
             html.gsub! /<b>(\w*)<\/b>/ do |match| "*#{$1}*" end 
             html.gsub! /<sup>(\w*)<\/sup>/ do |match| "^(#{$1})" end 

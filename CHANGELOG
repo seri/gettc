@@ -1,20 +1,35 @@
-= 1.2.0
-=== 3 April, 2013
-* Report cases whose outputs are not wrong but invalid (cannot be parsed, that is)
-* Remove `rake install` (the shortcut doesn't work on Windows sometimes so just not worth it)
-= 1.1.0
-=== 28 December, 2011
-* Add boolean as a valid TopCoder type (thanks bokertov)
-* Write a Raketask to automate re-installation, simply run `rake` now
-= 1.0.2
-=== 24 December, 2011
-* Fix some bugs in the parser (thanks bokertov)
-= 1.0.0
-=== 24 October, 2011
-* Change Haskell template to work with GHC7.2.1 (thanks Muskesh)
-=== 12 August, 2011
-* Important: Change download.rb code due to TopCoder's changes
-* No longer need to export anything in bashrc
-* Add Java support
-* Put language supports into plugins, Ruby code into core
-* Refactor the types and signatures API
+28 June, 2013
+v1.2.1
+
+Get rid of the deprecated iconv
+
+3 April, 2013
+v1.2.0
+
+Report cases whose outputs are not wrong but invalid (cannot be parsed, that is)
+Remove `rake install` (the shortcut doesn't work on Windows sometimes so just not worth it)
+
+28 December, 2011
+v1.1.0
+
+Add boolean as a valid TopCoder type (thanks bokertov)
+Write a Raketask to automate re-installation, simply run `rake` now
+
+24 December, 2011
+v1.0.2
+
+Fix some bugs in the parser (thanks bokertov)
+
+24 October, 2011
+v1.0.1
+
+Change Haskell template to work with GHC7.2.1 (thanks Muskesh)
+
+12 August, 2011
+v1.0.0
+
+Important: Change download.rb code due to TopCoder's changes
+No longer need to export anything in bashrc
+Add Java support
+Put language supports into plugins, Ruby code into core
+Refactor the types and signatures API
