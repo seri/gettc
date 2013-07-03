@@ -1,0 +1,336 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Gettc by seri</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Gettc</h1>
+        <p>Download TopCoder problem and generate a skeleton solution</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/seri/gettc" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/seri/gettc/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/seri/gettc/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p>Download a <a href="http://topcoder.com/tc">TopCoder</a> problem, parse the examples and system tests, then finally generate a basic template for C++, Haskell, and Java. You write the function definition and the generated template will take care of running it against input and output files.</p>
+
+<p>TopCoder is a heaven for programmers. Solving algorithmic problems is a great way to embrace the passion for programming. There are problems for all levels. A strong academic background is not required to enjoy it. If you like Project Euler, you will probably love TopCoder.</p>
+
+<p>However, you normally have to paste the solution into TopCoder's online arena where it will be checked for correctness. Even then the online arena only supports C++, Java, and C#.</p>
+
+<h1>
+<a name="get-started" class="anchor" href="#get-started"><span class="octicon octicon-link"></span></a>Get started</h1>
+
+<p>The following packages are hard dependencies. They are required no matter what language you plan to use gettc for.</p>
+
+<ul>
+<li>
+<a href="http://www.ruby-lang.org/en/downloads/">Ruby</a>: The <a href="http://rubyinstaller.org/">Ruby installer</a> is recommend for Windows users. </li>
+<li>
+<a href="http://rubygems.org/pages/download">RubyGems</a>: Many Ruby installations already bundle RubyGems.</li>
+<li>The standard GCC toolset: Most Unix systems have it bundled. Windows users may use <a href="http://www.mingw.org">MinGW</a>.</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>$ git clone git://github.com/seri/gettc.git
+$ cd gettc
+$ rake gem
+$ gem install pkg/gettc-1.2
+
+The newest version of bluecloth, which gettc depends on, is reported to have
+problems compiling on Windows under MinGW. You may manually install an older
+version before running `gem install pkg/gettc-1.2`:
+    $ gem install bluecloth -v2.0.7
+</code></pre>
+
+<h2>
+<a name="try-out" class="anchor" href="#try-out"><span class="octicon octicon-link"></span></a>Try out</h2>
+
+<p>Now try running it for the first time:</p>
+
+<pre><code>$ cd ~/download
+$ gettc 11290
+</code></pre>
+
+<p>11290 is the problem ID for <a href="http://www.topcoder.com/stat?c=problem_statement&amp;pm=11290&amp;rd=14537">this problem in TopCoder</a> (login is required). The ID is encoded in the URL. If gettc has been installed correctly, the previous command should output:</p>
+
+<pre><code> You have given ID = 11290
+ Downloading problem to raw HTML ... Done
+ Parsing problem from raw HTML ... Done
+ Generating problem diectory for PickAndDelete ... Done
+</code></pre>
+
+<p>Now a directory called PickAndDelete was generated with the following content:</p>
+
+<pre><code>PickAndDelete
+`-- bin
+    `-- runner.sh
+`-- data
+    `-- demo
+        `-- 0.in
+        `-- 0.out
+        `-- 1.in
+        `-- 1.out
+        ...
+    `-- sys
+        `-- 0.in
+        `-- 0.out
+        `-- 1.in
+        `-- 1.out
+        ...
+`-- prob
+    `-- PickAndDelete.html
+    `-- PickAndDelete.md
+`-- solve
+    `-- cpp
+        `-- Makefile
+        `-- PickAndDelete.cpp
+        `-- PickAndDeleteRunner.cpp
+        `-- PickAndDeleteTest.cpp
+    `-- haskell
+        `-- Makefile
+        `-- PickAndDelete.hs
+        `-- PickAndDeleteRunner.hs
+        `-- PickAndDeleteTest.hs
+    `-- java
+        `-- build.xml
+        `-- PickAndDelete.java
+        `-- PickAndDeleteRunner.java
+        `-- PickAndDeleteTest.java
+`-- util
+    `-- check
+        `-- check.cpp
+        `-- Makefile
+</code></pre>
+
+<p>Don't get upset by the number of generated files. It's possible to tweak the template so that less files are generated next time.</p>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>Suppose C++ is your language of choice. The standard process of solving a problem called <em>PickAndDelete</em> will be like:</p>
+
+<pre><code>$ cd PickAndDelete/solve/cpp
+$ vim PickAndDelete.cpp
+</code></pre>
+
+<p>Write some code and then:</p>
+
+<pre><code>$ make
+</code></pre>
+
+<p>The output will look something like:</p>
+
+<pre><code>Check 0 ... Time: 0.01s - Memory: 2036K
+Failed
+Input: &lt;["1 2"]&gt;
+Expected: &lt;3&gt;
+Received: &lt;0&gt;
+Check 1 ... Time: 0.00s - Memory: 2044K
+Failed
+Input: &lt;["2 2 2 2 2 2 2 2 2"]&gt;
+Expected: &lt;512&gt;
+Received: &lt;0&gt;
+Check 2 ... Time: 0.00s - Memory: 2048K
+Failed
+Input: &lt;["5", " 1 ", "2"]&gt;
+Expected: &lt;34&gt;
+Received: &lt;0&gt;
+Check 3 ... Time: 0.00s - Memory: 2060K
+Failed
+Input: &lt;["3 ", "14159 265", "3589 7", " 932"]&gt;
+Expected: &lt;353127147&gt;
+Received: &lt;0&gt;
+4 cases checked, 4 failed
+Failed cases: 0 1 2 3
+</code></pre>
+
+<p>The default action of <em>make</em> is to run against the examples given in problem statement. In order to challange system tests, type:</p>
+
+<pre><code>$ make sys
+</code></pre>
+
+<p>The output should be:</p>
+
+<pre><code>57 cases checked, 57 failed, 0 errored
+Failed cases: 0 1 10 11 12 13 14 15 16 17 18 19 2 20 21 22 23 24 25 26 27 28 29 3 30 31 32 33 34 35 36 37 38 39 4 40 41 42 43 44 45 46 47 48 49 5 50 51 52 53 54 55 56 6 7 8 9
+</code></pre>
+
+<p>This process is the same for all languages that gettc supports. Below are some specific deteails for each language.</p>
+
+<h4>
+<a name="c" class="anchor" href="#c"><span class="octicon octicon-link"></span></a>C++</h4>
+
+<p>The <a href="http://www.boost.org/">Boost</a> library is required if you wish to apply TDD:</p>
+
+<pre><code>$ make test
+</code></pre>
+
+<p>If you don't write tests, there is no need to install Boost.</p>
+
+<h4>
+<a name="haskell" class="anchor" href="#haskell"><span class="octicon octicon-link"></span></a>Haskell</h4>
+
+<p>Besides GHC, <a href="http://www.haskell.org/cabal/download.html">Cabal</a> is required. But it could have been bundled by your Haskell installer. Now:</p>
+
+<pre><code>$ sudo cabal update
+$ sudo cabal install parsec
+</code></pre>
+
+<p>HUnit is required if you wish to apply TDD:</p>
+
+<pre><code>$ sudo cabal install HUnit
+</code></pre>
+
+<p>If you don't write tests, there is no need to install HUnit.</p>
+
+<h4>
+<a name="java" class="anchor" href="#java"><span class="octicon octicon-link"></span></a>Java</h4>
+
+<p>Besides JDK, <a href="http://ant.apache.org/">Apache Ant</a> is required. This should come as no surprise to most Java programmers.</p>
+
+<p>In Java, you use <em>ant</em> instead of <em>make</em>. So:</p>
+
+<pre><code>$ ant
+</code></pre>
+
+<p>Will run against the examples. And:</p>
+
+<pre><code>$ ant sys
+</code></pre>
+
+<p>Will run against the system tests.</p>
+
+<p><a href="https://github.com/KentBeck/junit/downloads">JUnit</a> is required if you wish to run unit tests. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. </p>
+
+<h1>
+<a name="further-information" class="anchor" href="#further-information"><span class="octicon octicon-link"></span></a>Further information</h1>
+
+<h2>
+<a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<h4>
+<a name="i-only-use-java" class="anchor" href="#i-only-use-java"><span class="octicon octicon-link"></span></a>I only use Java</h4>
+
+<pre><code>$ cd ~/.gettc/template/solve
+$ rm -rf haskell cpp
+</code></pre>
+
+<p>If you want them back, copy from the project's Gem directory.</p>
+
+<h4>
+<a name="i-want-to-see-inputoutput-for-the-failed-cases-in-system-tests" class="anchor" href="#i-want-to-see-inputoutput-for-the-failed-cases-in-system-tests"><span class="octicon octicon-link"></span></a>I want to see input/output for the failed cases in system tests</h4>
+
+<pre><code>$ make sysv
+</code></pre>
+
+<h4>
+<a name="i-never-write-unit-tests" class="anchor" href="#i-never-write-unit-tests"><span class="octicon octicon-link"></span></a>I never write unit tests</h4>
+
+<pre><code>$ cd ~/.gettc/template/solve/
+$ rm {cpp,haskell,java}/*Test.*
+</code></pre>
+
+<h4>
+<a name="the-output-of-make-is-too-verbose" class="anchor" href="#the-output-of-make-is-too-verbose"><span class="octicon octicon-link"></span></a>The output of make is too verbose</h4>
+
+<p>Use <em>make --quiet</em> instead. Here is what I do in my bashrc:</p>
+
+<pre><code>alias mk=`make --quiet`
+</code></pre>
+
+<h4>
+<a name="but-i-use-c" class="anchor" href="#but-i-use-c"><span class="octicon octicon-link"></span></a>But I use C#</h4>
+
+<p>You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. </p>
+
+<p>I would appreciate if you roll your own, too. First refer to gettc/plugins to see what I did for the supported languages. There are a few things you need to do:</p>
+
+<ul>
+<li>Write a generic parser that parses the generated input files into variables.</li>
+<li>Write an engine in Ruby that acts a helper to generate code.</li>
+<li>Write the template files in ERuby.</li>
+</ul><p>As what happens in gettc's generator is:</p>
+
+<ul>
+<li>It will automatically require ~/.gettc/include/*/engine.rb.</li>
+<li>It will walk through ~/.gettc/template, read each file as an ERuby template, and copy to the target directory.</li>
+</ul><p>Once you have done the hard work, please make a fork or something for other people to use.</p>
+
+<h4>
+<a name="how-do-i-uninstall" class="anchor" href="#how-do-i-uninstall"><span class="octicon octicon-link"></span></a>How do I uninstall?</h4>
+
+<pre><code>$ sudo gem uni gettc
+$ rm -rf ~/.gettc
+</code></pre>
+
+<p>Besides getting rid of gettc, you may also want to do this to get a clean upgrade.</p>
+
+<h4>
+<a name="wrong-username-or-password-when-trying-to-download" class="anchor" href="#wrong-username-or-password-when-trying-to-download"><span class="octicon octicon-link"></span></a>Wrong username or password when trying to download</h4>
+
+<ul>
+<li>You should provide your own username/password in ~/.gettc/config.yml</li>
+<li>If this doesn't work, try grabbing the latest version</li>
+<li>If that still doesn't work, make an issue or email me</li>
+</ul><h2>
+<a name="tips" class="anchor" href="#tips"><span class="octicon octicon-link"></span></a>Tips</h2>
+
+<ul>
+<li>You may <code>rm -rf build</code> after you're done solving to save some disk space.</li>
+</ul><h2>
+<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h2>
+
+<h4>
+<a name="ambiguous-function-names" class="anchor" href="#ambiguous-function-names"><span class="octicon octicon-link"></span></a>Ambiguous function names</h4>
+
+<p>Sometimes the solution method has the same name with a standard library function, such as <em>filter</em>. In this case, you'll have to manually change the function name to something else in the runner and solution files.</p>
+
+<h4>
+<a name="string-parsing-error" class="anchor" href="#string-parsing-error"><span class="octicon octicon-link"></span></a>String parsing error</h4>
+
+<p>TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.</p>
+
+<h2>
+<a name="future-plans" class="anchor" href="#future-plans"><span class="octicon octicon-link"></span></a>Future plans</h2>
+
+<ul>
+<li>Support for more interesting languages (Golang is on the way)</li>
+</ul>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/seri">seri</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
