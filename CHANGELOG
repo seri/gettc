@@ -1,3 +1,10 @@
+03 July, 2013
+v1.3
+
+Switch from bluecloth to the more stable rdiscount for handling markdown
+Push gettc to rubygems.org for easier installation
+Documentation is polished and published to project's website
+
 30 June, 2013
 v1.2.2
 
