@@ -1,3 +1,5 @@
+Project page: [http://seri.github.io/gettc/](http://seri.github.io/gettc/)
+
 # At a glance
 
     $ [sudo] gem install gettc
