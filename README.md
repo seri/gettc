@@ -5,7 +5,7 @@ Project page: [http://seri.github.io/gettc/](http://seri.github.io/gettc/)
     $ [sudo] gem install gettc
     $ gettc 11127
 
-Note that 11127 is the ID that TopCoder gives to the problem named `DigitHoles`. You can find the ID for any problem if you look at the URL for that problem's statement. Output:
+Note that 11127 is the ID that TopCoder gives to the problem named `DigitHoles`. You can find the ID for any problem if you look at the URL for [that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127) (you need to have a TopCoder account). Output:
 
     You have given ID = 11127
     Downloading problem to raw HTML ... Done
@@ -192,7 +192,7 @@ Once you have done the hard work, please make a fork or something for other peop
 
 ### How do I uninstall?
 
-    $ sudo gem uni gettc
+    $ sudo gem uninstall gettc
 
 Besides getting rid of gettc, you may also want to do this to get a clean upgrade:
 
