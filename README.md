@@ -1,5 +1,3 @@
-Project page: [http://seri.github.io/gettc/](http://seri.github.io/gettc/)
-
 # At a glance
 
     $ [sudo] gem install gettc
@@ -110,7 +108,7 @@ The following packages are hard dependencies:
 
 With those in place, we are aready to go:
 
-    $ [sudo] gem install hpricot rdiscount gettc
+    $ [sudo] gem install gettc
 
 Once that is done, you should be able to run gettc on the command line. Now there are a couple things you need to get depending on which language you plan to use to solve problems.
 
@@ -147,78 +145,24 @@ Will run against the system tests.
 
 [JUnit](https://github.com/KentBeck/junit/downloads) is required if you wish to run unit tests. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. 
 
-# Further information
+## Other languages
 
-## FAQ
+At the moment, gettc supports C++, Haskell and Java out of the box. Other languages are provided via plugins.
 
-### I only use Java
+# Tips
 
-    $ cd ~/.gettc/template/solve
-    $ rm -rf haskell cpp
-
-If you want them back, copy from the project's Gem directory.
-
-### I want to see input/output for the failed cases in system tests
-
-    $ make sysv
-
-### I never write unit tests
-
-    $ cd ~/.gettc/template/solve/
-    $ rm {cpp,haskell,java}/*Test.*
-
-### The output of make is too verbose
-   
-Use *make --quiet* instead. Here is what I do in my bashrc:
-
-    alias mk=`make --quiet`
-
-### But I use C&#35;
-
-You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. 
-
-I would appreciate if you roll your own, too. First refer to gettc/plugins to see what I did for the supported languages. There are a few things you need to do:
-
-- Write a generic parser that parses the generated input files into variables.
-- Write an engine in Ruby that acts a helper to generate code.
-- Write the template files in ERuby.
-
-As what happens in gettc's generator is:
-
-- It will automatically require ~/.gettc/include/*/engine.rb.
-- It will walk through ~/.gettc/template, read each file as an ERuby template, and copy to the target directory.
-
-Once you have done the hard work, please make a fork or something for other people to use.
-
-### How do I uninstall?
-
-    $ sudo gem uninstall gettc
-
-Besides getting rid of gettc, you may also want to do this to get a clean upgrade:
-
-    $ rm -rf ~/.gettc
-
-
-#### Wrong username or password when trying to download
-
-- You should provide your own username/password in ~/.gettc/config.yml
-- If this doesn't work, try grabbing the latest version
-- If that still doesn't work, make an issue or email me
-
-## Tips
-
+- Provide your own username/password in `~/.gettc/config.yml` if download fails.
+- Use `make sysv` (or `ant sysv` for Java) to display failed cases when challenging the system tests.
 - You may `rm -rf build` after you're done solving to save some disk space.
+- You can play with the contents of the directory `~/.gettc` to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory `~/.gettc`. 
 
-## Known Issues
+# Known Issues
 
-### Ambiguous function names
+## Ambiguous function names
 
 Sometimes the solution method has the same name with a standard library function, such as *filter*. In this case, you'll have to manually change the function name to something else in the runner and solution files.
 
-### String parsing error
+## String parsing error
 
  TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.
 
-## Future plans
-
-- Support for more interesting languages (Golang is on the way)

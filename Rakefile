@@ -11,7 +11,7 @@ end
 spec = Gem::Specification.new do |s| 
     s.platform = Gem::Platform::RUBY
     s.name = 'gettc'
-    s.summary = 'Download TopCoder problem and generate a skeleton solution'
+    s.summary = 'TopCoder offline arena supporting multiple languages'
     s.description = 'Given a TopCoder problem ID, gettc downloads the problem specification, parses the whole thing into a Markdown file, generates inputs/outputs based on the Examples and System Tests given, and finally generates basic solution files for you to get started.'
     s.version = '1.3.1'
 
