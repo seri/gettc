@@ -153,7 +153,7 @@ Passed
 <li>The standard GCC toolset: Most Unix systems have it bundled. Windows users may use <a href="http://www.mingw.org">MinGW</a>.</li>
 </ul><p>With those in place, we are aready to go:</p>
 
-<pre><code>$ [sudo] gem install hpricot rdiscount gettc
+<pre><code>$ [sudo] gem install gettc
 </code></pre>
 
 <p>Once that is done, you should be able to run gettc on the command line. Now there are a couple things you need to get depending on which language you plan to use to solve problems.</p>
@@ -198,102 +198,31 @@ $ [sudo] cabal install parsec
 
 <p><a href="https://github.com/KentBeck/junit/downloads">JUnit</a> is required if you wish to run unit tests. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. </p>
 
+<h2>
+<a name="other-languages" class="anchor" href="#other-languages"><span class="octicon octicon-link"></span></a>Other languages</h2>
+
+<p>At the moment, gettc supports C++, Haskell and Java out of the box. Other languages are provided via plugins.</p>
+
 <h1>
-<a name="further-information" class="anchor" href="#further-information"><span class="octicon octicon-link"></span></a>Further information</h1>
+<a name="tips" class="anchor" href="#tips"><span class="octicon octicon-link"></span></a>Tips</h1>
+
+<ul>
+<li>Provide your own username/password in <code>~/.gettc/config.yml</code> if download fails.</li>
+<li>Use <code>make sysv</code> (or <code>ant sysv</code> for Java) to display failed cases when challenging the system tests.</li>
+<li>You may <code>rm -rf build</code> after you're done solving to save some disk space.</li>
+<li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory <code>~/.gettc</code>. </li>
+</ul><h1>
+<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h1>
 
 <h2>
-<a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>FAQ</h2>
-
-<h3>
-<a name="i-only-use-java" class="anchor" href="#i-only-use-java"><span class="octicon octicon-link"></span></a>I only use Java</h3>
-
-<pre><code>$ cd ~/.gettc/template/solve
-$ rm -rf haskell cpp
-</code></pre>
-
-<p>If you want them back, copy from the project's Gem directory.</p>
-
-<h3>
-<a name="i-want-to-see-inputoutput-for-the-failed-cases-in-system-tests" class="anchor" href="#i-want-to-see-inputoutput-for-the-failed-cases-in-system-tests"><span class="octicon octicon-link"></span></a>I want to see input/output for the failed cases in system tests</h3>
-
-<pre><code>$ make sysv
-</code></pre>
-
-<h3>
-<a name="i-never-write-unit-tests" class="anchor" href="#i-never-write-unit-tests"><span class="octicon octicon-link"></span></a>I never write unit tests</h3>
-
-<pre><code>$ cd ~/.gettc/template/solve/
-$ rm {cpp,haskell,java}/*Test.*
-</code></pre>
-
-<h3>
-<a name="the-output-of-make-is-too-verbose" class="anchor" href="#the-output-of-make-is-too-verbose"><span class="octicon octicon-link"></span></a>The output of make is too verbose</h3>
-
-<p>Use <em>make --quiet</em> instead. Here is what I do in my bashrc:</p>
-
-<pre><code>alias mk=`make --quiet`
-</code></pre>
-
-<h3>
-<a name="but-i-use-c" class="anchor" href="#but-i-use-c"><span class="octicon octicon-link"></span></a>But I use C#</h3>
-
-<p>You may email me to request support for your favourite language. I don't promise it will get delivered, but I'll see what I can do. </p>
-
-<p>I would appreciate if you roll your own, too. First refer to gettc/plugins to see what I did for the supported languages. There are a few things you need to do:</p>
-
-<ul>
-<li>Write a generic parser that parses the generated input files into variables.</li>
-<li>Write an engine in Ruby that acts a helper to generate code.</li>
-<li>Write the template files in ERuby.</li>
-</ul><p>As what happens in gettc's generator is:</p>
-
-<ul>
-<li>It will automatically require ~/.gettc/include/*/engine.rb.</li>
-<li>It will walk through ~/.gettc/template, read each file as an ERuby template, and copy to the target directory.</li>
-</ul><p>Once you have done the hard work, please make a fork or something for other people to use.</p>
-
-<h3>
-<a name="how-do-i-uninstall" class="anchor" href="#how-do-i-uninstall"><span class="octicon octicon-link"></span></a>How do I uninstall?</h3>
-
-<pre><code>$ sudo gem uninstall gettc
-</code></pre>
-
-<p>Besides getting rid of gettc, you may also want to do this to get a clean upgrade:</p>
-
-<pre><code>$ rm -rf ~/.gettc
-</code></pre>
-
-<h4>
-<a name="wrong-username-or-password-when-trying-to-download" class="anchor" href="#wrong-username-or-password-when-trying-to-download"><span class="octicon octicon-link"></span></a>Wrong username or password when trying to download</h4>
-
-<ul>
-<li>You should provide your own username/password in ~/.gettc/config.yml</li>
-<li>If this doesn't work, try grabbing the latest version</li>
-<li>If that still doesn't work, make an issue or email me</li>
-</ul><h2>
-<a name="tips" class="anchor" href="#tips"><span class="octicon octicon-link"></span></a>Tips</h2>
-
-<ul>
-<li>You may <code>rm -rf build</code> after you're done solving to save some disk space.</li>
-</ul><h2>
-<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h2>
-
-<h3>
-<a name="ambiguous-function-names" class="anchor" href="#ambiguous-function-names"><span class="octicon octicon-link"></span></a>Ambiguous function names</h3>
+<a name="ambiguous-function-names" class="anchor" href="#ambiguous-function-names"><span class="octicon octicon-link"></span></a>Ambiguous function names</h2>
 
 <p>Sometimes the solution method has the same name with a standard library function, such as <em>filter</em>. In this case, you'll have to manually change the function name to something else in the runner and solution files.</p>
 
-<h3>
-<a name="string-parsing-error" class="anchor" href="#string-parsing-error"><span class="octicon octicon-link"></span></a>String parsing error</h3>
+<h2>
+<a name="string-parsing-error" class="anchor" href="#string-parsing-error"><span class="octicon octicon-link"></span></a>String parsing error</h2>
 
 <p>TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.</p>
-
-<h2>
-<a name="future-plans" class="anchor" href="#future-plans"><span class="octicon octicon-link"></span></a>Future plans</h2>
-
-<ul>
-<li>Support for more interesting languages (Golang is on the way)</li>
-</ul>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
