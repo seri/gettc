@@ -50,8 +50,7 @@ module TopCoder
             raw = res['set-cookie']
 
             cookie = CGI::Cookie.parse raw
-            if cookie['main_user_id_1'].empty? or 
-               cookie['main_tcsso_1'].empty? then
+            if cookie['tcsso'].empty? then
                 raise LoginFailed.new @account, cookie
             end
 
