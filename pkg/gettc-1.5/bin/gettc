@@ -1,0 +1,63 @@
+#! /usr/bin/ruby
+
+require 'topcoder' 
+include TopCoder
+
+require 'rubygems'
+require 'fileutils' 
+require 'yaml' 
+
+def root_d
+    gem_d = Gem.loaded_specs['gettc']
+    if gem_d.nil? then
+        return File.join(File.basename(__FILE__), '../')
+    else
+        return gem_d.full_gem_path
+    end
+end
+
+def load_config
+    config_d = File.join File.expand_path('~'), '.gettc'    
+    unless Dir.exists? config_d then
+        FileUtils.mkdir config_d
+        default_d = File.join root_d, 'dist/.'
+        FileUtils.cp_r default_d, config_d
+    end
+    config = YAML.load_file File.join(config_d, 'config.yml')
+    account = Account.new config['username'], config['password']
+    source_d = File.join config_d, 'template'
+    return account, source_d
+end 
+
+def main
+    prog = File.basename __FILE__
+    usage = "Usage: #{prog} <id>\nWhere <id> is the problem ID, eg 11138" 
+    if ARGV.empty?  
+        puts usage 
+    else
+        id = ARGV[0].to_i
+        puts "You have given ID = #{id}" 
+    begin
+        account, source_d = load_config 
+        robot = Downloader.new account
+        parser = Parser.new robot
+        generator = Generator.new source_d, Dir.getwd
+        
+        print 'Downloading problem to raw HTML ... '
+        html = robot.download_problem id
+        puts 'Done'
+        
+        print 'Parsing problem from raw HTML ... '
+        prob = parser.parse html
+        puts 'Done'
+        
+        print "Generating problem diectory for #{prob.name} ... "
+        generator.generate prob
+        puts 'Done'
+    rescue => err
+        $stderr.puts err
+        exit -1
+    end
+    end        
+end
+main
