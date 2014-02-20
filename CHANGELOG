@@ -1,3 +1,13 @@
+20 February, 2014
+v1.5
+
+Add support for proxy
+
+24 December, 2013
+v1.4
+
+Important change to download.rb due to changes TopCoder authentication (thanks romand for reporting the issue)
+
 06 July, 2013
 v1.3.1
 
