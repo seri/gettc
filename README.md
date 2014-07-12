@@ -154,7 +154,7 @@ At the moment, gettc supports C++, Haskell and Java out of the box. Other langua
 - Provide your own username/password in `~/.gettc/config.yml` if download fails.
 - Use `make sysv` (or `ant sysv` for Java) to display failed cases when challenging the system tests.
 - You may `rm -rf build` after you're done solving to save some disk space.
-- You can play with the contents of the directory `~/.gettc` to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory `~/.gettc`. 
+- You can play with the contents of the directory `~/.gettc` to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory `~/.gettc`. It will be generated again the next time gettc runs.
 
 # Known Issues
 

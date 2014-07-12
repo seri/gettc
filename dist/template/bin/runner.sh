@@ -1,3 +1,6 @@
+# runner.sh mode /path/to/solver /path/to/input/dir /path/to/output/dir
+# mode = quiet|verbose|file
+
 mode="$1"
 solver="$2"
 data_d="$3"
@@ -5,14 +8,19 @@ output_d="$4"
 ostream=/dev/null
 
 timeit () {
-    if [ -x /usr/bin/time ]; then
-        /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+    if [ command -v /usr/bin/time >/dev/null 2>&1 ]; then
+        /usr/bin/time -o /dev/null echo "Testing availability of the time command" >/dev/null
+        if [ $? -eq 0 ]; then
+            /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+        fi
     elif [ $mode = 'verbose' ]; then
-        time "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+        if [ command -v time >/dev/null 2>&1 ]; then
+            time "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+        fi
     else
         "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
     fi
-} 
+}
 
 puts () {
     echo "$1" > $ostream
