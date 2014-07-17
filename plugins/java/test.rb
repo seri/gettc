@@ -1,19 +1,19 @@
-require 'test/unit'
-require 'topcoder/signature' 
-require 'engine' 
+require "test/unit"
+require "topcoder/signature" 
+require "engine" 
 include TopCoder
 
 class JavaEngineTest < Test::Unit::TestCase
     def setup
-        func = Signature.new TArray.new(TDouble), 'getMaxMin'
-        vars = [ Signature.new(TArray.new(TArray.new(TInt)), 'numbers'),
-                 Signature.new(TString, 'name'),
-                 Signature.new(TInt, 'pivot'),
-                 Signature.new(TBoolean, 'rounded') ]
+        func = Signature.new TArray.new(TDouble), "getMaxMin"
+        vars = [ Signature.new(TArray.new(TArray.new(TInt)), "numbers"),
+                 Signature.new(TString, "name"),
+                 Signature.new(TInt, "pivot"),
+                 Signature.new(TBoolean, "rounded") ]
         @engine = JavaEngine.new func, vars
     end
     def test_declare
-        result = <<-eos.gsub(/^ {12}/, '')
+        result = <<-eos.gsub(/^ {12}/, "")
             public double[] getMaxMin(int[][] numbers,
                                       String name,
                                       int pivot,
@@ -45,7 +45,7 @@ boolean rounded = (Boolean) reader.next(Boolean.class);
         assert_equal result.rstrip, @engine.input
     end
     def test_box_double_array
-        sig = Signature.new TArray.new(TArray.new(TString)), 'matrix'
+        sig = Signature.new TArray.new(TArray.new(TString)), "matrix"
         arr = JavaArray.new sig
         result = <<-eos
 List<List<String>> matrixBoxed = new ArrayList<List<String>>();
@@ -71,7 +71,7 @@ writer.write(resultBoxed);
         assert_equal result.rstrip, @engine.output
     end
     def test_output_prim
-        func = Signature.new TInt, 'count'
+        func = Signature.new TInt, "count"
         vars = []
         engine = JavaEngine.new func, vars
         result = "writer.write(solver.count());"

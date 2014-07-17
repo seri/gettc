@@ -1,58 +1,58 @@
-require 'topcoder/types' 
+require "topcoder/types" 
 
 module TopCoder
     class Type
         def to_cpp
             if self == TInt then
-                return 'int'
+                return "int"
             elsif self == TLong then
-                return 'int64'        
+                return "int64"        
             elsif self == TFloat then
-                return 'float'
+                return "float"
             elsif self == TDouble then
-                return 'double'
+                return "double"
             elsif self == TChar then
-                return 'char'
+                return "char"
             elsif self == TString then
-                return 'string'
+                return "string"
             elsif self == TBoolean then
-                return 'bool'
+                return "bool"
             elsif is_a? TArray then
-                ret = 'vector<' << subtype.to_cpp
-                ret << ' ' if subtype.is_a? TArray
-                ret << '>'
+                ret = "vector<" << subtype.to_cpp
+                ret << " " if subtype.is_a? TArray
+                ret << ">"
                 return ret
             else
-                return 'unknown'
+                return "unknown"
             end 
         end
         def dumb_cpp
             if self == TInt then
-                return '0'
+                return "0"
             elsif self == TLong then
-                return '0'        
+                return "0"        
             elsif self == TFloat then
-                return '0'
+                return "0"
             elsif self == TDouble then
-                return '0'
+                return "0"
             elsif self == TChar then
-                return "'$'"
+                return "\"$\""
             elsif self == TString then
-                return '"$"'
+                return "\"$\""
             elsif self == TBoolean then
-                return 'true'
+                return "true"
             elsif is_a? TArray then
                 return "#{to_cpp}()"
             else
-                return 'Nil'
+                return "Nil"
             end
         end
     end
     class Signature
         def to_cpp declaring = false
             ret = type.to_cpp
-            ret << ' '
-            ret << 'const &' if declaring and type.obj?
+            ret << " "
+            ret << "const &" if declaring and type.obj?
             ret << name 
             return ret
         end
@@ -65,26 +65,26 @@ module TopCoder
         end
         def declare
             ret = @func.to_cpp
-            ret << '('
-                indent = ' ' * ret.size
+            ret << "("
+                indent = " " * ret.size
                 temp = @vars.map do |var| var.to_cpp true end
                 ret << temp.join(",\n#{indent}")
-            ret << ')'
+            ret << ")"
             return ret
         end
         def input
             temp = @vars.map do |var|
                 x = var.to_cpp
-                x << '; read(ifs, '
+                x << "; read(ifs, "
                 x << var.name
-                x << ');'
+                x << ");"
             end
             return temp.join " next(ifs);\n"
         end
         def output
-            ret = 'show(ofs, ' << @func.name << '('
+            ret = "show(ofs, " << @func.name << "("
             temp = @vars.map do |var| var.name end
-            ret << temp.join(', ') << '));'
+            ret << temp.join(", ") << "));"
         end
     end
 end

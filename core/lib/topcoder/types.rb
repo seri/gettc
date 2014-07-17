@@ -1,11 +1,11 @@
-require 'singleton'
+require "singleton"
     
 module TopCoder 
     class TypeError < StandardError        
     end
     class UnrecognizedType < TypeError
         attr_accessor :type
-        def initialize type = nil, msg = 'Not a valid TopCoder type'
+        def initialize type = nil, msg = "Not a valid TopCoder type"
             @type = type
             super "#{msg} (#{type})"         
         end
@@ -40,21 +40,21 @@ module TopCoder
         end
     end
     def parse_type str
-        return TArray.new parse_type str[0 .. -3] if str[-2 .. -1] == '[]'
+        return TArray.new parse_type str[0 .. -3] if str[-2 .. -1] == "[]"
         case str
-        when 'boolean'
+        when "boolean"
             return TBoolean
-        when 'int'
+        when "int"
             return TInt
-        when 'long'
+        when "long"
             return TLong
-        when 'float'
+        when "float"
             return TFloat
-        when 'double'
+        when "double"
             return TDouble
-        when 'char'
+        when "char"
             return TChar
-        when 'String'
+        when "String"
             return TString
         end
         raise UnrecognizedType.new str

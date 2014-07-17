@@ -1,31 +1,41 @@
 #! /usr/bin/ruby
 
-require 'topcoder' 
+require "topcoder" 
 include TopCoder
 
-require 'rubygems'
-require 'fileutils' 
-require 'yaml' 
+require "rubygems"
+require "fileutils" 
+require "yaml" 
+
+def config_d
+    return File.join File.expand_path("~"), ".gettc"
+end
 
 def root_d
-    gem_d = Gem.loaded_specs['gettc']
+    gem_d = Gem.loaded_specs["gettc"]
     if gem_d.nil? then
-        return File.join File.basename(__FILE__), '../'
+        return File.join File.basename(__FILE__), "../"
     else
         return gem_d.full_gem_path
     end
 end
 
+def replace_config config_d
+    FileUtils.mkdir config_d
+    default_d = File.join root_d, "dist/."
+    FileUtils.cp_r default_d, config_d        
+end
+
 def load_config
-    config_d = File.join File.expand_path('~'), '.gettc'    
-    unless Dir.exists? config_d then
-        FileUtils.mkdir config_d
-        default_d = File.join root_d, 'dist/.'
-        FileUtils.cp_r default_d, config_d
+    replace_config unless Dir.exists? config_d
+    config = YAML.load_file File.join(config_d, "config.yml")
+    version = Gem::Version.new config["version"]
+    if version < Gem::Version.new(VERSION) then
+        FileUtils.rm_rf config_d
+        replace_config config_d
     end
-    config = YAML.load_file File.join(config_d, 'config.yml')
-    account = Account.new config['username'], config['password']
-    source_d = File.join config_d, 'template'
+    account = Account.new config["username"], config["password"]
+    source_d = File.join config_d, "template"
     return account, source_d
 end 
 
@@ -43,17 +53,17 @@ def main
         parser = Parser.new robot
         generator = Generator.new source_d, Dir.getwd
         
-        print 'Downloading problem to raw HTML ... '
+        print "Downloading problem to raw HTML ... "
         html = robot.download_problem id
-        puts 'Done'
+        puts "Done"
         
-        print 'Parsing problem from raw HTML ... '
+        print "Parsing problem from raw HTML ... "
         prob = parser.parse html
-        puts 'Done'
+        puts "Done"
         
         print "Generating problem diectory for #{prob.name} ... "
         generator.generate prob
-        puts 'Done'
+        puts "Done"
     rescue => err
         $stderr.puts err
         exit -1

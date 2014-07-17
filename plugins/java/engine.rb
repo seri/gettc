@@ -1,68 +1,68 @@
-require 'topcoder/types' 
+require "topcoder/types" 
 
 module TopCoder
     class Type
         def to_java
             if self == TInt then
-                return 'int'
+                return "int"
             elsif self == TLong then
-                return 'long'        
+                return "long"        
             elsif self == TFloat then
-                return 'float'
+                return "float"
             elsif self == TDouble then
-                return 'double'
+                return "double"
             elsif self == TChar then
-                return 'char'
+                return "char"
             elsif self == TString then
-                return 'String'
+                return "String"
             elsif self == TBoolean then
-                return 'boolean'
+                return "boolean"
             elsif is_a? TArray then
                 return "#{subtype.to_java}[]"
             else
-                return 'unknown'
+                return "unknown"
             end 
         end
         def to_java_boxed
             if self == TInt then
-                return 'Integer'
+                return "Integer"
             elsif self == TLong then
-                return 'Long'        
+                return "Long"        
             elsif self == TFloat then
-                return 'Float'
+                return "Float"
             elsif self == TDouble then
-                return 'Double'
+                return "Double"
             elsif self == TChar then
-                return 'Character'
+                return "Character"
             elsif self == TString then
-                return 'String'
+                return "String"
             elsif self == TBoolean then
-                return 'Boolean'
+                return "Boolean"
             elsif self.is_a? TArray then
                 return "List<#{subtype.to_java_boxed}>"
             else
-                return 'Unknown'
+                return "Unknown"
             end 
         end
         def dumb_java
             if self == TInt then
-                return '0'
+                return "0"
             elsif self == TLong then
-                return '0'          
+                return "0"          
             elsif self == TFloat then
-                return '0'
+                return "0"
             elsif self == TDouble then
-                return '0'
+                return "0"
             elsif self == TChar then
-                return "'$'"
+                return "\"$\""
             elsif self == TString then
-                return '"$"'
+                return "\"$\""
             elsif self == TBoolean then
-                return 'true'
+                return "true"
             elsif self.is_a? TArray then
                 return "new #{subtype.to_java}[1]"
             else
-                return 'Nil'
+                return "Nil"
             end
         end
     end
@@ -91,47 +91,47 @@ module TopCoder
             @elem_type = self.class.get_elem_type(sig.type).to_java
         end
         def unbox_code
-            counters = @depth.times.map do |i| '_' + ('i'[0].ord + i).chr end
-            indents = 0.upto(@depth).map do |i| ' ' * 4 * i end
+            counters = @depth.times.map do |i| "_" + ("i"[0].ord + i).chr end
+            indents = 0.upto(@depth).map do |i| " " * 4 * i end
             sizes = @depth.times.map do |i|
-                @boxed_name + ('.get(0)' * i) + '.size()'
+                @boxed_name + (".get(0)" * i) + ".size()"
             end
-            ret = ''
+            ret = ""
 
-            ret << @type << ' ' << @name << ' = new ' << @elem_type;
-            @depth.times do |i| ret << '[' << sizes[i] << ']' end
+            ret << @type << " " << @name << " = new " << @elem_type;
+            @depth.times do |i| ret << "[" << sizes[i] << "]" end
             ret << ";\n"
         
             @depth.times do |i|
-                ret << indents[i] << 'for (int ' << counters[i] << ' = 0; '
-                ret << counters[i] << ' < ' << sizes[i]
-                ret << '; ++' << counters[i] << ")\n"
+                ret << indents[i] << "for (int " << counters[i] << " = 0; "
+                ret << counters[i] << " < " << sizes[i]
+                ret << "; ++" << counters[i] << ")\n"
             end
 
             ret << indents[@depth] << @name
-            @depth.times do |i| ret << '[' << counters[i] << ']' end            
-            ret << ' = '
+            @depth.times do |i| ret << "[" << counters[i] << "]" end            
+            ret << " = "
             ret << @boxed_name
-            @depth.times do |i| ret << '.get(' << counters[i] << ')' end            
+            @depth.times do |i| ret << ".get(" << counters[i] << ")" end            
             ret << ";"
 
             return ret
         end
         def box_code_recurse boxed_type, parent, boxed_name, depth, counters
-            ret = ''
-            index = counters.map do |counter| '[' + counter + ']' end
+            ret = ""
+            index = counters.map do |counter| "[" + counter + "]" end
             index = index.join
             if depth == 0
-                ret << parent << '.add(' << @name << index << ");\n"
+                ret << parent << ".add(" << @name << index << ");\n"
             else
                 type_str = boxed_type.to_java_boxed
-                ret << type_str << ' ' << boxed_name 
-                ret << ' = new Array' << type_str << '();' << "\n"
+                ret << type_str << " " << boxed_name 
+                ret << " = new Array" << type_str << "();" << "\n"
 
-                counter = '_' + ('i'[0].ord + counters.size).chr
-                ret << 'for (int ' << counter << ' = 0; '
-                ret << counter << ' < ' << @name << index << '.length; '
-                ret << '++' << counter << ") {\n"
+                counter = "_" + ("i"[0].ord + counters.size).chr
+                ret << "for (int " << counter << " = 0; "
+                ret << counter << " < " << @name << index << ".length; "
+                ret << "++" << counter << ") {\n"
 
                 ret << box_code_recurse(boxed_type.subtype, 
                                         boxed_name, 
@@ -140,11 +140,11 @@ module TopCoder
                 ret << "}\n"
 
                 unless parent.nil?
-                    ret << parent << '.add(' 
+                    ret << parent << ".add(" 
                     ret << boxed_name  << ");\n"
                 end
             end
-            ret.gsub! /^/, ' ' * 4 unless parent.nil? 
+            ret.gsub! /^/, " " * 4 unless parent.nil? 
             return ret
         end
         def box_code
@@ -158,48 +158,48 @@ module TopCoder
             @vars = vars            
         end
         def declare 
-            ret = 'public '
-            ret << @func.to_java << '('
-                indent = ' ' * ret.size
+            ret = "public "
+            ret << @func.to_java << "("
+                indent = " " * ret.size
                 temp = @vars.map do |var| var.to_java end
                 ret << temp.join(",\n#{indent}")
-            ret << ')'
+            ret << ")"
             return ret
         end
         def input
             temp = @vars.map do |var| 
-                ret = ''
+                ret = ""
                 if var.type.is_a? TArray
                     arr = JavaArray.new var
                     ret << arr.boxed_type
-                    ret << ' ' << arr.boxed_name
-                    ret << ' = (' << arr.boxed_type << ') '
-                    ret << 'reader.next(new TypeRef<' << arr.boxed_type << '>'
+                    ret << " " << arr.boxed_name
+                    ret << " = (" << arr.boxed_type << ") "
+                    ret << "reader.next(new TypeRef<" << arr.boxed_type << ">"
                     ret << "(){}.getType());\n"
                     ret << arr.unbox_code
                 else
                     ret << var.to_java
-                    ret << ' = (' << var.type.to_java_boxed << ') '
-                    ret << 'reader.next(' 
+                    ret << " = (" << var.type.to_java_boxed << ") "
+                    ret << "reader.next(" 
                     ret << var.type.to_java_boxed 
-                    ret << '.class);'
+                    ret << ".class);"
                 end
                 ret
             end
             return temp.join "\nreader.next();\n\n"
         end
         def output
-            ret = ''
-            caller = 'solver.' + @func.name + '('
+            ret = ""
+            caller = "solver." + @func.name + "("
             temp = @vars.map do |var| var.name end
-            caller << temp.join(', ') << ')'
+            caller << temp.join(", ") << ")"
             if @func.type.is_a? TArray
-                ret << @func.type.to_java << ' result = ' << caller << ";\n"
-                arr = JavaArray.new(Signature.new @func.type, 'result')
+                ret << @func.type.to_java << " result = " << caller << ";\n"
+                arr = JavaArray.new(Signature.new @func.type, "result")
                 ret << arr.box_code
-                ret << 'writer.write(resultBoxed);'
+                ret << "writer.write(resultBoxed);"
             else
-                ret << 'writer.write(' << caller << ');'
+                ret << "writer.write(" << caller << ");"
             end
             return ret
         end

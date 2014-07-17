@@ -1,9 +1,9 @@
-require 'topcoder/problem'
-require 'topcoder/download' 
+require "topcoder/problem"
+require "topcoder/download" 
 
-require 'uri' 
-require 'pathname' 
-require 'hpricot'
+require "uri" 
+require "pathname" 
+require "hpricot"
 
 module TopCoder
     class Parser 
@@ -22,12 +22,12 @@ module TopCoder
         end
         def filter html
             unless html.valid_encoding? then
-                html = html.encode Encoding::UTF_8, invaid: :replace, undef: :replace, replace: ''
+                html = html.encode Encoding::UTF_8, invaid: :replace, undef: :replace, replace: ""
             end
             html.gsub! /<b>(\w*)<\/b>/ do |match| "*#{$1}*" end 
             html.gsub! /<sup>(\w*)<\/sup>/ do |match| "^(#{$1})" end 
-            html.gsub! '&#160;', ''
-            html.gsub! '&nbsp;', ' '
+            html.gsub! "&#160;", ""
+            html.gsub! "&nbsp;", " "
             text = Hpricot(html).to_plain_text
             text.gsub! /\[img:(http:\/\/[^\]]*)\]/ do |match|
                 url = $1
@@ -50,7 +50,7 @@ module TopCoder
         ## @section Parse problem parts
 
         def parse_name html
-            html.sub! 'Problem Statement for', ''
+            html.sub! "Problem Statement for", ""
             return filter html
         end
         def parse_statement html
@@ -58,8 +58,8 @@ module TopCoder
         end
         def parse_definitions html
             defs = { }
-            Hpricot(html).search '/tr/td.statText/table/tr' do |tr|
-                tds = tr.search '/td.statText'
+            Hpricot(html).search "/tr/td.statText/table/tr" do |tr|
+                tds = tr.search "/td.statText"
                 if tds.size == 2 then
                     key = tds[0].to_plain_text[0 .. -2]
                     value = tds[1].to_plain_text
@@ -70,8 +70,8 @@ module TopCoder
         end
         def parse_notes html
             notes = []
-            Hpricot(html).search '/tr' do |tr|
-                tds = tr.search '/td.statText'
+            Hpricot(html).search "/tr" do |tr|
+                tds = tr.search "/td.statText"
                 notes << filter(tds[1].html) if tds.size == 2
             end 
             return notes
@@ -83,13 +83,13 @@ module TopCoder
         ## @section Parse cases
 
         def filter_inout text
-            text.gsub! '{', '['
-            text.gsub! '}', ']'
+            text.gsub! "{", "["
+            text.gsub! "}", "]"
             return text.strip
         end
         def parse_input html
             text = nil
-            Hpricot(html).search '/table/tr/td.statText' do |td|
+            Hpricot(html).search "/table/tr/td.statText" do |td|
                 input = td.to_plain_text.strip
                 if text.nil? then
                     text = input
@@ -101,7 +101,7 @@ module TopCoder
         end
         def parse_output html
             text = Hpricot(html).to_plain_text
-            text.sub! 'Returns: ', ''
+            text.sub! "Returns: ", ""
             return filter_inout text
         end
         def parse_reason html
@@ -109,7 +109,7 @@ module TopCoder
         end
         def parse_examples html
             examples = []
-            tds = Hpricot(html).search('/tr/td.statText/table/tr/td.statText')
+            tds = Hpricot(html).search("/tr/td.statText/table/tr/td.statText")
             i = 0
             while i < tds.size do
                 example = Case.new
@@ -123,11 +123,11 @@ module TopCoder
         end
         def parse_systests html
             systests = []
-            _, y = indexes html, '<!-- System Testing -->'
-            z, _ = indexes html, '<!-- End System Testing -->'
+            _, y = indexes html, "<!-- System Testing -->"
+            z, _ = indexes html, "<!-- End System Testing -->"
             return systests unless y and z
-            Hpricot(html[y .. z]).search '/table/tr[@valign=top]' do |tr|
-                tds = tr.search '/td.statText'    
+            Hpricot(html[y .. z]).search "/table/tr[@valign=top]" do |tr|
+                tds = tr.search "/td.statText"    
                 if tds.size == 3 then
                     test = Case.new
                     test.input = filter_inout tds[0].to_plain_text
@@ -139,17 +139,17 @@ module TopCoder
         end
         def download_systests detail_url
             detail = @downloader.download detail_url
-            Hpricot(detail).search 'a[@href^=/stat?c=problem_solution]' do |url|
-                solution = @downloader.download url.attributes['href']
+            Hpricot(detail).search "a[@href^=/stat?c=problem_solution]" do |url|
+                solution = @downloader.download url.attributes["href"]
                 systests = parse_systests solution
                 return systests unless systests.empty?
             end 
             return []
         end
         def parse_details doc
-            url, source, systests = '', '', []
-            doc.search 'a[@href^=/tc?module=ProblemDetail]' do |elem|
-                url = URI.join(Downloader::ROOT, elem.attributes['href']).to_s
+            url, source, systests = "", "", []
+            doc.search "a[@href^=/tc?module=ProblemDetail]" do |elem|
+                url = URI.join(Downloader::ROOT, elem.attributes["href"]).to_s
                 source = filter elem.html
                 begin
                     systests = download_systests url
@@ -169,24 +169,24 @@ module TopCoder
             prob = Problem.new 
             doc = Hpricot(html)
 
-            prob.name = parse_name doc.search('tr/td.statTextBig').html
+            prob.name = parse_name doc.search("tr/td.statTextBig").html
             prob.notes = nil
             prob.constraints = nil
             prob.examples = nil 
 
-            html = doc.search('td.problemText/table').html
+            html = doc.search("td.problemText/table").html
 
-            _, x = indexes html, h3('Problem Statement')
-            y, z = indexes html, h3('Definition')
+            _, x = indexes html, h3("Problem Statement")
+            y, z = indexes html, h3("Definition")
             prob.statement = parse_statement html[x .. y]
 
-            x, y = indexes html, h3('Notes')
+            x, y = indexes html, h3("Notes")
             if x.nil? then
                 prob.notes = []
-                x, y = indexes html, h3('Constraints')
+                x, y = indexes html, h3("Constraints")
                 if x.nil? then
                     prob.constraints = []
-                    x, y = indexes html, h3('Examples')
+                    x, y = indexes html, h3("Examples")
                     if x.nil? then
                         prob.examples = []
                         x = -2
@@ -196,10 +196,10 @@ module TopCoder
             prob.definitions = parse_definitions html[z .. x]
 
             if prob.notes.nil? then
-                z, x = indexes html, h3('Constraints')
+                z, x = indexes html, h3("Constraints")
                 if z.nil? then
                     prob.constraints = []
-                    z, x = indexes html, h3('Examples') 
+                    z, x = indexes html, h3("Examples") 
                     if z.nil? then
                         prob.examples = []
                         z = - 2
@@ -210,7 +210,7 @@ module TopCoder
             end 
 
             if prob.constraints.nil? then
-                z, x = indexes html, h3('Examples')
+                z, x = indexes html, h3("Examples")
                 if z.nil? then
                     prob.examples = []
                     z = -2

@@ -1,4 +1,4 @@
-require 'topcoder/types' 
+require "topcoder/types" 
 class String
     def uncapitalize
         return self[0, 1].downcase + self[1..-1]
@@ -8,65 +8,65 @@ module TopCoder
     class Type
         def to_haskell
             if self == TInt then
-                return 'Int'
+                return "Int"
             elsif self == TLong then
-                return 'Integer'        
+                return "Integer"        
             elsif self == TFloat then
-                return 'Float'
+                return "Float"
             elsif self == TDouble then
-                return 'Double'
+                return "Double"
             elsif self == TChar then
-                return 'Char'
+                return "Char"
             elsif self == TString then
-                return 'String'
+                return "String"
             elsif self == TBoolean then
-                return 'Bool'
+                return "Bool"
             elsif is_a? TArray then
-                return '[' + subtype.to_haskell + ']'
+                return "[" + subtype.to_haskell + "]"
             else
-                return 'Unknown'
+                return "Unknown"
             end 
         end
         def get_haskell_parser
             if self == TInt then
-                return 'parseInt'
+                return "parseInt"
             elsif self == TLong then
-                return 'parseLong'        
+                return "parseLong"        
             elsif self == TFloat then
-                return 'parseFloat'
+                return "parseFloat"
             elsif self == TDouble then
-                return 'parseDouble'
+                return "parseDouble"
             elsif self == TChar then
-                return 'parseChar'
+                return "parseChar"
             elsif self == TString then
-                return 'parseString'
+                return "parseString"
             elsif self == TBoolean then
-                return 'parseBool'
+                return "parseBool"
             elsif is_a? TArray then
-                return '(parseList ' + subtype.get_haskell_parser + ')'
+                return "(parseList " + subtype.get_haskell_parser + ")"
             else
-                return 'unknown'
+                return "unknown"
             end
         end
         def dumb_haskell
             if self == TInt then
-                return '0'
+                return "0"
             elsif self == TLong then
-                return '0'        
+                return "0"        
             elsif self == TFloat then
-                return '0'
+                return "0"
             elsif self == TDouble then
-                return '0'
+                return "0"
             elsif self == TChar then
-                return "'$'"
+                return "\"$\""
             elsif self == TString then
-                return '"$"'
+                return "\"$\""
             elsif self == TBoolean then
-                return 'True'
+                return "True"
             elsif is_a? TArray then
-                return '[]'
+                return "[]"
             else
-                return 'Nil'
+                return "Nil"
             end
         end
     end
@@ -79,43 +79,43 @@ module TopCoder
             end
         end
         def declare
-            ret = ''
-            ret << func.name << ' :: '
+            ret = ""
+            ret << func.name << " :: "
 
             temp = vars.map do |var| var.type.to_haskell end
-            ret << temp.join(' -> ') << ' -> ' << func.type.to_haskell << "\n"
+            ret << temp.join(" -> ") << " -> " << func.type.to_haskell << "\n"
 
-            ret << func.name << ' '
+            ret << func.name << " "
             temp = vars.map do |var| var.name end
-            ret << temp.join(' ') << ' = ' << func.type.dumb_haskell
+            ret << temp.join(" ") << " = " << func.type.dumb_haskell
 
             return ret
         end
         def input
-            ret = 'getVars :: Parser ('
+            ret = "getVars :: Parser ("
             temp = @vars.map do |var| var.type.to_haskell end
-            ret << temp.join(', ') << ")\n"
-            temp = 'getVars = do '
+            ret << temp.join(", ") << ")\n"
+            temp = "getVars = do "
             ret << temp
-                indent = ' ' * temp.size
+                indent = " " * temp.size
                 temp = @vars.map do |var|
-                    x = ''
+                    x = ""
                     x << var.name
-                    x << ' <- spaces >> ' 
+                    x << " <- spaces >> " 
                     x << var.type.get_haskell_parser
                 end
             ret << temp.join(" ; next\n#{indent}") << "\n"
-            ret << indent << 'return ('
+            ret << indent << "return ("
                 temp = @vars.map do |var| var.name end
-                ret << temp.join(', ')
-            ret << ')'
+                ret << temp.join(", ")
+            ret << ")"
             return ret
         end
         def output
-            ret = ''
-            ret << @func.name << ' '
+            ret = ""
+            ret << @func.name << " "
             temp = vars.map do |var| var.name end
-            ret << temp.join(' ')
+            ret << temp.join(" ")
             return ret
         end
     end

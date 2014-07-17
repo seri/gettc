@@ -2,26 +2,26 @@ module TopCoder
     class Case
         attr_accessor :input, :output, :reason
         def initialize
-            @input = ''
-            @output = ''
-            @reason = ''
+            @input = ""
+            @output = ""
+            @reason = ""
         end
     end
     class Image
         attr_accessor :name, :content
         def initialize
-            @name = ''
-            @content = ''
+            @name = ""
+            @content = ""
         end
     end
     class Problem
         attr_accessor :name, :url, :source, :statement, :definitions, :notes, 
                       :constraints, :examples, :systests, :images
         def initialize
-            @name = ''
-            @url = ''
-            @source = ''
-            @statement = ''
+            @name = ""
+            @url = ""
+            @source = ""
+            @statement = ""
             @definitions = { }
             @notes = []
             @constraints = []

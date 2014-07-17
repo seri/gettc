@@ -1,14 +1,14 @@
-require 'test/unit' 
-require 'topcoder/download' 
+require "test/unit" 
+require "topcoder/download" 
 include TopCoder
 
 class DownloadTest < Test::Unit::TestCase
     def setup
-        @account = Account.new 'gettc', 'algorithm'
+        @account = Account.new "gettc", "algorithm"
     end
     def test_wrong_account
         assert_raises LoginFailed do 
-            Downloader.new Account.new 'username', 'password'
+            Downloader.new Account.new "username", "password"
         end
     end    
     def test_wrong_id
@@ -23,7 +23,7 @@ class DownloadTest < Test::Unit::TestCase
         3.times do
             id = ids[rand ids.size]
             html = downloader.download_problem id
-            assert_match '<h3>Problem Statement</h3>', html
+            assert_match "<h3>Problem Statement</h3>", html
         end
     end
 end

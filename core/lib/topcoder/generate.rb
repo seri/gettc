@@ -1,9 +1,9 @@
-require 'fileutils'
-require 'erb' 
+require "fileutils"
+require "erb" 
 
-require 'topcoder/problem'
-require 'topcoder/signature' 
-require 'topcoder/print'
+require "topcoder/problem"
+require "topcoder/signature" 
+require "topcoder/print"
 
 module TopCoder
     class GenerateError < StandardError
@@ -12,7 +12,7 @@ module TopCoder
         attr_accessor :dir
         def initialize dir, msg = nil
             if msg.nil? then
-                msg = 'Cannot create problem directory because it already exists'
+                msg = "Cannot create problem directory because it already exists"
             end 
             @dir = dir
             super "#{msg} (#{dir})"
@@ -20,14 +20,14 @@ module TopCoder
     end
     class SourceDirNotExist < GenerateError
         attr_accessor :dir
-        def initialize dir, msg = 'Source directory does not exist'
+        def initialize dir, msg = "Source directory does not exist"
             @dir = dir
             super "#{msg} (#{dir})"
         end
     end
     class TargetDirNotExist < GenerateError
         attr_accessor :dir
-        def initialize dir, msg = 'Target directory does not exist'
+        def initialize dir, msg = "Target directory does not exist"
             @dir = dir
             super "#{msg} (#{dir})"
         end
@@ -42,59 +42,59 @@ module TopCoder
         def gen_images images, images_d
             images.each do |image|
                 filename = File.join images_d, image.name
-                File.open filename, 'wb' do |f| f.write image.content end
+                File.open filename, "wb" do |f| f.write image.content end
             end
         end
         def gen_cases cases, data_d
             cases.each_index do |i|
                 c = cases[i]
-                File.open File.join(data_d, "#{i.to_s}.in"), 'w' do |f| 
+                File.open File.join(data_d, "#{i.to_s}.in"), "w" do |f| 
                     f.write c.input 
                 end 
-                File.open File.join(data_d, "#{i.to_s}.out"), 'w' do |f| 
+                File.open File.join(data_d, "#{i.to_s}.out"), "w" do |f| 
                     f.write c.output
                 end 
             end 
         end
         def gen_template source, target
-            before = File.open source, 'r' do |f| f.read end
+            before = File.open source, "r" do |f| f.read end
             begin
                 after = ERB.new(before).result @context
             rescue StandardError => err
                 puts "Template error (#{File.expand_path source}): "
                 puts err.backtrace.join "\n"
             end
-            File.open target, 'w' do |f| f.write after end
+            File.open target, "w" do |f| f.write after end
         end
         def filter target_d, name
-            if name == '{images_d}' then
+            if name == "{images_d}" then
                 gen_images @prob.images, target_d
-            elsif name == '{examples_d}' then
+            elsif name == "{examples_d}" then
                 gen_cases @prob.examples, target_d
-            elsif name == '{systests_d}' then
+            elsif name == "{systests_d}" then
                 gen_cases @prob.systests, target_d
             else
                 target_n = name.gsub /\{(\w*)\}/ do |match|
-                    @prob.name if $1 == 'name'
+                    @prob.name if $1 == "name"
                 end 
                 return target_n
             end
             return nil
         end
         def load_engines
-            include_d = File.join File.expand_path('~'), '.gettc/include'
+            include_d = File.join File.expand_path("~"), ".gettc/include"
             return unless File.exists? include_d
             Dir.foreach include_d do |name|
                 child = File.join include_d, name
                 if File.directory? child then
-                    engine = File.join child, 'engine.rb'
+                    engine = File.join child, "engine.rb"
                     require engine if File.exists? engine
                 end
             end
         end
         def walk source_d, target_d
             Dir.foreach source_d do |name|
-                if name != '.' and name != '..' then
+                if name != "." and name != ".." then
                     source_p = File.join source_d, name
                     target_n = filter target_d, name
                     unless target_n.nil? then
@@ -115,9 +115,9 @@ module TopCoder
             raise ProblemDirExists.new @prob_d if File.exists? @prob_d
             FileUtils.mkdir @prob_d
 
-            method_sig = @prob.definitions['Method signature']
+            method_sig = @prob.definitions["Method signature"]
             if method_sig.nil? then 
-                $stderr.puts '[Warning] No definition for method signature found'
+                $stderr.puts "[Warning] No definition for method signature found"
             else
                 vars = parse_method_signature method_sig
                 func = vars.shift

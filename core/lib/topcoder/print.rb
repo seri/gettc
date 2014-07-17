@@ -1,5 +1,5 @@
-require 'topcoder/problem'
-require 'rdiscount'
+require "topcoder/problem"
+require "rdiscount"
 
 module TopCoder
     class Problem
@@ -36,10 +36,10 @@ module TopCoder
                     example = @examples[i]
                     out << "### Example #{i + 1}\n"
                     out << "#### Input\n<c>"
-                    out << example.input.gsub("\n", '<br />')
+                    out << example.input.gsub("\n", "<br />")
                     out << "</c>\n"
                     out << "#### Output\n<c>"
-                    out << example.output.gsub("\n", '<br />')
+                    out << example.output.gsub("\n", "<br />")
                     out << "</c>\n"
                     unless example.reason.empty? then
                         out << "#### Reason\n#{example.reason}\n\n"
