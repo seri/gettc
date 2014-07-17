@@ -10,19 +10,19 @@ module TopCoder
             out << "## Statement\n"
             out << @statement << "\n\n"
 
-            if not @definitions.empty? then
+            unless @definitions.empty? then
                 out << "## Definitions\n"
                 @definitions.each do |k, v| out << "- *#{k}*: `#{v}`\n" end 
                 out << "\n"
             end 
 
-            if not @notes.empty? then
+            unless @notes.empty? then
                 out << "## Notes\n"
                 @notes.each do |note| out << "- #{note}\n" end 
                 out << "\n"
             end 
 
-            if not @constraints.empty? then
+            unless @constraints.empty? then
                 out << "## Constraints\n"
                 @constraints.each do |constraint|
                     out << "- #{constraint}\n"
@@ -30,7 +30,7 @@ module TopCoder
                 out << "\n"
             end 
 
-            if not @examples.empty? then
+            unless @examples.empty? then
                 out << "## Examples\n"
                 @examples.each_index do |i|
                     example = @examples[i]
@@ -41,7 +41,7 @@ module TopCoder
                     out << "#### Output\n<c>"
                     out << example.output.gsub("\n", '<br />')
                     out << "</c>\n"
-                    if not example.reason.empty? then
+                    unless example.reason.empty? then
                         out << "#### Reason\n#{example.reason}\n\n"
                     end 
                 end

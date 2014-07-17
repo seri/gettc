@@ -1,12 +1,6 @@
-require 'rake/testtask' 
 require 'rubygems/package_task' 
 require 'rubygems/installer' 
 require 'fileutils' 
-
-Rake::TestTask.new do |t|
-    t.libs   << 'core/lib'
-    t.pattern = 'core/test/**/*_test.rb'
-end
 
 spec = Gem::Specification.new do |s| 
     s.platform = Gem::Platform::RUBY
@@ -35,7 +29,5 @@ Gem::PackageTask.new spec do |pkg|
 end
 
 task :clean do
-    if File.exists? 'pkg' then
-        FileUtils.rm_rf 'pkg'
-    end
+    FileUtils.rm_rf 'pkg' if File.exists? 'pkg'
 end 

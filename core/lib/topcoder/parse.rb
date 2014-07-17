@@ -125,7 +125,7 @@ module TopCoder
             systests = []
             _, y = indexes html, '<!-- System Testing -->'
             z, _ = indexes html, '<!-- End System Testing -->'
-            return systests if not y or not z
+            return systests unless y and z
             Hpricot(html[y .. z]).search '/table/tr[@valign=top]' do |tr|
                 tds = tr.search '/td.statText'    
                 if tds.size == 3 then
@@ -142,7 +142,7 @@ module TopCoder
             Hpricot(detail).search 'a[@href^=/stat?c=problem_solution]' do |url|
                 solution = @downloader.download url.attributes['href']
                 systests = parse_systests solution
-                return systests if not systests.empty?
+                return systests unless systests.empty?
             end 
             return []
         end

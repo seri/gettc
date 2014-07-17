@@ -9,7 +9,7 @@ class GenerateTest < Test::Unit::TestCase
     def setup
         @source_d = File.join File.dirname(__FILE__), '../../../dist/template'
         @target_d = File.join Dir.tmpdir, 'gettc'
-        FileUtils.mkdir @target_d if not File.directory? @target_d
+        FileUtils.mkdir @target_d unless File.directory? @target_d
         @generator = Generator.new @source_d, @target_d
     end
     def test_initialize
@@ -24,7 +24,7 @@ class GenerateTest < Test::Unit::TestCase
         prob = Problem.new
         prob.name = 'JustATest'
         prob_d = File.join @target_d, prob.name
-        FileUtils.mkdir prob_d if not File.exists? prob_d
+        FileUtils.mkdir prob_d unless File.exists? prob_d
         assert_raise ProblemDirExists do @generator.generate prob end
         FileUtils.rmdir prob_d
     end

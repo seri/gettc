@@ -34,8 +34,8 @@ module TopCoder
     end
     class Generator
         def initialize source_d, target_d
-            raise SourceDirNotExist.new source_d if not File.directory? source_d 
-            raise TargetDirNotExist.new target_d if not File.directory? target_d
+            raise SourceDirNotExist.new source_d unless File.directory? source_d 
+            raise TargetDirNotExist.new target_d unless File.directory? target_d
             @source_d = source_d
             @target_d = target_d
         end
@@ -83,7 +83,7 @@ module TopCoder
         end
         def load_engines
             include_d = File.join File.expand_path('~'), '.gettc/include'
-            return if not File.exists? include_d
+            return unless File.exists? include_d
             Dir.foreach include_d do |name|
                 child = File.join include_d, name
                 if File.directory? child then
@@ -97,10 +97,10 @@ module TopCoder
                 if name != '.' and name != '..' then
                     source_p = File.join source_d, name
                     target_n = filter target_d, name
-                    if not target_n.nil? then
+                    unless target_n.nil? then
                         target_p = File.join target_d, target_n
                         if File.directory? source_p then
-                            FileUtils.mkdir target_p if not File.exists? target_p
+                            FileUtils.mkdir target_p unless File.exists? target_p
                             walk source_p, target_p
                         elsif File.file? source_p then
                             gen_template source_p, target_p

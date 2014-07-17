@@ -28,11 +28,11 @@ module TopCoder
     class TArray < Type
         attr_accessor :subtype
         def initialize subtype
-            raise UnrecognizedType.new subtype if not subtype.is_a? Type
+            raise UnrecognizedType.new subtype unless subtype.is_a? Type
             @subtype = subtype
         end
         def == ary
-            return false if not ary.is_a? TArray
+            return false unless ary.is_a? TArray
             return @subtype == ary.subtype
         end
         def obj?

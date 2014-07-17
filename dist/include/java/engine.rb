@@ -73,11 +73,11 @@ module TopCoder
     end
     class JavaArray
         def self.get_depth type
-            return 0 if not type.is_a? TArray
+            return 0 unless type.is_a? TArray
             return 1 + get_depth(type.subtype)
         end
         def self.get_elem_type type
-            return type if not type.is_a? TArray
+            return type unless type.is_a? TArray
             return get_elem_type type.subtype
         end
         attr_accessor :name, :boxed_name, :type, :boxed_type
@@ -139,12 +139,12 @@ module TopCoder
                                         depth - 1, counters << counter)
                 ret << "}\n"
 
-                if not parent.nil?
+                unless parent.nil?
                     ret << parent << '.add(' 
                     ret << boxed_name  << ");\n"
                 end
             end
-            ret.gsub! /^/, ' ' * 4 if not parent.nil? 
+            ret.gsub! /^/, ' ' * 4 unless parent.nil? 
             return ret
         end
         def box_code

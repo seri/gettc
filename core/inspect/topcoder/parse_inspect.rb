@@ -12,7 +12,7 @@ end
 def parse_all name
     print "Parsing #{name} ... " 
     statfile = filename('stats', name, 'htm')
-    if not File.exists? statfile then
+    unless File.exists? statfile then
         $stderr.puts "#{statfile} doesn't exist. Run download_inspect first."
         return
     end 

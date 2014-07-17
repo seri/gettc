@@ -10,7 +10,7 @@ require 'yaml'
 def root_d
     gem_d = Gem.loaded_specs['gettc']
     if gem_d.nil? then
-        return File.join(File.basename(__FILE__), '../')
+        return File.join File.basename(__FILE__), '../'
     else
         return gem_d.full_gem_path
     end
