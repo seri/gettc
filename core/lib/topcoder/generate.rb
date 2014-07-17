@@ -1,11 +1,11 @@
 require "fileutils"
 require "erb" 
 
-require "topcoder/problem"
-require "topcoder/signature" 
-require "topcoder/print"
+require "gettc/problem"
+require "gettc/signature" 
+require "gettc/print"
 
-module TopCoder
+module Gettc
     class GenerateError < StandardError
     end
     class ProblemDirExists < GenerateError

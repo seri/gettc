@@ -1,11 +1,11 @@
-require "topcoder/problem"
-require "topcoder/download" 
+require "gettc/problem"
+require "gettc/download" 
 
 require "uri" 
 require "pathname" 
 require "hpricot"
 
-module TopCoder
+module Gettc
     class Parser 
         def initialize downloader
             @downloader = downloader

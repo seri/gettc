@@ -1,4 +1,4 @@
-module TopCoder
+module Gettc
     class Case
         attr_accessor :input, :output, :reason
         def initialize

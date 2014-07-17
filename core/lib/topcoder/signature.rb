@@ -1,6 +1,6 @@
-require "topcoder/types"
+require "gettc/types"
     
-module TopCoder 
+module Gettc
     class SignatureError < StandardError
     end
     class CannotParseSignature < SignatureError

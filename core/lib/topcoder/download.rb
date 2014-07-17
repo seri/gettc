@@ -3,7 +3,7 @@ require "cgi"
 require "uri" 
 require "ostruct"
 
-module TopCoder 
+module Gettc
     class Account
         attr_accessor :username, :password
         def initialize username, password

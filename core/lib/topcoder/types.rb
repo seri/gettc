@@ -1,8 +1,5 @@
-require "singleton"
-    
-module TopCoder 
-    class TypeError < StandardError        
-    end
+module Gettc
+    TypeError = Class.new StandardError        
     class UnrecognizedType < TypeError
         attr_accessor :type
         def initialize type = nil, msg = "Not a valid TopCoder type"

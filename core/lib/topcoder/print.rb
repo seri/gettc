@@ -1,7 +1,7 @@
-require "topcoder/problem"
+require "gettc/problem"
 require "rdiscount"
 
-module TopCoder
+module Gettc
     class Problem
         def to_md
             out  = "# [#{@name}](#{@url})\n"
