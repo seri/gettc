@@ -60,7 +60,6 @@ parseFloat = parseReal :: Parser Float
 parseDouble = parseReal :: Parser Double
 
 
-
 expect :: Char -> Parser ()
 expect c = do
     cc <- optionMaybe (char c) 
