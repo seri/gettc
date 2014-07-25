@@ -1,4 +1,4 @@
-This document is for new users. Existing users can find details about updating by reading the [CHANGELOG](http://github.com/seri/gettc/CHANGELOG.md).
+This document is for new users. Existing users can find details about updating by reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
 
 # At a glance
 
