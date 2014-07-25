@@ -30,7 +30,9 @@
 
       </header>
       <section>
-        <h1>
+        <p>This document is for new users. Existing users can find details about updating by reading the <a href="https://github.com/seri/gettc/blob/master/CHANGELOG.md">change log</a>.</p>
+
+<h1>
 <a name="at-a-glance" class="anchor" href="#at-a-glance"><span class="octicon octicon-link"></span></a>At a glance</h1>
 
 <pre><code>$ [sudo] gem install gettc
@@ -156,12 +158,18 @@ Passed
 <pre><code>$ [sudo] gem install gettc
 </code></pre>
 
-<p>Once that is done, you should be able to run gettc on the command line. Now there are a couple things you need to get depending on which language you plan to use to solve problems.</p>
+<p>Once that is done, you should be able to run gettc on the command line. After a solution directory is generated, the standard procedure is:</p>
+
+<pre><code>$ cd ProblemName/solve/your_language
+$ make
+</code></pre>
+
+<p>Now there are a couple things you need to get depending on your desired language.</p>
 
 <h2>
 <a name="for-c" class="anchor" href="#for-c"><span class="octicon octicon-link"></span></a>For C++</h2>
 
-<p>You are already ready to solve problems using C++. If you want to use <code>make test</code>, you just need to get <a href="http://www.boost.org/">Boost</a>.</p>
+<p>You are already ready to solve problems using C++.</p>
 
 <h2>
 <a name="for-haskell" class="anchor" href="#for-haskell"><span class="octicon octicon-link"></span></a>For Haskell</h2>
@@ -172,31 +180,15 @@ Passed
 $ [sudo] cabal install parsec
 </code></pre>
 
-<p>HUnit is required if you wish to apply TDD:</p>
-
-<pre><code>$ [sudo] cabal install HUnit
-</code></pre>
-
-<p>If you don't write tests, there is no need to install HUnit.</p>
-
 <h2>
 <a name="for-java" class="anchor" href="#for-java"><span class="octicon octicon-link"></span></a>For Java</h2>
 
-<p>Besides JDK, <a href="http://ant.apache.org/">Apache Ant</a> is required. This should come as no surprise to most Java programmers.</p>
+<p>Besides JDK, <a href="http://ant.apache.org/">Apache Ant</a> is required. </p>
 
-<p>In Java, you use <em>ant</em> instead of <em>make</em>. So:</p>
+<h2>
+<a name="for-python" class="anchor" href="#for-python"><span class="octicon octicon-link"></span></a>For Python</h2>
 
-<pre><code>$ ant demo
-</code></pre>
-
-<p>Will run against the examples. And:</p>
-
-<pre><code>$ ant sys
-</code></pre>
-
-<p>Will run against the system tests.</p>
-
-<p><a href="https://github.com/KentBeck/junit/downloads">JUnit</a> is required if you wish to run unit tests. Don't use the beta versions. Download one of the stable jar archives and put the jar into Ant's lib dir. </p>
+<p>Python 3 is required. If your system contains multiple pythons, make sure that Python 3 is the default. If you must keep Python 2 as default, manually tweak around the files in <code>~/.gettc/template/solve/python</code>.</p>
 
 <h2>
 <a name="other-languages" class="anchor" href="#other-languages"><span class="octicon octicon-link"></span></a>Other languages</h2>
@@ -208,24 +200,14 @@ $ [sudo] cabal install parsec
 
 <ul>
 <li>Provide your own username/password in <code>~/.gettc/config.yml</code> if download fails.</li>
-<li>Use <code>make sysv</code> (or <code>ant sysv</code> for Java) to display failed cases when challenging the system tests.</li>
+<li>Use <code>make sysv</code> to display failed cases when challenging the system tests.</li>
 <li>You may <code>rm -rf build</code> after you're done solving to save some disk space.</li>
-<li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory <code>~/.gettc</code>. </li>
-</ul><h1>
-<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h1>
-
-<h2>
-<a name="ambiguous-function-names" class="anchor" href="#ambiguous-function-names"><span class="octicon octicon-link"></span></a>Ambiguous function names</h2>
-
-<p>Sometimes the solution method has the same name with a standard library function, such as <em>filter</em>. In this case, you'll have to manually change the function name to something else in the runner and solution files.</p>
-
-<h2>
-<a name="string-parsing-error" class="anchor" href="#string-parsing-error"><span class="octicon octicon-link"></span></a>String parsing error</h2>
-
-<p>TopCoder allows a string to be like "This is" one string", while gettc gets confused with the quote character in between. If your solution fails only under this situation, it's probably correct.</p>
+<li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory <code>~/.gettc</code>. The next time gettc runs, it will notice that there is no <code>~/.gettc</code> and regenerate that.</li>
+<li>You can bring the solutions generated by gettc to another computer to run. Such system doesn't need to have gettc, or even ruby, but it will need the standard gcc toolchain, and of course the compiler for your desired language (if it isn't C++). You will also need to copy '~/.gettc' to that system.</li>
+</ul>
       </section>
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
