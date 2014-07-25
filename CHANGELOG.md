@@ -14,7 +14,7 @@ updating.
 ## 1.6
 Released July 25th, 2014
 * Add Python plugin.
-* Fixed string parsing when there is a quote character in between (except for Haskell).
+* Fixed string parsing when there is a quote character in between.
 * Fixed ambiguity of the name of solution method by using namespace whenever that makes sense.
 * Change runner.sh to be more portable w/r/t the time command (issue reported by Mukesh).
 * Now gettc will respect `$GETTC_HOME` if it is set (default is still `~/.gettc`)

@@ -1,14 +1,14 @@
 Gettc's Python plugin to generate Python solutions for TopCoder problems.
 
-# Current status:
+## Current status
 
 * `rake test:python` Passed
 * `rake test:engine` Passed
 * `rake generate` OK
 * `rake run` OK
 
-# Change log
+## Change log
 
-## gettc-1.6
+### gettc-1.6
 
 * Born
