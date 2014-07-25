@@ -8,12 +8,15 @@ import java.util.List;
 
 public class TopcoderWriter {
     private Writer source;
+
     public TopcoderWriter(Writer source) {
         this.source = source;
     }
+
     public void close() throws IOException  {
         source.close();
     }
+    
     public <T> void write(T obj) throws IOException {
         if (obj == null) {
             source.write('"');
@@ -24,19 +27,17 @@ public class TopcoderWriter {
         if (type.equals(Integer.class) || type.equals(Long.class)
                                        || type.equals(Float.class)
                                        || type.equals(Double.class)
-                                       || type.equals(Boolean.class))
+                                       || type.equals(Boolean.class)) {
             source.write(obj.toString());            
-        else if (type.equals(Character.class)) {
+        } else if (type.equals(Character.class)) {
             source.write('\'');
             source.write(obj.toString());
             source.write('\'');
-        }
-        else if (type.equals(String.class)) {
+        } else if (type.equals(String.class)) {
             source.write('"');
             source.write(obj.toString());
             source.write('"');
-        }
-        else if (obj instanceof List) {
+        } else if (obj instanceof List) {
             source.write('[');
             List list = (List) obj;
             for (int i = 0; i < list.size() - 1; ++i) {
@@ -45,7 +46,8 @@ public class TopcoderWriter {
             }
             if (!list.isEmpty()) write(list.get(list.size() - 1));
             source.write(']');
+        } else {
+            throw new UnsupportedTypeException(obj.getClass());
         }
-        else throw new UnsupportedTypeException(obj.getClass());
     }
 }

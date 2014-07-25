@@ -1,44 +1,56 @@
+require "fileutils"
 require "rake/clean"
 
-CLEAN << "files"
+CLEAN << "temp"
 
-file "files" do
-    mkdir "files"
-    mkdir "files/yamls"
-    mkdir "files/stats"
-    mkdir "files/details"
-    mkdir "files/solutions"
-    mkdir "files/results"
+file "temp" do
+    mkdir "temp"
+    mkdir "temp/parse_problem"
+    mkdir "temp/download_problem_statement"
+    mkdir "temp/download_problem_detail"
+    mkdir "temp/download_problem_solution"
+    mkdir "temp/generate_problem_dir"
 end
 
 def inspector name, output
     unless File.exists? output then
-        ruby "-Ilib inspect/topcoder/#{name}_inspect.rb"  
+        ruby "-Ilib inspect/gettc/#{name}_inspect.rb"  
     end
 end
 
 def tester name
-    ruby "-Ilib test/topcoder/#{name}_test.rb"    
+    ruby "-Ilib test/gettc/#{name}_test.rb"    
 end
 
 namespace :inspect do
     desc "Inspect the downloader"
-    task :download => "files" do 
-        inspector "download", "files/stats/Checker.htm"
+    task :download => "temp" do 
+        inspector "download", "temp/download_problem_statement/Checker.htm"
     end
 
     desc "Inspect the parser"
     task :parse => "inspect:download" do 
-        inspector "parse", "files/yamls/Checker.yml"
+        inspector "parse", "temp/parse_problem/Checker.yml"
     end
 
     desc "Inspect the generator"
     task :generate => "inspect:parse" do 
-        inspector "generate", "files/results/BuildingRoads"
+        inspector "generate", "temp/generate_problem_dir/BuildingRoads"
     end
+
 end
 
 namespace :test do
+    desc "Test the types"
+    task :types do 
+        tester "types"
+    end
+
+    desc "Test the signature"
+    task :signature do 
+        tester "signature"
+    end
+
     desc "Test the downloader"
     task :download do 
         tester "download"
@@ -55,6 +67,6 @@ namespace :test do
     end
 
     desc "Test everything"
-    task :all => %w[test:download test:parse test:generate] do
+    task :all => %w[test:types test:signature test:download test:parse test:generate] do
     end
 end

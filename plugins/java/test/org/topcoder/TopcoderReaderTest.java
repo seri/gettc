@@ -56,6 +56,10 @@ public class TopcoderReaderTest {
         int i = (Integer) reader.next(Integer.class);
         assertEquals(123, i);
 
+        source("-32");
+        int j = (Integer) reader.next(Integer.class);
+        assertEquals(-32, j);
+
         source("123.456");
         double d = (Double) reader.next(Double.class);
         assertEquals(123.456, d, EPSILON);
@@ -73,24 +77,36 @@ public class TopcoderReaderTest {
         assertEquals(true, b);
     }
 
+    @Test public void stringWithQuotes() throws IOException {
+        source("\"Welcome to \"Code Jam\"  !\"");
+        String message = (String) reader.next(String.class);
+        assertEquals("Welcome to \"Code Jam\"  !", message);
+    }
+
+    @Test(expected = ParseException.class) 
+    public void corruptedStringWithQuotes() throws IOException {
+        source("\"Welcome to \" No , or ] to end this nightmare?");
+        String message = (String) reader.next(String.class);
+    }
+
     @Test public void arrays() throws IOException {
         source("[]");
         List<Integer> a = (List<Integer>) reader.next(new TypeRef<List<Integer>>(){}.getType());
         assertTrue(a.isEmpty());
 
-        source("[123,234,5]");
+        source("[123,-1,50]");
         a = (List<Integer>) reader.next(new TypeRef<List<Integer>>(){}.getType());
         assertEquals(3,   a.size());
         assertEquals(123, (int) a.get(0));
-        assertEquals(234, (int) a.get(1));
-        assertEquals(5,   (int) a.get(2));
+        assertEquals(-1, (int) a.get(1));
+        assertEquals(50,   (int) a.get(2));
 
-        source("  [  123  ,\n234,     5]");
+        source("  [  123  ,\n234,     -5]");
         a = (List<Integer>) reader.next(new TypeRef<List<Integer>>(){}.getType());
         assertEquals(3,   a.size());
         assertEquals(123, (int) a.get(0));
         assertEquals(234, (int) a.get(1));
-        assertEquals(5,   (int) a.get(2));
+        assertEquals(-5,   (int) a.get(2));
 
         source("[[\"Hello\", \"World\"], [\"With\", \"Java\"]]");
         List<List<String>> aa = (List<List<String>>) reader.next(new TypeRef<List<List<String>>>(){}.getType());
@@ -100,7 +116,7 @@ public class TopcoderReaderTest {
     }
 
     @Test public void realLife() throws IOException {
-        source("\"Seri\", 'M',\tfaLSe\t,24, [\"Hello\",\n \"Good World!!!\",\n \"\"]");
+        source("\"Seri\", 'M',\tfaLSe\t,99, [\"Welcome to \"Code Jam\" ?\",\n \"\",\n \"Hey!\"]");
         String name = (String) reader.next(String.class); reader.next();
         char gender = (Character) reader.next(Character.class); reader.next();
         boolean passed = (Boolean) reader.next(Boolean.class); reader.next();
@@ -108,28 +124,17 @@ public class TopcoderReaderTest {
         List<String> textsBoxed = (List<String>) reader.next(new TypeRef<List<String>>(){}.getType());
 
         String[] texts = new String[textsBoxed.size()];
-        for (int _i = 0; _i != texts.length; ++_i)
+        for (int _i = 0; _i != texts.length; ++_i) {
             texts[_i] = textsBoxed.get(_i);
+        }
 
         assertEquals("Seri", name);
         assertEquals('M', gender);
         assertEquals(false, passed);
-        assertEquals(24, age);
+        assertEquals(99, age);
         assertEquals(3, texts.length);
-        assertEquals("Hello", texts[0]);
-        assertEquals("Good World!!!", texts[1]);
-        assertTrue(texts[2].isEmpty());
-
-        source("[\"We have the best mortgage rates. Refinance today.\",\"Money-making opportunity! $5000/week potential!!!\",\"Don't Feel Short; try Elevator Shoes for increase.\",\n \"All-new pics: Stacy, Tiffany, Donner, and Blitzen.\"],\n[\"5000 bucks for shoes?\",\n \"Short bucks for new shoes?\"]");
-        
-        List<String> knownSpam = (List<String>) reader.next(new TypeRef<List<String>>(){}.getType());
-        for (String elem : knownSpam) {
-            System.out.println(elem);
-        }
-        reader.next();
-        List<String> mails = (List<String>) reader.next(new TypeRef<List<String>>(){}.getType());
-        for (String elem : mails) {
-            System.out.println(elem);
-        }
+        assertEquals("Welcome to \"Code Jam\" ?", texts[0]);
+        assertEquals("", texts[1]);
+        assertEquals("Hey!", texts[2]);
     }
 }

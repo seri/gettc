@@ -1,0 +1,5 @@
+Hello from gettc! The following commands are available:
+    make demo: Run the solution against the examples
+    make sys: Run the solution against the system tests
+    make sysv: Like make sys but in verbose mode to debug
+    make clean: Delete all temporary files

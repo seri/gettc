@@ -1,3 +1,4 @@
 /pkg/
 /plugins/java/class/
-/core/files/
+temp/
+__pycache__/

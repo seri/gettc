@@ -1,0 +1,24 @@
+require "rake/clean"
+
+CLEAN << "temp"
+file "temp" do 
+    mkdir "temp"
+end
+
+file "temp/topcoder_test" => %w[temp dist/include/cpp/topcoder topcoder_test.cpp] do
+    sh "g++ -Idist/include/cpp topcoder_test.cpp -o temp/topcoder_test" +
+          " -lpthread -lgtest"
+    
+end
+
+namespace :test do
+    desc "Test the C++ library"
+    task :cpp => "temp/topcoder_test" do 
+        sh "temp/topcoder_test"
+    end
+
+    desc "Test the plugins's Ruby engine"
+    task :engine do 
+        ruby "-I../../core/lib -Idist/include/cpp engine_test.rb"
+    end
+end
