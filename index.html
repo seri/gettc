@@ -30,7 +30,8 @@
 
       </header>
       <section>
-        <p>This document is for new users. Existing users can find details about updating by reading the <a href="https://github.com/seri/gettc/blob/master/CHANGELOG.md">change log</a>.</p>
+        <p>This document is for new users. Existing users can find details about updating by
+reading the <a href="https://github.com/seri/gettc/blob/master/CHANGELOG.md">change log</a>.</p>
 
 <h1>
 <a name="at-a-glance" class="anchor" href="#at-a-glance"><span class="octicon octicon-link"></span></a>At a glance</h1>
@@ -39,7 +40,10 @@
 $ gettc 11127
 </code></pre>
 
-<p>Note that 11127 is the ID that TopCoder gives to the problem named <code>DigitHoles</code>. You can find the ID for any problem if you look at the URL for <a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=11127">that problem's statement</a> (you need to have a TopCoder account). Output:</p>
+<p>Note that 11127 is the ID that TopCoder gives to the problem named <code>DigitHoles</code>. You
+can find the ID for any problem if you look at the URL for 
+<a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=11127">that problem's statement</a> 
+(you need to have a TopCoder account). Output:</p>
 
 <pre><code>You have given ID = 11127
 Downloading problem to raw HTML ... Done
@@ -86,7 +90,8 @@ Failed
 Failed cases: 0 1 2 4 5
 </code></pre>
 
-<p>5/6 test cases failed. That sucks. Now edit the file <code>DigitHoles.cpp</code> with the following content:</p>
+<p>5/6 test cases failed. That sucks. Now edit the file <code>DigitHoles.cpp</code> with the
+following content:</p>
 
 <pre><code>int numHoles(int number) {
     static int holes[] = {1, 0, 0, 0, 1, 0, 1, 0, 2, 1};
@@ -121,7 +126,8 @@ Passed
 6 cases checked, 0 failed, 0 errored
 </code></pre>
 
-<p>Good. We have passed all the example tests. Why not challenge the system tests while we are it?</p>
+<p>Good. We have passed all the example tests. Why not challenge the system tests
+while we are it?</p>
 
 <pre><code>$ make sys
 </code></pre>
@@ -136,11 +142,28 @@ Passed
 <h1>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
-<p>Download a <a href="http://topcoder.com/tc">TopCoder</a> problem, parse the examples and system tests, then finally generate a basic template for C++, Haskell, and Java. You write the function definition and the generated template will take care of running it against input and output files.</p>
+<p>Download a <a href="http://topcoder.com/tc">TopCoder</a> problem, parse the examples and
+system tests, then finally generate a naive solution for some the following
+languages:</p>
 
-<p>TopCoder is a heaven for programmers. Solving algorithmic problems is a great way to embrace the passion for programming. There are problems for all levels. A strong academic background is not required to enjoy it. If you like Project Euler, you will probably love TopCoder.</p>
+<ul>
+<li>C++</li>
+<li>Haskell</li>
+<li>Java</li>
+<li>Python 3</li>
+</ul><p>And support for more languages is just around the corner.</p>
 
-<p>However, you normally have to paste the solution into TopCoder's online arena where it will be checked for correctness. Even then the online arena only supports C++, Java, and C#.</p>
+<p>You write the function definition and the generated solution will take care of
+running it against the downloaded input and output files.</p>
+
+<p>TopCoder is a heaven for programmers. Solving algorithmic problems is a great
+way to embrace the passion for programming. There are problems for all levels. 
+A strong academic background is not required to enjoy it. If you like Project
+Euler, you will probably love TopCoder. </p>
+
+<p>However, the TopCoder online arena is quite inconvenient and supports only a 
+few languages. Gettc's goal is to make the practice of solving algorithmic
+problems convenient and fun, and in your desired language.</p>
 
 <h1>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
@@ -149,16 +172,20 @@ Passed
 
 <ul>
 <li>
-<a href="http://www.ruby-lang.org/en/downloads/">Ruby</a>: The <a href="http://rubyinstaller.org/">Ruby installer</a> is recommend for Windows users. </li>
+<a href="http://www.ruby-lang.org/en/downloads/">Ruby</a>: The
+<a href="http://rubyinstaller.org/">Ruby installer</a> is recommend for Windows users. </li>
 <li>
-<a href="http://rubygems.org/pages/download">RubyGems</a>: Many Ruby installations already bundle RubyGems.</li>
-<li>The standard GCC toolset: Most Unix systems have it bundled. Windows users may use <a href="http://www.mingw.org">MinGW</a>.</li>
+<a href="http://rubygems.org/pages/download">RubyGems</a>: Many Ruby installations
+already bundle RubyGems.</li>
+<li>The standard GCC toolset: Most Unix systems have it bundled. Windows users
+may use <a href="http://www.mingw.org">MinGW</a> or Cygwin.</li>
 </ul><p>With those in place, we are aready to go:</p>
 
 <pre><code>$ [sudo] gem install gettc
 </code></pre>
 
-<p>Once that is done, you should be able to run gettc on the command line. After a solution directory is generated, the standard procedure is:</p>
+<p>Once that is done, you should be able to run gettc on the command line. After
+a solution directory is generated, the standard procedure is:</p>
 
 <pre><code>$ cd ProblemName/solve/your_language
 $ make
@@ -166,44 +193,29 @@ $ make
 
 <p>Now there are a couple things you need to get depending on your desired language.</p>
 
-<h2>
-<a name="for-c" class="anchor" href="#for-c"><span class="octicon octicon-link"></span></a>For C++</h2>
-
-<p>You are already ready to solve problems using C++.</p>
-
-<h2>
-<a name="for-haskell" class="anchor" href="#for-haskell"><span class="octicon octicon-link"></span></a>For Haskell</h2>
-
-<p>Besides GHC, <a href="http://www.haskell.org/cabal/download.html">Cabal</a> is required. But it could have been bundled by your Haskell installer. Now:</p>
-
-<pre><code>$ [sudo] cabal update
-$ [sudo] cabal install parsec
-</code></pre>
-
-<h2>
-<a name="for-java" class="anchor" href="#for-java"><span class="octicon octicon-link"></span></a>For Java</h2>
-
-<p>Besides JDK, <a href="http://ant.apache.org/">Apache Ant</a> is required. </p>
-
-<h2>
-<a name="for-python" class="anchor" href="#for-python"><span class="octicon octicon-link"></span></a>For Python</h2>
-
-<p>Python 3 is required. If your system contains multiple pythons, make sure that Python 3 is the default. If you must keep Python 2 as default, manually tweak around the files in <code>~/.gettc/template/solve/python</code>.</p>
-
-<h2>
-<a name="other-languages" class="anchor" href="#other-languages"><span class="octicon octicon-link"></span></a>Other languages</h2>
-
-<p>At the moment, gettc supports C++, Haskell and Java out of the box. Other languages are provided via plugins.</p>
-
-<h1>
+<ul>
+<li>For C++: You are already ready to solve problems <a href="https://github.com/seri/gettc/blob/master/plugins/cpp/README.md">using C++</a>.</li>
+<li>For Haskell: <a href="https://github.com/seri/gettc/blob/master/plugins/haskell/README.md">Come here</a>
+</li>
+<li>For Java: <a href="https://github.com/seri/gettc/blob/master/plugins/java/README.md">Come here</a>
+</li>
+<li>For Python: <a href="https://github.com/seri/gettc/blob/master/plugins/python/README.md">Come here</a>
+</li>
+</ul><h1>
 <a name="tips" class="anchor" href="#tips"><span class="octicon octicon-link"></span></a>Tips</h1>
 
 <ul>
 <li>Provide your own username/password in <code>~/.gettc/config.yml</code> if download fails.</li>
 <li>Use <code>make sysv</code> to display failed cases when challenging the system tests.</li>
 <li>You may <code>rm -rf build</code> after you're done solving to save some disk space.</li>
-<li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory <code>~/.gettc</code>. The next time gettc runs, it will notice that there is no <code>~/.gettc</code> and regenerate that.</li>
-<li>You can bring the solutions generated by gettc to another computer to run. Such system doesn't need to have gettc, or even ruby, but it will need the standard gcc toolchain, and of course the compiler for your desired language (if it isn't C++). You will also need to copy '~/.gettc' to that system.</li>
+<li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things
+you don't want to be generated. If you mess up, you can safely delete the
+whole directory <code>~/.gettc</code>. The next time gettc runs, it will notice that 
+there is no <code>~/.gettc</code> and regenerate that.</li>
+<li>You can bring the solutions generated by gettc to another computer to run.
+Such system doesn't need to have gettc, or even ruby, but it will need the 
+standard gcc toolchain, and of course the compiler for your desired language
+(if it isn't C++). You will also need to copy '~/.gettc' to that system.</li>
 </ul>
       </section>
       <footer>
