@@ -1,11 +1,15 @@
-This document is for new users. Existing users can find details about updating by reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
+This document is for new users. Existing users can find details about updating by
+reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
 
 # At a glance
 
     $ [sudo] gem install gettc
     $ gettc 11127
 
-Note that 11127 is the ID that TopCoder gives to the problem named `DigitHoles`. You can find the ID for any problem if you look at the URL for [that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127) (you need to have a TopCoder account). Output:
+Note that 11127 is the ID that TopCoder gives to the problem named `DigitHoles`. You
+can find the ID for any problem if you look at the URL for 
+[that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127) 
+(you need to have a TopCoder account). Output:
 
     You have given ID = 11127
     Downloading problem to raw HTML ... Done
@@ -49,7 +53,8 @@ Output:
     6 cases checked, 5 failed, 0 errored
     Failed cases: 0 1 2 4 5
 
-5/6 test cases failed. That sucks. Now edit the file `DigitHoles.cpp` with the following content:
+5/6 test cases failed. That sucks. Now edit the file `DigitHoles.cpp` with the
+following content:
 
     int numHoles(int number) {
         static int holes[] = {1, 0, 0, 0, 1, 0, 1, 0, 2, 1};
@@ -81,7 +86,8 @@ You should see:
     Passed
     6 cases checked, 0 failed, 0 errored
 
-Good. We have passed all the example tests. Why not challenge the system tests while we are it?
+Good. We have passed all the example tests. Why not challenge the system tests
+while we are it?
 
     $ make sys
 
@@ -93,25 +99,46 @@ Congratulations! You have solved a TopCoder problem like a boss!
 
 # Introduction
 
-Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and system tests, then finally generate a basic template for C++, Haskell, and Java. You write the function definition and the generated template will take care of running it against input and output files.
+Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
+system tests, then finally generate a basic template for some the following
+languages:
 
-TopCoder is a heaven for programmers. Solving algorithmic problems is a great way to embrace the passion for programming. There are problems for all levels. A strong academic background is not required to enjoy it. If you like Project Euler, you will probably love TopCoder.
+- C++
+- Haskell
+- Java
+- Python 3
 
-However, you normally have to paste the solution into TopCoder's online arena where it will be checked for correctness. Even then the online arena only supports C++, Java, and C#.
+And support for more languages is just around the corner.
+
+You write the function definition and the generated template will take care of
+running it against input and output files.
+
+TopCoder is a heaven for programmers. Solving algorithmic problems is a great
+way to embrace the passion for programming. There are problems for all levels. 
+A strong academic background is not required to enjoy it. If you like Project
+Euler, you will probably love TopCoder.
+
+However, you normally have to paste the solution into TopCoder's online arena
+where it will be checked for correctness. Even then the online arena only
+supports C++, Java, and C#.
 
 # Installation
 
 The following packages are hard dependencies:
 
-- [Ruby](http://www.ruby-lang.org/en/downloads/): The [Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
-- [RubyGems](http://rubygems.org/pages/download): Many Ruby installations already bundle RubyGems.
-- The standard GCC toolset: Most Unix systems have it bundled. Windows users may use [MinGW](http://www.mingw.org).
+- [Ruby](http://www.ruby-lang.org/en/downloads/): The
+[Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
+- [RubyGems](http://rubygems.org/pages/download): Many Ruby installations
+already bundle RubyGems.
+- The standard GCC toolset: Most Unix systems have it bundled. Windows users
+may use [MinGW](http://www.mingw.org) or Cygwin.
 
 With those in place, we are aready to go:
 
     $ [sudo] gem install gettc
 
-Once that is done, you should be able to run gettc on the command line. After a solution directory is generated, the standard procedure is:
+Once that is done, you should be able to run gettc on the command line. After
+a solution directory is generated, the standard procedure is:
 
     $ cd ProblemName/solve/your_language
     $ make
@@ -124,7 +151,8 @@ You are already ready to solve problems using C++.
 
 ## For Haskell
 
-Besides GHC, [Cabal](http://www.haskell.org/cabal/download.html) is required. But it could have been bundled by your Haskell installer. Now:
+Besides GHC, [Cabal](http://www.haskell.org/cabal/download.html) is required.
+But it could have been bundled by your Haskell installer. Now:
 
     $ [sudo] cabal update
     $ [sudo] cabal install parsec
@@ -135,16 +163,20 @@ Besides JDK, [Apache Ant](http://ant.apache.org/) is required.
 
 ## For Python
 
-Python 3 is required. If your system contains multiple pythons, make sure that Python 3 is the default. If you must keep Python 2 as default, manually tweak around the files in `~/.gettc/template/solve/python`.
-
-## Other languages
-
-At the moment, gettc supports C++, Haskell and Java out of the box. Other languages are provided via plugins.
+Python 3 is required. If your system contains multiple pythons, make sure that
+Python 3 is the default. If you must keep Python 2 as default, manually tweak
+around the files in `~/.gettc/template/solve/python`.
 
 # Tips
 
 - Provide your own username/password in `~/.gettc/config.yml` if download fails.
 - Use `make sysv` to display failed cases when challenging the system tests.
 - You may `rm -rf build` after you're done solving to save some disk space.
-- You can play with the contents of the directory `~/.gettc` to, say, remove things you don't want to be generated. If you mess up, you can safely delete the whole directory `~/.gettc`. The next time gettc runs, it will notice that there is no `~/.gettc` and regenerate that.
-- You can bring the solutions generated by gettc to another computer to run. Such system doesn't need to have gettc, or even ruby, but it will need the standard gcc toolchain, and of course the compiler for your desired language (if it isn't C++). You will also need to copy '~/.gettc' to that system.
+- You can play with the contents of the directory `~/.gettc` to, say, remove things
+you don't want to be generated. If you mess up, you can safely delete the
+whole directory `~/.gettc`. The next time gettc runs, it will notice that 
+there is no `~/.gettc` and regenerate that.
+- You can bring the solutions generated by gettc to another computer to run.
+Such system doesn't need to have gettc, or even ruby, but it will need the 
+standard gcc toolchain, and of course the compiler for your desired language
+(if it isn't C++). You will also need to copy '~/.gettc' to that system.
