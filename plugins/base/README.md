@@ -1,6 +1,6 @@
 Contains stuffs that other Gettc plugins may want to use.
 
-## Current status
+## Developement status
 
 * `rake test:cpp` Passed
 * `rake test:engine` Passed

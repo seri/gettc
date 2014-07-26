@@ -1,19 +1,20 @@
 require "rake/clean"
 require_relative "../helper"
 
-CLEAN << "temp"
+CLEAN << "temp" << "__pycache__"
+
 file "temp" do
     mkdir "temp"
 end 
 
 namespace :test do
     desc "Test the Python reader"
-    task :reader => %w[helper.py reader_test.py] do 
+    task :reader do 
         sh "python reader_test.py"
     end
 
     desc "Test the Python writer"
-    task :writer => %w[helper.py writer_test.py] do 
+    task :writer do 
         sh "python writer_test.py"
     end
 

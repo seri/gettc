@@ -11,9 +11,15 @@ As of version 1.6 and onward, gettc will replace the contents in `$GETTC_HOME`
 make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
+## 1.6.2
+Released July 26th, 2014
+* Add a convenient command: `gettc reset` to force a replacement of `$GETTC_HOME`.
+* Change shebang in Python plugin to be a bit more portable.
+* Minor documentation changes.
+
 ## 1.6.1
 Released July 25th, 2014
-* Minor style changes
+* Minor style changes.
 
 ## 1.6
 Released July 25th, 2014

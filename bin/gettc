@@ -11,7 +11,7 @@ def init
     $config_d = ENV.fetch "GETTC_HOME", File.expand_path("~/.gettc")
     gem_d = Gem.loaded_specs["gettc"]
     if gem_d.nil? then
-        $root_d = File.join File.basename(__FILE__), "../"
+        $root_d = File.join File.dirname(__FILE__), "../"
     else
         $root_d = gem_d.full_gem_path
     end
@@ -43,9 +43,21 @@ end
 
 def main
     prog = File.basename __FILE__
-    usage = "Usage: #{prog} <id>\nWhere <id> is the problem ID, eg 11138" 
+    usage = <<-eos.strip
+gettc <id>: Generate a solution for the TopCoder problem with that ID, eg 11138.
+gettc version: Print version string.
+gettc reset: Force a reset of the contents in GETTC_HOME.
+    eos
     if ARGV.empty?  
         puts usage 
+        return
+    end
+    command = ARGV[0]
+    if command == "version"
+        puts VERSION
+    elsif command == "reset"
+        FileUtils.rm_rf $config_d
+        replace_config
     else
         id = ARGV[0].to_i
         puts "You have given ID = #{id}" 

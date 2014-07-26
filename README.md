@@ -100,7 +100,7 @@ Congratulations! You have solved a TopCoder problem like a boss!
 # Introduction
 
 Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
-system tests, then finally generate a basic template for some the following
+system tests, then finally generate a naive solution for some the following
 languages:
 
 - C++
@@ -110,17 +110,17 @@ languages:
 
 And support for more languages is just around the corner.
 
-You write the function definition and the generated template will take care of
-running it against input and output files.
+You write the function definition and the generated solution will take care of
+running it against the downloaded input and output files.
 
 TopCoder is a heaven for programmers. Solving algorithmic problems is a great
 way to embrace the passion for programming. There are problems for all levels. 
 A strong academic background is not required to enjoy it. If you like Project
-Euler, you will probably love TopCoder.
+Euler, you will probably love TopCoder. 
 
-However, you normally have to paste the solution into TopCoder's online arena
-where it will be checked for correctness. Even then the online arena only
-supports C++, Java, and C#.
+However, the TopCoder online arena is quite inconvenient and supports only a 
+few languages. Gettc's goal is to make the practice of solving algorithmic
+problems convenient and fun, and in your desired language.
 
 # Installation
 
@@ -145,27 +145,10 @@ a solution directory is generated, the standard procedure is:
 
 Now there are a couple things you need to get depending on your desired language.
 
-## For C++
-
-You are already ready to solve problems using C++.
-
-## For Haskell
-
-Besides GHC, [Cabal](http://www.haskell.org/cabal/download.html) is required.
-But it could have been bundled by your Haskell installer. Now:
-
-    $ [sudo] cabal update
-    $ [sudo] cabal install parsec
-
-## For Java
-
-Besides JDK, [Apache Ant](http://ant.apache.org/) is required. 
-
-## For Python
-
-Python 3 is required. If your system contains multiple pythons, make sure that
-Python 3 is the default. If you must keep Python 2 as default, manually tweak
-around the files in `~/.gettc/template/solve/python`.
+- For C++: You are already ready to solve problems [using C++](https://github.com/seri/gettc/blob/master/plugins/cpp/README.md).
+- For Haskell: [Come here](https://github.com/seri/gettc/blob/master/plugins/haskell/README.md)
+- For Java: [Come here](https://github.com/seri/gettc/blob/master/plugins/java/README.md)
+- For Python: [Come here](https://github.com/seri/gettc/blob/master/plugins/python/README.md)
 
 # Tips
 
