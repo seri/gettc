@@ -13,7 +13,7 @@ class CppEngineTest < Test::Unit::TestCase
         @engine = CppEngine.new func, vars
     end
     def test_declare
-        result = <<-eos.gsub(/^ {8}/, "")
+        result = <<-eos.gsub(/^ {12}/, "")
             vector<double> getMaxMin(vector<double> const &numbers,
                                      string const &name,
                                      int pivot,

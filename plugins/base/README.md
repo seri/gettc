@@ -4,9 +4,12 @@ Contains stuffs that other Gettc plugins may want to use.
 
 * `rake test:cpp` Passed
 * `rake test:engine` Passed
-* `rake inspect:helper` OK
 
 ## Change log
+
+### gettc-1.7
+
+* Minor engine.rb refactoring
 
 ### gettc-1.6
         

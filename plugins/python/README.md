@@ -2,12 +2,7 @@ Gettc's Python plugin to generate Python solutions for TopCoder problems.
 
 ## User requirements
 
-Python 3 is required to run the generated solutions. If your system contains 
-multiple pythons, make sure that Python 3 is the default. That is, `python --version`
-should returns 3.x.y. 
-
-If you must keep Python 2 as default, change `/usr/bin/env python` to
-`/usr/bin/env python3` in `~/.gettc/template/solve/python/{name}Runner.py`.
+Python 3 is required to run the generated solutions.
 
 ## Development status
 
@@ -17,6 +12,12 @@ If you must keep Python 2 as default, change `/usr/bin/env python` to
 * `rake run` OK
 
 ## Change log
+
+### gettc-1.7
+
+* Auto detect path to python3 so things are smoother under systems with both
+python2 and python 3.
+* Minor engine.rb refactoring.
 
 ### gettc-1.6.2
 

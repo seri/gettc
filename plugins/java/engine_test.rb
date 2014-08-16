@@ -5,12 +5,12 @@ include Gettc
 
 class JavaEngineTest < Test::Unit::TestCase
     def setup
-        func = Signature.new TArray.new(TDouble), "getMaxMin"
-        vars = [ Signature.new(TArray.new(TArray.new(TInt)), "numbers"),
+        @func = Signature.new TArray.new(TDouble), "getMaxMin"
+        @vars = [ Signature.new(TArray.new(TArray.new(TInt)), "numbers"),
                  Signature.new(TString, "name"),
                  Signature.new(TInt, "pivot"),
                  Signature.new(TBoolean, "rounded") ]
-        @engine = JavaEngine.new func, vars
+        @engine = JavaEngine.new @func, @vars
     end
     def test_declare
         result = <<-eos.gsub(/^ {12}/, "")
@@ -22,7 +22,7 @@ class JavaEngineTest < Test::Unit::TestCase
         assert_equal result.rstrip, @engine.declare
     end
     def test_array_depth
-        assert_equal 1, JavaArray.get_depth(@engine.func.type)        
+        assert_equal 1, JavaArray.get_depth(@func.type)        
         assert_equal 2, JavaArray.get_depth(TArray.new(TArray.new(TString)))
     end
     def test_input

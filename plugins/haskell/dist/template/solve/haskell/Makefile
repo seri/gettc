@@ -17,10 +17,6 @@ setup :
 main : <%= prob.name %>Runner.hs <%= prob.name %>.hs setup
 	$(COMPILER) -o $(OUTPUT_D)/<%= prob.name %>Runner $<
 
-test : <%= prob.name %>Test.hs <%= prob.name %>.hs setup
-	$(COMPILER) -o $(OUTPUT_D)/<%= prob.name %>Test $<
-	$(OUTPUT_D)/<%= prob.name %>Test
-
 demo : main
 	$(call run,verbose,demo) 
 

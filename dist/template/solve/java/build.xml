@@ -59,22 +59,6 @@ java -cp "`dirname $0`${path.separator}${lib}" <%= prob.name %>Runner $$*
             <arg value="${output.dir}/sys"/>
         </exec>
     </target>
-
-    <target name="compile-test">
-        <mkdir dir="${output.dir}"/>
-        <javac srcdir="." destdir="${output.dir}" 
-               includes="<%= prob.name %>.java,<%= prob.name %>Test.java"
-               includeantruntime="yes">
-            <classpath location="${output.dir}"/>
-        </javac>
-    </target>
-    <target name="test" depends="compile-test">
-        <junit fork="yes" haltonfailure="yes">
-            <classpath location="${output.dir}"/>
-            <formatter type="plain" usefile="false" />
-            <test name="<%= prob.name %>Test"/>
-        </junit>
-    </target>
     
     <target name="clean">
         <delete dir="${output.dir}"/>

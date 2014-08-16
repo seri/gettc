@@ -1,5 +1,26 @@
-This document is for new users. Existing users can find details about updating by
-reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
+Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
+system tests, then finally generate a naive solution for some the following
+languages:
+
+- C++
+- Haskell
+- Java
+- Python 3
+- Go
+
+And support for more languages is just around the corner.
+
+You write the function definition and the generated solution will take care of
+running it against the downloaded input and output files.
+
+TopCoder is a heaven for programmers. Solving algorithmic problems is a great
+way to embrace the passion for programming. There are problems for all levels. 
+A strong academic background is not required to enjoy it. If you like Project
+Euler, you will probably love TopCoder. 
+
+However, the TopCoder online arena is quite inconvenient and supports only a 
+few languages. Gettc's goal is to make the practice of solving algorithmic
+problems convenient and fun, and in your desired language.
 
 # At a glance
 
@@ -53,8 +74,10 @@ Output:
     6 cases checked, 5 failed, 0 errored
     Failed cases: 0 1 2 4 5
 
-5/6 test cases failed. That sucks. Now edit the file `DigitHoles.cpp` with the
-following content:
+As you can see, the generated solution actually managed to solve 1 test case. 
+Gettc is pretty smart after all. Anyway, you still need to do the hard work.
+Open the file `DigitHoles.cpp` in your favourite editor and enter the following
+content:
 
     int numHoles(int number) {
         static int holes[] = {1, 0, 0, 0, 1, 0, 1, 0, 2, 1};
@@ -97,31 +120,6 @@ Output:
 
 Congratulations! You have solved a TopCoder problem like a boss!
 
-# Introduction
-
-Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
-system tests, then finally generate a naive solution for some the following
-languages:
-
-- C++
-- Haskell
-- Java
-- Python 3
-
-And support for more languages is just around the corner.
-
-You write the function definition and the generated solution will take care of
-running it against the downloaded input and output files.
-
-TopCoder is a heaven for programmers. Solving algorithmic problems is a great
-way to embrace the passion for programming. There are problems for all levels. 
-A strong academic background is not required to enjoy it. If you like Project
-Euler, you will probably love TopCoder. 
-
-However, the TopCoder online arena is quite inconvenient and supports only a 
-few languages. Gettc's goal is to make the practice of solving algorithmic
-problems convenient and fun, and in your desired language.
-
 # Installation
 
 The following packages are hard dependencies:
@@ -149,6 +147,7 @@ Now there are a couple things you need to get depending on your desired language
 - For Haskell: [Come here](https://github.com/seri/gettc/blob/master/plugins/haskell/README.md)
 - For Java: [Come here](https://github.com/seri/gettc/blob/master/plugins/java/README.md)
 - For Python: [Come here](https://github.com/seri/gettc/blob/master/plugins/python/README.md)
+- For Go: [Come here](https://github.com/seri/gettc/blob/master/plugins/go/README.md)
 
 # Tips
 
@@ -163,3 +162,6 @@ there is no `~/.gettc` and regenerate that.
 Such system doesn't need to have gettc, or even ruby, but it will need the 
 standard gcc toolchain, and of course the compiler for your desired language
 (if it isn't C++). You will also need to copy `~/.gettc` to that system.
+
+    This document is for new users. Existing users can find details about updating by
+    reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).

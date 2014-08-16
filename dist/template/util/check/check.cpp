@@ -7,7 +7,7 @@ using namespace std;
 %>
 int main(int argc, char *argv[]) { 
     try { 
-        <%= engine.func.type.to_cpp %> output, result;
+        <%= func.type.to_cpp %> output, result;
         ifstream ifs;
         
         ifs.open(argv[1]);

@@ -10,3 +10,7 @@ Only g++ is required.
 * `rake run` OK
 
 ## Change log
+
+### gettc-1.7
+
+* Remove target `test` in template Makefile.

@@ -80,7 +80,7 @@ module Gettc
             return type unless type.is_a? TArray
             return get_elem_type type.subtype
         end
-        attr_accessor :name, :boxed_name, :type, :boxed_type
+        attr_reader :name, :boxed_name, :type, :boxed_type
         def initialize sig
             @sig = sig
             @name = sig.name
@@ -152,21 +152,25 @@ module Gettc
         end 
     end
     class JavaEngine
-        attr_accessor :func, :vars
+        attr_accessor :declare, :input, :output
         def initialize func, vars
             @func = func
-            @vars = vars            
+            @vars = vars
+            compute_declare
+            compute_input
+            compute_output
         end
-        def declare 
+    private
+        def compute_declare 
             ret = "public "
             ret << @func.to_java << "("
                 indent = " " * ret.size
                 temp = @vars.map do |var| var.to_java end
                 ret << temp.join(",\n#{indent}")
             ret << ")"
-            return ret
+            @declare = ret
         end
-        def input
+        def compute_input
             temp = @vars.map do |var| 
                 ret = ""
                 if var.type.is_a? TArray
@@ -186,9 +190,9 @@ module Gettc
                 end
                 ret
             end
-            return temp.join "\nreader.next();\n\n"
+            @input = temp.join "\nreader.next();\n\n"
         end
-        def output
+        def compute_output
             ret = ""
             caller = "solver." + @func.name + "("
             temp = @vars.map do |var| var.name end
@@ -201,7 +205,7 @@ module Gettc
             else
                 ret << "writer.write(" << caller << ");"
             end
-            return ret
+            @output = ret
         end
     end
 end

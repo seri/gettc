@@ -58,33 +58,40 @@ module Gettc
         end
     end
     class CppEngine
-        attr_accessor :func, :vars
+        attr_reader :declare, :input, :output
         def initialize func, vars
             @func = func
             @vars = vars            
+            compute_declare
+            compute_input
+            compute_output
         end
-        def declare
-            ret = "    " + @func.to_cpp
-            ret << "("
-                indent = " " * ret.size
-                temp = @vars.map do |var| var.to_cpp true end
-                ret << temp.join(",\n#{indent}")
-            ret << ")"
-            return ret
+    private
+        def compute_declare
+            @declare = @func.to_cpp
+            @declare << "("
+                indent = " " * @declare.size
+                temp = @vars.map do |var| 
+                    var.to_cpp true 
+                end
+                @declare << temp.join(",\n#{indent}")
+            @declare << ")"
         end
-        def input
+        def compute_input
             temp = @vars.map do |var|
                 x = var.to_cpp
                 x << "; tc::read(ifs, "
                 x << var.name
                 x << ");"
             end
-            return temp.join " tc::next(ifs);\n"
+            @input = temp.join " tc::next(ifs);\n"
         end
-        def output
-            ret = "tc::show(ofs, solver." << @func.name << "("
-            temp = @vars.map do |var| var.name end
-            ret << temp.join(", ") << "));"
+        def compute_output
+            @output = "tc::show(ofs, solver." << @func.name << "("
+            temp = @vars.map do |var| 
+                var.name 
+            end
+            @output << temp.join(", ") << "));"
         end
     end
 end

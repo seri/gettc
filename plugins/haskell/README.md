@@ -17,6 +17,11 @@ But it could have been bundled by your Haskell installer. Now:
 
 ## Change log
 
+### gettc-1.7
+
+* Remove target `test` in template Makefile.
+* Minor engine.rb refactoring.
+
 ### gettc-1.6
 
 * Delete the unit test file in template.

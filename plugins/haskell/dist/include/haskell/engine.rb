@@ -1,11 +1,5 @@
 require "gettc/types" 
 
-class String
-    def uncapitalize
-        return self[0, 1].downcase + self[1..-1]
-    end
-end
-
 module Gettc
     class Type
         def to_haskell
@@ -73,14 +67,21 @@ module Gettc
         end
     end
     class HaskellEngine
-        attr_accessor :func, :vars
+        attr_reader :func, :vars, :declare, :input, :output
         def initialize func, vars
-            @func = Signature.new func.type, func.name.uncapitalize
+            @func = Signature.new func.type, uncapitalize(func.name)
             @vars = vars.map do |var|
-                Signature.new var.type, var.name.uncapitalize
+                Signature.new var.type, uncapitalize(var.name)
             end
+            compute_declare
+            compute_input
+            compute_output
         end
-        def declare
+    private
+        def uncapitalize str
+            return str[0, 1].downcase + str[1..-1]
+        end
+        def compute_declare
             ret = ""
             ret << func.name << " :: "
 
@@ -91,9 +92,9 @@ module Gettc
             temp = vars.map do |var| var.name end
             ret << temp.join(" ") << " = " << func.type.dumb_haskell
 
-            return ret
+            @declare = ret
         end
-        def input
+        def compute_input
             ret = "getVars :: TC.Parser ("
             temp = @vars.map do |var| var.type.to_haskell end
             ret << temp.join(", ") << ")\n"
@@ -111,14 +112,14 @@ module Gettc
                 temp = @vars.map do |var| var.name end
                 ret << temp.join(", ")
             ret << ")"
-            return ret
+            @input = ret
         end
-        def output
+        def compute_output
             ret = ""
             ret << @func.name << " "
             temp = vars.map do |var| var.name end
             ret << temp.join(" ")
-            return ret
+            @output = ret
         end
     end
 end

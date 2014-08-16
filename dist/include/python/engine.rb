@@ -1,4 +1,5 @@
-require "gettc/types" 
+require "gettc/types"
+require "mkmf"
 
 module Gettc
     class Type
@@ -25,22 +26,44 @@ module Gettc
         end
     end
     class PythonEngine
-        attr_accessor :func, :vars
+        attr_reader :arglist, :input, :shebang
         def initialize func, vars
-            @func = func
-            @vars = vars            
-        end
-        def vars_list
-            temp = @vars.map do |var|
+            temp = vars.map do |var|
                 var.name
             end
-            return temp.join ", "
-        end
-        def input
-            temp = @vars.map do |var| 
+            @arglist = temp.join ", "
+
+            temp = vars.map do |var| 
                 var.name + ' = reader.next("' + var.type.to_s + '")'
             end
-            return temp.join "\nreader.next()\n"
+            @input = temp.join "\nreader.next()\n"
+
+            @shebang = "#! "
+            @shebang << python3_path
+        end
+    private
+        def python3_path
+            default = "/usr/bin/env python"
+
+            version = system_q("python --version").split
+            if version.size != 2 || version[0].upcase != "PYTHON" then
+                return default
+            end
+
+            version = version[1].split(".")[0].to_i
+            if version >= 3 then
+                return default
+            end 
+
+            python3 = system_q "which python3"
+            return python3.empty? ? default : python3
+        rescue
+            return default
+        end
+        def system_q command
+            IO.popen command, err: [:child, :out] do |f|
+                return f.gets
+            end
         end
     end
 end

@@ -17,10 +17,6 @@ setup :
 main : <%= prob.name %>Runner.cpp <%= prob.name %>.cpp setup
 	$(COMPILER) -o $(OUTPUT_D)/<%= prob.name %>Runner $<
 
-test : <%= prob.name %>Test.cpp <%= prob.name %>.cpp setup
-	$(COMPILER) -lboost_unit_test_framework -o $(OUTPUT_D)/<%= prob.name %>Test $<
-	$(OUTPUT_D)/<%= prob.name %>Test
-
 demo : main
 	$(call run,verbose,demo) 
 

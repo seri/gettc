@@ -78,7 +78,7 @@ def try_run_solutions plugin_d
                 return
             end
             with_dir "#{prob_d}/solve/#{plugin_name}" do
-                sh "make --quiet demo", $options
+                sh "make demo", $options
                 puts 
             end
         end

@@ -12,8 +12,8 @@ class PythonEngineTest < Test::Unit::TestCase
                  Signature.new(TBoolean, "rounded") ]
         @engine = PythonEngine.new func, vars
     end
-    def test_vars_list
-        assert_equal "numbers, name, pivot, rounded", @engine.vars_list
+    def test_arglist
+        assert_equal "numbers, name, pivot, rounded", @engine.arglist
     end
     def test_input
         result = <<-eos.gsub(/ {12}/, "")

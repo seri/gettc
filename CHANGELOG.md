@@ -10,6 +10,11 @@ As of version 1.6 and onward, gettc will replace the contents in `$GETTC_HOME`
 make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
+## 1.7
+Released August 3rd, 2014
+* Add Golang support.
+* Minor template changes.
+
 ## 1.6
 
 ### 1.6.2

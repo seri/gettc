@@ -1,5 +1,5 @@
-#! /usr/bin/env python
-
+<%= engine = PythonEngine.new func, vars
+    engine.shebang %>
 import os, sys
 import <%= prob.name %>
 
@@ -15,10 +15,9 @@ def main():
         input = fi.read()
         reader = tc.Reader(input)
     
-<%= engine = PythonEngine.new func, vars
-    engine.input.gsub(/^/, ' ' * 8) %>
+<%= engine.input.gsub(/^/, ' ' * 8) %>
 
-    result = <%= prob.name %>.<%= func.name %>(<%= engine.vars_list %>)
+    result = <%= prob.name %>.<%= func.name %>(<%= engine.arglist %>)
     with open(sys.argv[2], "w") as fo:
         fo.write(tc.write(result, "<%= func.type %>"))
 

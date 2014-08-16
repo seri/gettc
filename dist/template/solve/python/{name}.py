@@ -1,4 +1,4 @@
 <%
     engine = PythonEngine.new func, vars
-%>def <%= func.name %>(<%= engine.vars_list %>):
+%>def <%= func.name %>(<%= engine.arglist %>):
     return <%= func.type.dumb_python %>
