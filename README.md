@@ -1,6 +1,5 @@
 Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
-system tests, then finally generate a naive solution for some the following
-languages:
+system tests, then finally generate a naive solution for the following languages:
 
 - C++
 - Haskell
