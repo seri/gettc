@@ -11,7 +11,13 @@ make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
 ## 1.7
-Released August 3rd, 2014
+
+### 1.7.1
+Released August 16th, 2014
+* Minor engine.rb change in Python plugin.
+
+### 1.7.0
+Released August 16th, 2014
 * Add Golang support.
 * Minor template changes.
 

@@ -1,5 +1,4 @@
 require "gettc/types"
-require "mkmf"
 
 module Gettc
     class Type

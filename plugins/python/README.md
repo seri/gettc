@@ -13,6 +13,10 @@ Python 3 is required to run the generated solutions.
 
 ## Change log
 
+### gettc-1.7.1
+
+* Remove mkmf in engine.rb
+
 ### gettc-1.7
 
 * Auto detect path to python3 so things are smoother under systems with both

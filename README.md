@@ -163,5 +163,5 @@ Such system doesn't need to have gettc, or even ruby, but it will need the
 standard gcc toolchain, and of course the compiler for your desired language
 (if it isn't C++). You will also need to copy `~/.gettc` to that system.
 
-    This document is for new users. Existing users can find details about updating by
-    reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
+> This document is for new users. Existing users can find details about updating by
+> reading the [change log](https://github.com/seri/gettc/blob/master/CHANGELOG.md).
