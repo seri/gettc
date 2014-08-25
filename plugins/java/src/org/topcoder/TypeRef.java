@@ -4,7 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 // Based on an idea by Neal Gafter
-// Seaerch for "super type tokens" if you're curious
+// Search for "super type tokens" if you're curious
 public abstract class TypeRef<T> {
     private final Type type;
     protected TypeRef() {

@@ -7,7 +7,10 @@ system tests, then finally generate a naive solution for the following languages
 - Python 3
 - Go
 
-And support for more languages is just around the corner.
+And support for more languages is just around the corner. 
+    
+    > You can email me to request support for your favourite language. I will
+    > prioritize development on the most requested ones.
 
 You write the function definition and the generated solution will take care of
 running it against the downloaded input and output files.
@@ -121,22 +124,29 @@ Congratulations! You have solved a TopCoder problem like a boss!
 
 # Installation
 
+Gettc works on most operating systems, including Linux, Windows, and Mac OS.
+
 The following packages are hard dependencies:
 
 - [Ruby](http://www.ruby-lang.org/en/downloads/): The
 [Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
 - [RubyGems](http://rubygems.org/pages/download): Many Ruby installations
 already bundle RubyGems.
-- The standard GCC toolset: Most Unix systems have it bundled. Windows users
-may use [MinGW](http://www.mingw.org) or Cygwin.
+- The standard GCC toolset: Specifically, you should be able to run g++ and make
+from the command line. Windows users may use [MinGW](http://www.mingw.org) or
+Cygwin.
+
+    > If you have problems installing on Windows, this 
+    > [https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan](detailed guide) may help.
 
 With those in place, we are aready to go:
 
     $ [sudo] gem install gettc
 
-Once that is done, you should be able to run gettc on the command line. After
-a solution directory is generated, the standard procedure is:
+Once that is done, you should be able to run gettc on the command line. The
+standard procedure is:
 
+    $ gettc problem_id
     $ cd ProblemName/solve/your_language
     $ make
 
