@@ -5,11 +5,11 @@ RUNNER = sh ../../bin/runner.sh
 
 run = $(RUNNER) $1 ./<%= prob.name %>Runner.py $(DATA_D)/$2 $(OUTPUT_D)/$2
 
+default : usage
+
 setup :
 	if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
 	chmod +x <%= prob.name %>Runner.py
-
-default : usage
 
 usage :
 	@cat $(GETTC_HOME)/usage

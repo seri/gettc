@@ -12,6 +12,10 @@ Go version >=1.1
 
 ## Change log
 
+### gettc-1.7.2
+
+* Important bugfix in Makefile: on Windows, GOPATH tends to be quite picky. 
+
 ### gettc-1.7
 
 * Born

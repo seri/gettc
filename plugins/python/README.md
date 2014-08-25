@@ -13,6 +13,10 @@ Python 3 is required to run the generated solutions.
 
 ## Change log
 
+### gettc-1.7.2
+
+* Fix default target in template Makefile.
+
 ### gettc-1.7.1
 
 * Remove mkmf in engine.rb

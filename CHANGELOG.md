@@ -12,6 +12,10 @@ updating.
 
 ## 1.7
 
+### 1.7.2
+Released August 25th, 2014
+* Bugfix for Go plugin on Windows.
+
 ### 1.7.1
 Released August 16th, 2014
 * Minor engine.rb change in Python plugin.

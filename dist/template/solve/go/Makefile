@@ -1,4 +1,4 @@
-GETTC_HOME ?= $(HOME)/.gettc
+GETTC_HOME ?= <%= File.expand_path "~/.gettc" %>
 OUTPUT_D =../../build/go
 DATA_D = ../../data
 RUNNER = sh ../../bin/runner.sh
