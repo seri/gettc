@@ -136,8 +136,8 @@ already bundle RubyGems.
 from the command line. Windows users may use [MinGW](http://www.mingw.org) or
 Cygwin.
 
-> If you have problems installing on Windows, this 
-> [https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan](detailed guide) may help.
+> If you have problems installing on Windows, this may help:
+> https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan
 
 With those in place, we are aready to go:
 
