@@ -9,8 +9,8 @@ system tests, then finally generate a naive solution for the following languages
 
 And support for more languages is just around the corner. 
     
-    > You can email me to request support for your favourite language. I will
-    > prioritize development on the most requested ones.
+> You can email me to request support for your favourite language. I will
+> prioritize development on the most requested ones.
 
 You write the function definition and the generated solution will take care of
 running it against the downloaded input and output files.
@@ -136,8 +136,8 @@ already bundle RubyGems.
 from the command line. Windows users may use [MinGW](http://www.mingw.org) or
 Cygwin.
 
-    > If you have problems installing on Windows, this 
-    > [https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan](detailed guide) may help.
+> If you have problems installing on Windows, this 
+> [https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan](detailed guide) may help.
 
 With those in place, we are aready to go:
 
