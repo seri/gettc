@@ -39,7 +39,12 @@ system tests, then finally generate a naive solution for the following languages
 <li>Java</li>
 <li>Python 3</li>
 <li>Go</li>
-</ul><p>And support for more languages is just around the corner.</p>
+</ul><p>And support for more languages is just around the corner. </p>
+
+<blockquote>
+<p>You can email me to request support for your favourite language. I will
+prioritize development on the most requested ones.</p>
+</blockquote>
 
 <p>You write the function definition and the generated solution will take care of
 running it against the downloaded input and output files.</p>
@@ -164,6 +169,8 @@ while we are it?</p>
 <h1>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
 
+<p>Gettc works on most operating systems, including Linux, Windows, and Mac OS.</p>
+
 <p>The following packages are hard dependencies:</p>
 
 <ul>
@@ -173,17 +180,24 @@ while we are it?</p>
 <li>
 <a href="http://rubygems.org/pages/download">RubyGems</a>: Many Ruby installations
 already bundle RubyGems.</li>
-<li>The standard GCC toolset: Most Unix systems have it bundled. Windows users
-may use <a href="http://www.mingw.org">MinGW</a> or Cygwin.</li>
-</ul><p>With those in place, we are aready to go:</p>
+<li>The standard GCC toolset: Specifically, you should be able to run g++ and make
+from the command line. Windows users may use <a href="http://www.mingw.org">MinGW</a> or
+Cygwin.</li>
+</ul><blockquote>
+<p>If you have problems installing on Windows, this may help:
+<a href="https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan">https://www.quora.com/How-do-I-install-gettc-for-downloading-TopCoder-problems/answer/Rajneesh-Chauhan</a></p>
+</blockquote>
+
+<p>With those in place, we are aready to go:</p>
 
 <pre><code>$ [sudo] gem install gettc
 </code></pre>
 
-<p>Once that is done, you should be able to run gettc on the command line. After
-a solution directory is generated, the standard procedure is:</p>
+<p>Once that is done, you should be able to run gettc on the command line. The
+standard procedure is:</p>
 
-<pre><code>$ cd ProblemName/solve/your_language
+<pre><code>$ gettc problem_id
+$ cd ProblemName/solve/your_language
 $ make
 </code></pre>
 
