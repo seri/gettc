@@ -12,6 +12,14 @@ updating.
 
 ## 1.7
 
+### 1.7.4
+Released October 11th, 2014
+* Refactor the versioning a bit.
+
+### 1.7.3
+Released October 11th, 2014
+* Fix the time command in `runner.sh` once again.
+
 ### 1.7.2
 Released August 25th, 2014
 * Bugfix for Go plugin on Windows.

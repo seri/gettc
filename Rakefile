@@ -4,6 +4,7 @@ require "rake/clean"
 require "fileutils"
 
 require_relative "helper"
+require_relative "core/lib/version"
 
 CLEAN << "pkg"
 CLEAN << "temp"
@@ -13,7 +14,7 @@ spec = Gem::Specification.new do |s|
     s.name = "gettc"
     s.summary = "TopCoder offline arena supporting multiple languages"
     s.description = "Given a TopCoder problem ID, gettc downloads the problem specification, parses the whole thing into a Markdown file, generates inputs/outputs based on the Examples and System Tests given, and finally generates basic solution files for you to get started."
-    s.version = "1.7.2"
+    s.version = Gettc::VERSION
 
     s.author = "Seri"
     s.email = "seritrinh@gmail.com"

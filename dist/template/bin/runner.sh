@@ -7,15 +7,19 @@ data_d="$3"
 output_d="$4"
 ostream=/dev/null
 
+command_exists () {
+    type "$1" > /dev/null 2>&1 ;
+}
+
 timeit () {
-    if [ command -v /usr/bin/time >/dev/null 2>&1 ]; then
+    if command_exists /usr/bin/time ; then
         /usr/bin/time -o /dev/null echo "Testing availability of the time command" >/dev/null
         if [ $? -eq 0 ]; then
             /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
             return
         fi
     elif [ $mode = 'verbose' ]; then
-        if [ command -v time >/dev/null 2>&1 ]; then
+        if command_exists time ; then
             time "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
             return
         fi
