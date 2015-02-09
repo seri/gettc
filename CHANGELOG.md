@@ -12,6 +12,10 @@ updating.
 
 ## 1.7
 
+### 1.7.5
+Released Februrary 9th, 2015
+* Fix the time command portability issue on OS X (issue reported by yigezhe).
+
 ### 1.7.4
 Released October 11th, 2014
 * Refactor the versioning a bit.
