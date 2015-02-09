@@ -13,7 +13,7 @@ command_exists () {
 
 timeit () {
     if command_exists /usr/bin/time ; then
-        /usr/bin/time -o /dev/null echo "testing availability of the time command" &>/dev/null
+        /usr/bin/time -o /dev/null echo "Testing availability of the time command" &>/dev/null
         if [ $? -eq 0 ]; then
             /usr/bin/time -o $ostream "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
             return
@@ -46,17 +46,17 @@ view_file () {
 }
 
 report_case () {
-    write '    input: '
+    write '    Input: '
     view_file "$data_d/$test_case.in"
-    write '    expected: '
+    write '    Expected: '
     view_file "$data_d/$test_case.out"
-    write '    received: '
+    write '    Received: '
     view_file "$output_d/$test_case.out"
 }
 
 init () {
-    export time="time: %es - memory: %mk"
-    export timeformat=%3lr
+    export TIME="Time: %es - Memory: %MK"
+    export TIMEFORMAT=%3lR
 
     if [ ! -d "$output_d" ]; then
         mkdir "$output_d"
@@ -94,34 +94,34 @@ main () {
             test_case=`basename "$input"` 
             test_case=${test_case%.in}
 
-            write "check $test_case ... "
+            write "Check $test_case ... "
             timeit "$solver" "$data_d/$test_case.in" "$output_d/$test_case.out"
             "$checker" "$data_d/$test_case.out" "$output_d/$test_case.out" > $ostream
             retcode=$?
 
             if [ $retcode -eq 0 ]; then
-                puts 'passed'
+                puts 'Passed'
 
             elif [ $retcode -eq 1 ]; then
                 fails=$(( fails + 1 ))
                 failstr="$failstr $test_case"
-                puts 'failed'
+                puts 'Failed'
                 report_case "$test_case"
 
             else 
                 errors=$(( errors + 1 ))
                 errorstr="$errorstr $test_case"
-                puts 'error'
+                puts 'Error'
                 report_case "$test_case"
             fi
         fi
     done
     echo "$cases cases checked, $fails failed, $errors errored"
     if [ $fails -gt 0 ]; then
-        echo "failed cases:${failstr}"
+        echo "Failed cases:${failstr}"
     fi
     if [ $errors -gt 0 ]; then
-        echo "errored cases:${errorstr}"
+        echo "Errored cases:${errorstr}"
     fi
 
 }
