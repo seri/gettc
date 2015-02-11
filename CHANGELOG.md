@@ -12,6 +12,10 @@ updating.
 
 ## 1.7
 
+### 1.7.5.2
+Released Februrary 11th, 2015
+* Fix verbosity of `runner.sh` on Linux.
+
 ### 1.7.5.1
 Released Februrary 9th, 2015
 * Fix the time command issue on OS X (issue reported by yigezhe).
