@@ -6,13 +6,13 @@ usage :
 	@cat $(GETTC_HOME)/usage
 
 demo :
-	ant demo
+	@ant demo
 
 sys :
-	ant sys
+	@ant sys
 
 sysv :
-	ant sysv
+	@ant sysv
 
 clean :
-	ant clean
+	@ant clean

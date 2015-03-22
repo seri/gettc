@@ -46,50 +46,54 @@ Now:
 
 Output:
 
-    Check 0 ... 0m0.328s
-    Failed
-        Input: <42>
-        Expected: <1>
-        Received: <0>
-    Check 1 ... 0m0.015s
-    Failed
-        Input: <669>
-        Expected: <3>
-        Received: <0>
-    Check 2 ... 0m0.016s
-    Failed
+    [gettc] Compile solver                                                                   
+    [gettc] Compile checker                                                                  
+    [gettc] Run test cases                                                                   
+    Case 0 ... 2ms Failed                                                                    
+        Input: <42>                                                                          
+        Expected: <1>                                                                        
+        Received: <0>                                                                        
+    Case 1 ... 1ms Failed                                                                    
+        Input: <669>                                                                         
+        Expected: <3>                                                                        
+        Received: <0>                                                                        
+    Case 2 ... 1ms Failed                                                                    
         Input: <688>
         Expected: <5>
         Received: <0>
-    Check 3 ... 0m0.015s
-    Passed
-    Check 4 ... 0m0.016s
-    Failed
+    Case 3 ... 1ms Passed
+    Case 4 ... 1ms Failed
         Input: <456>
         Expected: <2>
         Received: <0>
-    Check 5 ... 0m0.016s
-    Failed
+    Case 5 ... 1ms Failed
         Input: <789>
         Expected: <3>
         Received: <0>
-    6 cases checked, 5 failed, 0 errored
-    Failed cases: 0 1 2 4 5
+    [gettc] Summary
+    6 cases checked, 5 failures, 0 errors
+    Failures: 0, 1, 2, 4, 5
+        Total time taken: 7 ms
+        Average time taken: 1 ms
+        Slowest running case: 2 ms (case 0)
 
 As you can see, the generated solution actually managed to solve 1 test case. 
 Gettc is pretty smart after all. Anyway, you still need to do the hard work.
 Open the file `DigitHoles.cpp` in your favourite editor and enter the following
 content:
 
-    int numHoles(int number) {
-        static int holes[] = {1, 0, 0, 0, 1, 0, 1, 0, 2, 1};
-        int ret = 0;
-        while (number > 0) {
-            ret += holes[number % 10];
-            number /= 10;
+    class DigitHoles {
+    public:
+        int numHoles(int number) {
+            static int holes[] = {1, 0, 0, 0, 1, 0, 1, 0, 2, 1};
+            int ret = 0;
+            while (number > 0) {
+                ret += holes[number % 10];
+                number /= 10;
+            }
+            return ret;
         }
-        return ret;
-    }
+    };
 
 And then try again:
 
@@ -97,19 +101,20 @@ And then try again:
 
 You should see:
 
-    Check 0 ... 0m0.141s
-    Passed
-    Check 1 ... 0m0.015s
-    Passed
-    Check 2 ... 0m0.016s
-    Passed
-    Check 3 ... 0m0.015s
-    Passed
-    Check 4 ... 0m0.016s
-    Passed
-    Check 5 ... 0m0.015s
-    Passed
-    6 cases checked, 0 failed, 0 errored
+    [gettc] Compile solver
+    [gettc] Compile checker
+    [gettc] Run test cases
+    Case 0 ... 2ms Passed
+    Case 1 ... 1ms Passed
+    Case 2 ... 1ms Passed
+    Case 3 ... 1ms Passed
+    Case 4 ... 1ms Passed
+    Case 5 ... 2ms Passed
+    [gettc] Summary
+    6 cases checked, 0 failures, 0 errors
+        Total time taken: 8 ms
+        Average time taken: 1 ms
+        Slowest running case: 2 ms (case 0)
 
 Good. We have passed all the example tests. Why not challenge the system tests
 while we are it?
@@ -118,7 +123,14 @@ while we are it?
 
 Output:
 
-    131 cases checked, 0 failed, 0 errored
+    [gettc] Compile solver
+    [gettc] Compile checker
+    [gettc] Run test cases
+    [gettc] Summary
+    131 cases checked, 0 failures, 0 errors
+        Total time taken: 233 ms
+        Average time taken: 1 ms
+        Slowest running case: 7 ms (case 2)
 
 Congratulations! You have solved a TopCoder problem like a boss!
 

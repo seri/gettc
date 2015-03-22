@@ -10,6 +10,12 @@ As of version 1.6 and onward, gettc will replace the contents in `$GETTC_HOME`
 make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
+## 1.8
+
+### 1.8.0
+Released March 22th, 2015
+* Improve performance reports.
+
 ## 1.7
 
 ### 1.7.5.2

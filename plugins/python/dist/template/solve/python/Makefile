@@ -3,13 +3,13 @@ OUTPUT_D = ../../build/python
 DATA_D = ../../data
 RUNNER = sh ../../bin/runner.sh
 
-run = $(RUNNER) $1 ./<%= prob.name %>Runner.py $(DATA_D)/$2 $(OUTPUT_D)/$2
+run = @$(RUNNER) $1 ./<%= prob.name %>Runner.py $(DATA_D)/$2 $(OUTPUT_D)/$2
 
 default : usage
 
 setup :
-	if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
-	chmod +x <%= prob.name %>Runner.py
+	@if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
+	@chmod +x <%= prob.name %>Runner.py
 
 usage :
 	@cat $(GETTC_HOME)/usage
@@ -24,4 +24,4 @@ sysv : setup
 	$(call run,verbose,sys)
 
 clean :
-	rm -rf $(OUTPUT_D)
+	@rm -rf $(OUTPUT_D)
