@@ -37,7 +37,7 @@ can find the ID for any problem if you look at the URL for
     You have given ID = 11127
     Downloading problem to raw HTML ... Done
     Parsing problem from raw HTML ... Done
-    Generating problem diectory for DigitHoles ... Done
+    Generating problem directory for DigitHoles ... Done
 
 Now:
 
