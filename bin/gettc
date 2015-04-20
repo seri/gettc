@@ -75,7 +75,7 @@ gettc reset: Bring all settings to default state.
         prob = parser.parse html
         puts "Done"
         
-        print "Generating problem diectory for #{prob.name} ... "
+        print "Generating problem directory for #{prob.name} ... "
         generator.generate prob
         puts "Done"
     rescue TemplateError => terr
