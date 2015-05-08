@@ -105,7 +105,15 @@ public class TopcoderReader {
     }
     
     private Character nextCharacter() throws IOException {
-        expect('\''); char c = nextChar(); expect('\'');
+        char c = nextChar();
+        switch (c) {
+            case ENDF:
+                throw new ParseException("Expect a character before end of input");
+            case '\'':
+                char ret = nextChar();
+                expect('\'');
+                return ret;
+        }
         return c;
     }
     

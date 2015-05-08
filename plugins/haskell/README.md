@@ -17,6 +17,10 @@ But it could have been bundled by your Haskell installer. Now:
 
 ## Change log
 
+### gettc-1.8.1
+
+* Fix Character parsing (allowing a Character to be either quoted or unquoted)
+
 ### gettc-1.7
 
 * Remove target `test` in template Makefile.

@@ -7,6 +7,10 @@ Contains stuffs that other Gettc plugins may want to use.
 
 ## Change log
 
+### gettc-1.8.1
+
+* Fix Character parsing (allowing a Character to be either quoted or unquoted)
+
 ### gettc-1.7
 
 * Minor engine.rb refactoring

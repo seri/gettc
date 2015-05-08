@@ -27,6 +27,10 @@ Mind the version number. Last time I checked, things didn't work for junit 4.11.
 
 ## Change log
 
+### gettc-1.8.1
+
+* Fix Character parsing (allowing a Character to be either quoted or unquoted)
+
 ### gettc-1.7
 
 * Remove target `test` in template Makefile.

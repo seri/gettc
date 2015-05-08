@@ -85,20 +85,25 @@ class GettcRunner
 
         if ret != true
             @errors << n
-            @log.debug "Error\n"
+            @log.debug "Error (cannot execute solver)\n"
         else
-            system "#{@checker} #{expected} #{received}"
-            ret = $?.exitstatus
-            case ret
-            when 0
-                @log.debug "Passed\n"
-            when 1
-                @log.debug "Failed\n"
-                @failures << n
-                print_case n if @verbose
-            when 2
-                @log.debug "Error\n"
-                @errors << n
+            ret = system "#{@checker} #{expected} #{received}"
+            if ret != true
+                @errors << n 
+                @log.debug "Error (cannot execute checker)\n"
+            else
+                ret = $?.exitstatus
+                case ret
+                when 0
+                    @log.debug "Passed\n"
+                when 1
+                    @log.debug "Failed\n"
+                    @failures << n
+                    print_case n if @verbose
+                when 2
+                    @log.debug "Error (checker reported error)\n"
+                    @errors << n
+                end
             end
         end 
     end
@@ -129,7 +134,7 @@ class GettcRunner
         puts "[gettc] Summary"
         puts "#{@total} cases checked, #{@failures.size} failures, #{@errors.size} errors"
         print_array "Failures", @failures
-        print_array " Errors", @errors
+        print_array "Errors", @errors
 
         if @total > 0
             sum = @elapsed.inject 0, :+

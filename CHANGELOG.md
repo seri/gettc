@@ -10,7 +10,12 @@ As of version 1.6 and onward, gettc will replace the contents in `$GETTC_HOME`
 make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
+
 ## 1.8
+
+### 1.8.1
+Release May 7th, 2015
+* Fix Character parsing across all plugins (issue reported by agsha)
 
 ### 1.8.0
 Released March 22th, 2015

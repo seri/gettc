@@ -157,8 +157,9 @@ func TestReadByte(t *testing.T) {
     var (
         xs = []aTest {
             aTest{"'H'ello", 'H', true},
-            aTest{"\n\t 'H'23", 'H', true},
-            aTest{"Hello", 'H', false},
+            aTest{"\n\t 'A'23", 'A', true},
+            aTest{"Bello", 'B', true},
+            aTest{"'C", 'C', false},
         }
         got byte
     )
@@ -320,14 +321,15 @@ func TestReadAll(t *testing.T) {
         age int
         gender byte
         average float32
+		grade byte
         courses []string
         grades [][]float64
     )
-    in := "\"Joe\", 20, 'M', 7.5, [\"Math\", \"Computer \"Science\"\"], [[7, 8], []]"
+    in := "\"Joe\", 20, 'M', 7.5, C, [\"Math\", \"Computer \"Science\"\"], [[7, 8], []]"
     br := newReader(in)
     f := fmt.Sprintf("Read(%v)", in)
-    Read(br, &name, &age, &gender, &average, &courses, &grades)
-    if name != "Joe" || age != 20 || average != 7.5 || gender != 'M' ||
+    Read(br, &name, &age, &gender, &average, &grade, &courses, &grades)
+    if name != "Joe" || age != 20 || average != 7.5 || gender != 'M' || grade != 'C' ||
         !reflect.DeepEqual(courses, []string{"Math", "Computer \"Science\""}) ||
         !reflect.DeepEqual(grades, [][]float64{{7, 8}, {}}) {
         t.Errorf(f + " produces (%q, %d, &q, %f, %v, %v)", name, age, gender, average, courses, grades)

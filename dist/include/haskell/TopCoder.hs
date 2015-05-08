@@ -25,12 +25,16 @@ next = do
     return ()
 
 
-parseChar :: Parser Char
-parseChar = do 
+parseQuotedChar :: Parser Char
+parseQuotedChar = do 
     char '\''
     ret <- anyChar
     char '\''
     return ret
+
+parseChar :: Parser Char
+parseChar = parseQuotedChar <|> anyChar
+
 
 parseBool :: Parser Bool
 parseBool = do 

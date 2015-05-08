@@ -108,12 +108,12 @@ namespace TopCoder {
     }
 
     void read(std::istream &is, char &c) {
-        _expect(is, '\'');
-        is.get(c);
-        if (c == '\'') {
-            c = 0;
-        } else {
+        _spaces(is); char ch; is.get(ch);
+        if (ch == '\'') {
+            is.get(c);
             _expect(is, '\'');
+        } else {
+            c = ch;
         }
     }
 

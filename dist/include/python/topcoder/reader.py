@@ -101,10 +101,14 @@ class ReaderInternal(object):
 
     def next_char(self):
         self.spaces()
-        self.expect("'")
         c = self.token()
+        if c == "'":
+            self.pos += 1
+            ret = self.token()
+            self.pos += 1
+            self.expect("'")
+            return ret
         self.pos += 1
-        self.expect("'")
         return c
 
     def next_boolean(self):

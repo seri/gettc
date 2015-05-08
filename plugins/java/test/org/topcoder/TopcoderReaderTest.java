@@ -68,6 +68,10 @@ public class TopcoderReaderTest {
         char c = (Character) reader.next(Character.class);
         assertEquals('c', c);
 
+        source("c");
+        c = (Character) reader.next(Character.class);
+        assertEquals('c', c);
+
         source("\"Hello World\"");
         String s = (String) reader.next(String.class);
         assertEquals("Hello World", s);
@@ -116,11 +120,12 @@ public class TopcoderReaderTest {
     }
 
     @Test public void realLife() throws IOException {
-        source("\"Seri\", 'M',\tfaLSe\t,99, [\"Welcome to \"Code Jam\" ?\",\n \"\",\n \"Hey!\"]");
+        source("\"Seri\", 'M',\tfaLSe\t,99, C, [\"Welcome to \"Code Jam\" ?\",\n \"\",\n \"Hey!\"]");
         String name = (String) reader.next(String.class); reader.next();
         char gender = (Character) reader.next(Character.class); reader.next();
         boolean passed = (Boolean) reader.next(Boolean.class); reader.next();
         int age = (Integer) reader.next(Integer.class); reader.next();
+        char grade = (Character) reader.next(Character.class); reader.next();
         List<String> textsBoxed = (List<String>) reader.next(new TypeRef<List<String>>(){}.getType());
 
         String[] texts = new String[textsBoxed.size()];
@@ -132,6 +137,7 @@ public class TopcoderReaderTest {
         assertEquals('M', gender);
         assertEquals(false, passed);
         assertEquals(99, age);
+        assertEquals('C', grade);
         assertEquals(3, texts.length);
         assertEquals("Welcome to \"Code Jam\" ?", texts[0]);
         assertEquals("", texts[1]);

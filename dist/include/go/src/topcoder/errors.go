@@ -1,3 +1,7 @@
+// I hope to migrate this codebase to this style soon, to avoid the error
+// checking madness: http://blog.golang.org/errors-are-values. However, it
+// will break compatibility so I'll wait for a timely chance.
+
 package topcoder
 
 import (

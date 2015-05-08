@@ -71,6 +71,18 @@ TEST(ReadTest, ReadNegativeDouble) {
     EXPECT_EQ(-123.04, grade);
 }
 
+TEST(ReadTest, ReadQuotedCharacter) {
+    istringstream iss("'B'");
+    char grade; read(iss, grade);
+    EXPECT_EQ('B', grade);
+}
+
+TEST(ReadTest, ReadUnquotedCharacter) {
+    istringstream iss("C");
+    char grade; read(iss, grade);
+    EXPECT_EQ('C', grade);
+}
+
 TEST(ReadTest, ReadStringEasy) {
     istringstream iss("\"The Red Wedding\"    ");
     string horror; read(iss, horror);

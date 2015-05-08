@@ -12,8 +12,6 @@ import (
 func spaces(br *bufio.Reader) error {
     for {
         switch b, err := br.ReadByte(); {
-        case err == io.EOF:
-            return nil
         case err != nil:
             return err
         case !unicode.IsSpace(rune(b)):
@@ -26,8 +24,6 @@ func spaces(br *bufio.Reader) error {
 
 func genericExpect(br *bufio.Reader, what string, predicate func(byte) bool) error {
     switch b, err := br.ReadByte(); {
-    case err == io.EOF:
-        return io.ErrUnexpectedEOF
     case err != nil:
         return err
     case !predicate(b):
@@ -64,19 +60,20 @@ func readChar(br *bufio.Reader, pChar *byte) error {
     if err = spaces(br); err != nil {
         return err
     }
-    if err = expect(br, '\''); err != nil {
-        return err
-    }
     switch b, err = br.ReadByte(); {
-    case err == io.EOF:
-        return io.ErrUnexpectedEOF
     case err != nil:
         return err
+	case b == '\'':
+		switch ret, errInside := br.ReadByte(); {
+		case errInside != nil:
+			return errInside
+		default:
+			*pChar = ret
+			return expect(br, '\'')
+		}
+	default:
+		*pChar = b
     }
-    if err = expect(br, '\''); err != nil {
-        return err
-    }
-    *pChar = b
     return nil
 }
 
@@ -124,8 +121,6 @@ func readString(br *bufio.Reader, pString *string) error {
     w := bytes.NewBufferString("")
     for {
         switch b, err = br.ReadByte(); {
-        case err == io.EOF:
-            return io.ErrUnexpectedEOF
         case err != nil:
             return err
         case b != '"':

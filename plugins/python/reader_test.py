@@ -65,8 +65,14 @@ class ReaderTest(unittest.TestCase):
         number = reader.next("float")
         self.assertEqual(number, -2)
 
-    def test_read_char(self):
+
+    def test_read_quoted_char(self):
         reader = tc.Reader("'@'")
+        character = reader.next("char")
+        self.assertEqual(character, '@')
+
+    def test_read_unquoted_char(self):
+        reader = tc.Reader("@")
         character = reader.next("char")
         self.assertEqual(character, '@')
 
@@ -116,12 +122,14 @@ class ReaderTest(unittest.TestCase):
               , "Lord Varys"
               , "The "Little Finger"" ]
             , [ ] ]
-            , 20.14, fAlSe, 'X'
+            , C, 20.14, fAlSe, 'X'
             , [ -2 , 0 , 1 , 4 ]
         """
         reader = tc.Reader(text)
         self.assertTrue(deep_equals(reader.next("String[][]"), 
                         [["Jon Snow", "Lord Varys", 'The "Little Finger"'], []]))
+        reader.next()
+        self.assertEqual(reader.next("char"), 'C')
         reader.next()
         self.assertEqual(reader.next("double"), 20.14)
         reader.next()
