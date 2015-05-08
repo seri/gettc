@@ -13,8 +13,8 @@ Python 3 is required to run the generated solutions.
 
 ## Known issues
 
-If you are Windows and you get an error like `cannot execute checker`, you can
-fix by deleting or comment the line `delegate` in `runner.sh` (line 132). To
+If you're on Windows and you get an error like `cannot execute checker`, you can
+fix by deleting or commenting the line `delegate` in `runner.sh` (line 132). To
 make the change permanent, apply the fix in `~/.gettc/template/bin/runner.sh`.
 
 If you know the fix to this issue, I would love to get an email.
