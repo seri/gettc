@@ -18,7 +18,7 @@
 
     <target name="runner">
         <echo file="${java.sh}" append="no">#! /bin/sh
-java -cp "`dirname $0`${path.separator}${lib}" <%= prob.name %>Runner $$*
+java -cp "`dirname $0`${path.separator}${lib}" <%= prob.name %>Solver $$*
         </echo>
         <chmod file="${java.sh}" perm="+x"/>
     </target>
@@ -26,7 +26,7 @@ java -cp "`dirname $0`${path.separator}${lib}" <%= prob.name %>Runner $$*
     <target name="compile-main">
         <mkdir dir="${output.dir}"/>
         <javac srcdir="." destdir="${output.dir}" 
-               includes="<%= prob.name %>.java,<%= prob.name %>Runner.java"
+               includes="<%= prob.name %>.java,<%= prob.name %>Solver.java"
                includeantruntime="no">
             <classpath refid="classpath"/>
         </javac>

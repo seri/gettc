@@ -3,3 +3,4 @@ Hello from gettc! The following commands are available:
     make sys: Run the solution against the system tests
     make sysv: Like make sys but in verbose mode to debug
     make clean: Delete all temporary files
+To run a single case, use something like: make sys case=99

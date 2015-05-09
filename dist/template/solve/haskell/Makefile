@@ -1,33 +1,11 @@
-GETTC_HOME ?= $(HOME)/.gettc
+include ../Makefile.common
+
 OUTPUT_D = ../../build/haskell
-DATA_D = ../../data
+SOLVER = $(OUTPUT_D)/<%= prob.name %>Solver
 COMPILER = ghc -i$(GETTC_HOME)/include/haskell -outputdir $(OUTPUT_D)
-RUNNER = sh ../../bin/runner.sh
 
-run = @$(RUNNER) $1 $(OUTPUT_D)/<%= prob.name %>Runner $(DATA_D)/$2 $(OUTPUT_D)/$2
+$(SOLVER): <%= prob.name %>Solver.hs <%= prob.name %>.hs
+	$(COMPILER) -o $(SOLVER) $<
 
-default : usage
+main: setup $(SOLVER)
 
-usage :
-	@cat $(GETTC_HOME)/usage
-
-setup :
-	@if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
-	@echo "[gettc] Compile solver"
-
-$(OUTPUT_D)/<%= prob.name %>Runner: <%= prob.name %>Runner.hs <%= prob.name %>.hs
-	$(COMPILER) -o $(OUTPUT_D)/<%= prob.name %>Runner $<
-
-main: setup $(OUTPUT_D)/<%= prob.name %>Runner
-
-demo : main
-	$(call run,verbose,demo) 
-
-sys : main
-	$(call run,quiet,sys)
-
-sysv : main
-	$(call run,verbose,sys)
-
-clean :
-	@rm -rf $(OUTPUT_D)

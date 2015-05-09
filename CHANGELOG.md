@@ -13,8 +13,12 @@ updating.
 
 ## 1.8
 
+### 1.8.2
+Released May 9th, 2015
+* Now support running a single test case
+
 ### 1.8.1
-Release May 7th, 2015
+Released May 7th, 2015
 * Fix Character parsing across all plugins (issue reported by agsha)
 
 ### 1.8.0

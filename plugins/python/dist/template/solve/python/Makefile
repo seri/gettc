@@ -1,27 +1,8 @@
-GETTC_HOME ?= $(HOME)/.gettc
+include ../Makefile.common
+
 OUTPUT_D = ../../build/python
-DATA_D = ../../data
-RUNNER = sh ../../bin/runner.sh
+SOLVER = ./<%= prob.name %>Solver.py
 
-run = @$(RUNNER) $1 ./<%= prob.name %>Runner.py $(DATA_D)/$2 $(OUTPUT_D)/$2
+main: setup
+	chmod +x $(SOLVER)
 
-default : usage
-
-setup :
-	@if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
-	@chmod +x <%= prob.name %>Runner.py
-
-usage :
-	@cat $(GETTC_HOME)/usage
-
-demo : setup
-	$(call run,verbose,demo) 
-
-sys : setup
-	$(call run,quiet,sys)
-
-sysv : setup
-	$(call run,verbose,sys)
-
-clean :
-	@rm -rf $(OUTPUT_D)

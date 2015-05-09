@@ -1,0 +1,40 @@
+run = \
+	@if [ -n "$(case)" ] ; then \
+		if [ ! -f "$(DATA_D)/$2/$(case).in" ] ; then \
+			echo "Error: Your test case $(case) does not exist" ; \
+			exit ; \
+		fi ; \
+		mv $(DATA_D)/$2 $(DATA_D)/$2_backup ; \
+		mkdir $(DATA_D)/$2 ; \
+		cp $(DATA_D)/$2_backup/$(case).* $(DATA_D)/$2 ; \
+		$(RUNNER) $1 $(SOLVER) $(DATA_D)/$2 $(OUTPUT_D)/$2 ; \
+		rm -rf $(DATA_D)/$2 ; \
+		mv $(DATA_D)/$2_backup $(DATA_D)/$2 ; \
+	else \
+		$(RUNNER) $1 $(SOLVER) $(DATA_D)/$2 $(OUTPUT_D)/$2 ; \
+	fi
+
+GETTC_HOME ?= $(HOME)/.gettc
+DATA_D = ../../data
+RUNNER = sh ../../bin/runner.sh
+
+default : usage
+
+usage :
+	@cat $(GETTC_HOME)/usage
+
+setup :
+	@if [ ! -d $(OUTPUT_D) ]; then mkdir -p $(OUTPUT_D); fi
+	@echo "[gettc] Compile solver"
+
+demo : main
+	$(call run,verbose,demo) 
+
+sys : main
+	$(call run,quiet,sys)
+
+sysv : main
+	$(call run,verbose,sys)
+
+clean :
+	@rm -rf $(OUTPUT_D)

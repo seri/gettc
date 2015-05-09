@@ -1,5 +1,6 @@
 require "fileutils"
 require "logger"
+require "pathname"
 
 class SysUtil
     def self.with_dir dir
@@ -80,30 +81,28 @@ class GettcRunner
         elapsed = StopWatch::measure do
             ret = system "#{@solver} #{input} #{received}"
         end
-        @elapsed << elapsed
+        @elapsed[n] = elapsed
         @log.debug "#{elapsed}ms "
 
         if ret != true
             @errors << n
             @log.debug "Error (cannot execute solver)\n"
         else
-            ret = system "#{@checker} #{expected} #{received}"
-            if ret != true
-                @errors << n 
-                @log.debug "Error (cannot execute checker)\n"
+            system "#{@checker} #{expected} #{received}"
+            ret = $?.exitstatus
+            case ret
+            when 0
+                @log.debug "Passed\n"
+            when 1
+                @log.debug "Failed\n"
+                @failures << n
+                print_case n if @verbose
+            when 2
+                @log.debug "Error (checker reported error)\n"
+                @errors << n
             else
-                ret = $?.exitstatus
-                case ret
-                when 0
-                    @log.debug "Passed\n"
-                when 1
-                    @log.debug "Failed\n"
-                    @failures << n
-                    print_case n if @verbose
-                when 2
-                    @log.debug "Error (checker reported error)\n"
-                    @errors << n
-                end
+                @log.debug "Error (error executing checker)\n"
+                @errors << n
             end
         end 
     end
@@ -112,14 +111,16 @@ class GettcRunner
         puts "[gettc] Run test cases"
 
         inputs = Dir.glob "#{@data_d}/*.in"
+        inputs.sort!
 
         @total = inputs.size
-        @elapsed = Array.new
+        @elapsed = Hash.new
         @failures = Array.new
         @errors = Array.new
 
-        @total.times do |n|
-            run_case n
+        inputs.each do |input|
+            basename = Pathname.new(input).basename.to_s
+            run_case basename[0..-4]
         end
     end
 
@@ -137,18 +138,21 @@ class GettcRunner
         print_array "Errors", @errors
 
         if @total > 0
-            sum = @elapsed.inject 0, :+
-            avg = sum / @elapsed.size
-            puts "    Total time taken: #{sum} ms"
-            puts "    Average time taken: #{avg} ms"
-
-            i, j = 0, 0
-            @elapsed.size.times do |k|
-                if @elapsed[k] > j
-                    i, j = k, @elapsed[k]
+            sum = 0
+            maxv = 0
+            maxk = nil
+            @elapsed.each do |key, value|
+                sum += value
+                if value > maxv
+                    maxv = value
+                    maxk = key
                 end 
             end
-            puts "    Slowest running case: #{j} ms (case #{i})"
+            avg = sum / @total
+
+            puts "    Total time taken: #{sum} ms"
+            puts "    Average time taken: #{avg} ms"
+            puts "    Slowest running case: #{maxv} ms (case #{maxk})"
         end 
     end
 
@@ -156,9 +160,11 @@ class GettcRunner
         if @failures.empty? || @verbose
             return
         end 
-        puts "Here are a few failed case for your debugging purposes"
-
-        n = [5, @failures.size].min
+        n =  @failures.size
+        if n > 5
+            puts "Here are a few failed case for your debugging purposes"
+            n = 5
+        end
         n.times do |i|
             j = @failures[i]
             puts "Case #{j}:"

@@ -10,7 +10,7 @@ import org.topcoder.TypeRef;
 <%
     engine = JavaEngine.new func, vars 
 %>
-public class <%= prob.name %>Runner {
+public class <%= prob.name %>Solver {
     public static void main(String[] args) {
     try {
         TopcoderReader reader = new TopcoderReader(new FileReader(args[0]));
