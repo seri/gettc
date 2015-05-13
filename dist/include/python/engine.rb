@@ -3,25 +3,22 @@ require "gettc/types"
 module Gettc
     class Type
         def dumb_python
-            if self == TInt then
-                return "0"
-            elsif self == TLong then
-                return "0"          
-            elsif self == TFloat then
-                return "0"
-            elsif self == TDouble then
-                return "0"
-            elsif self == TChar then
-                return "'$'"
-            elsif self == TString then
-                return '"$"'
-            elsif self == TBoolean then
-                return "True"
-            elsif self.is_a? TArray then
+            if self.is_a? TArray then
                 return "[]"
-            else
-                return "None"
             end
+
+            case self
+            when TInt, TLong, TFloat, TDouble
+                return "0"
+            when TChar
+                return "'$'"
+            when TString
+                return '"$"'
+            when TBoolean
+                return "True"
+            end
+
+            return "None"
         end
     end
     class PythonEngine

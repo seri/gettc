@@ -6,6 +6,7 @@ system tests, then finally generate a naive solution for the following languages
 - Java
 - Python 3
 - Go
+- Ruby
 
 And support for more languages is just around the corner. 
     

@@ -119,7 +119,7 @@ class ReaderInternal(object):
         elif self.text[self.pos:self.pos + 5].upper() == "FALSE":
             self.pos += 5
             return False
-        self.raise_here("expecting either true or false)")
+        self.raise_here("expecting either true or false")
 
     def next_string(self):
         self.spaces()

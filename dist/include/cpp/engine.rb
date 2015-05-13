@@ -3,49 +3,49 @@ require "gettc/types"
 module Gettc
     class Type
         def to_cpp
-            if self == TInt then
-                return "int"
-            elsif self == TLong then
-                return "int64"        
-            elsif self == TFloat then
-                return "float"
-            elsif self == TDouble then
-                return "double"
-            elsif self == TChar then
-                return "char"
-            elsif self == TString then
-                return "string"
-            elsif self == TBoolean then
-                return "bool"
-            elsif is_a? TArray then
+            if is_a? TArray then
                 ret = "vector<" << subtype.to_cpp
                 ret << " " if subtype.is_a? TArray
                 ret << ">"
                 return ret
-            else
-                return "unknown"
-            end 
+            end
+
+            case self
+            when TInt
+                return "int"
+            when TLong
+                return "int64"        
+            when TFloat
+                return "float"
+            when TDouble
+                return "double"
+            when TChar
+                return "char"
+            when TString
+                return "string"
+            when TBoolean
+                return "bool"
+            end
+
+            return "unknown"
         end
         def dumb_cpp
-            if self == TInt then
-                return "0"
-            elsif self == TLong then
-                return "0"        
-            elsif self == TFloat then
-                return "0"
-            elsif self == TDouble then
-                return "0"
-            elsif self == TChar then
-                return "\"$\""
-            elsif self == TString then
-                return "\"$\""
-            elsif self == TBoolean then
-                return "true"
-            elsif is_a? TArray then
+            if is_a? TArray then
                 return "#{to_cpp}()"
-            else
-                return "Nil"
             end
+
+            case self
+            when TInt, TLong, TFloat, TDouble
+                return "0"
+            when TChar
+                return "'$'"
+            when TString
+                return '"$"'
+            when TBoolean then
+                return "true"
+            end
+
+            return "Nil"
         end
     end
     class Signature

@@ -3,67 +3,70 @@ require "gettc/types"
 module Gettc
     class Type
         def to_haskell
-            if self == TInt then
-                return "Int"
-            elsif self == TLong then
-                return "Integer"        
-            elsif self == TFloat then
-                return "Float"
-            elsif self == TDouble then
-                return "Double"
-            elsif self == TChar then
-                return "Char"
-            elsif self == TString then
-                return "String"
-            elsif self == TBoolean then
-                return "Bool"
-            elsif is_a? TArray then
+            if is_a? TArray then
                 return "[" + subtype.to_haskell + "]"
-            else
-                return "Unknown"
+            end
+
+            case self
+            when TInt
+                return "Int"
+            when TLong
+                return "Integer"        
+            when TFloat
+                return "Float"
+            when TDouble
+                return "Double"
+            when TChar
+                return "Char"
+            when TString
+                return "String"
+            when TBoolean
+                return "Bool"
             end 
+
+            return "Unknown"
         end
         def get_haskell_parser
-            if self == TInt then
-                return "TC.parseInt"
-            elsif self == TLong then
-                return "TC.parseLong"        
-            elsif self == TFloat then
-                return "TC.parseFloat"
-            elsif self == TDouble then
-                return "TC.parseDouble"
-            elsif self == TChar then
-                return "TC.parseChar"
-            elsif self == TString then
-                return "TC.parseString"
-            elsif self == TBoolean then
-                return "TC.parseBool"
-            elsif is_a? TArray then
+            if is_a? TArray then
                 return "(TC.parseList " + subtype.get_haskell_parser + ")"
-            else
-                return "unknown"
             end
+            
+            case self
+            when TInt
+                return "TC.parseInt"
+            when TLong
+                return "TC.parseLong"        
+            when TFloat
+                return "TC.parseFloat"
+            when TDouble
+                return "TC.parseDouble"
+            when TChar
+                return "TC.parseChar"
+            when TString
+                return "TC.parseString"
+            when TBoolean
+                return "TC.parseBool"
+            end
+
+            return "unknown"
         end
         def dumb_haskell
-            if self == TInt then
-                return "0"
-            elsif self == TLong then
-                return "0"        
-            elsif self == TFloat then
-                return "0"
-            elsif self == TDouble then
-                return "0"
-            elsif self == TChar then
-                return "\"$\""
-            elsif self == TString then
-                return "\"$\""
-            elsif self == TBoolean then
-                return "True"
-            elsif is_a? TArray then
+            if is_a? TArray
                 return "[]"
-            else
-                return "Nil"
             end
+
+            case self
+            when TInt, TLong, TFloat, TDouble
+                return "0"
+            when TChar
+                return "'$'"
+            when TString
+                return '"$"'
+            when TBoolean
+                return "True"
+            end
+
+            return "Nil"
         end
     end
     class HaskellEngine

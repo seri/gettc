@@ -11,6 +11,12 @@ make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
 
+## 1.9
+
+### 1.9.0
+Released May 13th, 2015
+* Add Ruby support
+
 ## 1.8
 
 ### 1.8.2

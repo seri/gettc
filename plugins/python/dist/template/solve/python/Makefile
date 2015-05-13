@@ -4,5 +4,5 @@ OUTPUT_D = ../../build/python
 SOLVER = ./<%= prob.name %>Solver.py
 
 main: setup
-	chmod +x $(SOLVER)
+	@chmod +x $(SOLVER)
 

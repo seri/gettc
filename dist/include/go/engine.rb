@@ -3,46 +3,46 @@ require "gettc/types"
 module Gettc
     class Type
         def to_go
-            if self == TInt then
-                return "int"
-            elsif self == TLong then
-                return "int64"        
-            elsif self == TFloat then
-                return "float32"
-            elsif self == TDouble then
-                return "float64"
-            elsif self == TChar then
-                return "byte"
-            elsif self == TString then
-                return "string"
-            elsif self == TBoolean then
-                return "bool"
-            elsif is_a? TArray then
+            if is_a? TArray
                 return "[]#{subtype.to_go}"
-            else
-                return "unknown"
+            end
+
+            case self 
+            when TInt
+                return "int"
+            when TLong
+                return "int64"        
+            when TFloat
+                return "float32"
+            when TDouble
+                return "float64"
+            when TChar
+                return "byte"
+            when TString
+                return "string"
+            when TBoolean
+                return "bool"
             end 
+
+            return "unknown"
         end
         def dumb_go
-            if self == TInt then
-                return "0"
-            elsif self == TLong then
-                return "0"        
-            elsif self == TFloat then
-                return "0"
-            elsif self == TDouble then
-                return "0"
-            elsif self == TChar then
-                return "'$'"
-            elsif self == TString then
-                return '"$"'
-            elsif self == TBoolean then
-                return "true"
-            elsif is_a? TArray then
-                return self.to_go + " {}"
-            else
-                return "nil"
+            if is_a? TArray
+                return to_go + " {}"
             end
+
+            case self
+            when TInt, TLong, TDouble, TFloat
+                return "0"
+            when TChar
+                return "'$'"
+            when TString
+                return '"$"'
+            when TBoolean
+                return "true"
+            end
+
+            return "nil"
         end
     end
     class Signature

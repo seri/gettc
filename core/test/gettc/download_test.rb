@@ -1,6 +1,6 @@
 require "test/unit" 
-require "topcoder/download" 
-include TopCoder
+require "gettc/download" 
+include Gettc
 
 class DownloadTest < Test::Unit::TestCase
     def setup

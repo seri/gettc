@@ -15,23 +15,27 @@ module Gettc
             return @is_object
         end
         def to_s
-            if self == TInt then
-                return "int"
-            elsif self == TLong then
-                return "long"        
-            elsif self == TFloat then
-                return "float"
-            elsif self == TDouble then
-                return "double"
-            elsif self == TChar then
-                return "char"
-            elsif self == TString then
-                return "String"
-            elsif self == TBoolean then
-                return "boolean"
-            elsif is_a? TArray then
+            if is_a? TArray then
                 return subtype.to_s + "[]"
             end
+
+            case self
+            when TInt
+                return "int"
+            when TLong
+                return "long"        
+            when TFloat
+                return "float"
+            when TDouble
+                return "double"
+            when TChar
+                return "char"
+            when TString
+                return "String"
+            when TBoolean
+                return "boolean"
+            end
+
             return "unknown"
         end
     end

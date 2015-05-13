@@ -1,30 +1,31 @@
 require "rake/clean"
 require_relative "../helper"
 
-CLEAN << "temp" << "__pycache__"
+CLEAN << "temp"
+LIBS = "-I../../core/lib -Idist/include/ruby"
 
 file "temp" do
     mkdir "temp"
 end 
 
 namespace :test do
-    desc "Test the Python reader"
+    desc "Test the Ruby reader"
     task :reader do 
-        sh "python reader_test.py"
+        ruby "#{LIBS} reader_test.rb"
     end
 
-    desc "Test the Python writer"
+    desc "Test the Ruby writer"
     task :writer do 
-        sh "python writer_test.py"
+        ruby "#{LIBS} writer_test.rb"
     end
 
-    desc "Test the whole Python library"
-    task :python => %w[test:reader test:writer] do 
+    desc "Test the whole Ruby library"
+    task :ruby => %w[test:reader test:writer] do 
     end
 
     desc "Test the plugins's Ruby engine"
     task :engine do 
-        ruby "-I../../core/lib -Idist/include/python engine_test.rb"
+        ruby "#{LIBS} engine_test.rb"
     end
 end
 

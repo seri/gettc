@@ -1,6 +1,6 @@
 require "test/unit" 
-require "topcoder/parse" 
-include TopCoder
+require "gettc/parse" 
+include Gettc
 
 class ParseTest < Test::Unit::TestCase
     def setup
@@ -12,18 +12,18 @@ class ParseTest < Test::Unit::TestCase
         return File.read File.join @data_d, prob + ".htm"
     end
     def test_indexes
-        assert_equal [0, 3], @parser.indexes("abcde", "bc")
-        assert_equal nil, @parser.indexes("abcde", "f")
+        assert_equal [0, 3], @parser.send(:indexes, "abcde", "bc")
+        assert_equal nil, @parser.send(:indexes, "abcde", "f")
     end
     def test_filter
-        assert_equal "Lorem Ipsum", @parser.filter("<xml>   Lorem Ipsum  </xml> ")
-        assert_equal "2^(3)", @parser.filter("2<sup>3</sup>")
-        assert_equal "*hi*", @parser.filter("   <b>hi</b>")
+        assert_equal "Lorem Ipsum", @parser.send(:filter, "<xml>   Lorem Ipsum  </xml> ")
+        assert_equal "2^(3)", @parser.send(:filter, "2<sup>3</sup>")
+        assert_equal "*hi*", @parser.send(:filter, "   <b>hi</b>")
         html = <<-END
             <img src=
             "http://www.topcoder.com/contest/problem/CirclesCountry/case1.gif">
         END
-        assert_equal "![image](images/case1.gif)", @parser.filter(html)
+        assert_equal "![image](images/case1.gif)", @parser.send(:filter, html)
     end
     def test_PageNumbers
         html = get_problem_raw "PageNumbers"

@@ -1,6 +1,6 @@
 require "test/unit"
-require "topcoder/signature"
-include TopCoder
+require "gettc/signature"
+include Gettc
 
 class SignatureTest < Test::Unit::TestCase
     def test_parse_signature

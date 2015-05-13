@@ -2,12 +2,12 @@ require "test/unit"
 require "fileutils"
 require "tmpdir"
 
-require "topcoder/generate" 
-include TopCoder
+require "gettc/generate" 
+include Gettc
 
 class GenerateTest < Test::Unit::TestCase
     def setup
-        @source_d = File.join File.dirname(__FILE__), "../../dist/template"
+        @source_d = File.join File.dirname(__FILE__), "../../dist"
         @target_d = File.join Dir.tmpdir, "gettc"
         FileUtils.mkdir @target_d unless File.directory? @target_d
         @generator = Generator.new @source_d, @target_d

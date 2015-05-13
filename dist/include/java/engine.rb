@@ -3,67 +3,49 @@ require "gettc/types"
 module Gettc
     class Type
         def to_java
-            if self == TInt then
-                return "int"
-            elsif self == TLong then
-                return "long"        
-            elsif self == TFloat then
-                return "float"
-            elsif self == TDouble then
-                return "double"
-            elsif self == TChar then
-                return "char"
-            elsif self == TString then
-                return "String"
-            elsif self == TBoolean then
-                return "boolean"
-            elsif is_a? TArray then
-                return "#{subtype.to_java}[]"
-            else
-                return "unknown"
-            end 
+            return to_s
         end
         def to_java_boxed
-            if self == TInt then
-                return "Integer"
-            elsif self == TLong then
-                return "Long"        
-            elsif self == TFloat then
-                return "Float"
-            elsif self == TDouble then
-                return "Double"
-            elsif self == TChar then
-                return "Character"
-            elsif self == TString then
-                return "String"
-            elsif self == TBoolean then
-                return "Boolean"
-            elsif self.is_a? TArray then
+            if is_a? TArray then
                 return "List<#{subtype.to_java_boxed}>"
-            else
-                return "Unknown"
+            end
+
+            case self
+            when TInt
+                return "Integer"
+            when TLong
+                return "Long"        
+            when TFloat
+                return "Float"
+            when TDouble
+                return "Double"
+            when TChar
+                return "Character"
+            when TString
+                return "String"
+            when TBoolean
+                return "Boolean"
             end 
+
+            return "Unknown"
         end
         def dumb_java
-            if self == TInt then
-                return "0"
-            elsif self == TLong then
-                return "0"          
-            elsif self == TFloat then
-                return "0"
-            elsif self == TDouble then
-                return "0"
-            elsif self == TChar then
-                return "\"$\""
-            elsif self == TString then
-                return "\"$\""
-            elsif self == TBoolean then
-                return "true"
-            elsif self.is_a? TArray then
+            if self.is_a? TArray then
                 return "new #{subtype.to_java}[1]"
-            else
-                return "Nil"
             end
+
+            case self
+            when TInt, TLong, TFloat, TDouble
+                return "0"
+            when TChar
+                return "'$'"
+            when TString
+                return '"$"'
+            when TBoolean
+                return "true"
+            end
+
+            return "Nil"
         end
     end
     class Signature
