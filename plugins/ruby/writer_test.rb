@@ -9,7 +9,7 @@ include TopCoder
 
 class WriterTest < Test::Unit::TestCase
     def check value, typ
-        str = Writer.new.next(value, typ).to_s
+        str = Writer.new().next(value, typ).to_s()
         reader = Reader.new str
         reversed = reader.next typ
         assert_equal reversed, value
@@ -24,7 +24,7 @@ class WriterTest < Test::Unit::TestCase
         check [[[]]], TArray.new(TArray.new(TArray.new(TBoolean)))
         check false, TBoolean
         check [["Jon Snow"],['The "Little Finger"']], TArray.new(TArray.new(TString))
-        assert_raise UnrecognizedType do
+        assert_raise UnsupportedType do
             Writer.new.next Hash.new, "dict"
         end
     end

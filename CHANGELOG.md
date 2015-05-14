@@ -11,6 +11,13 @@ make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
 
+## 1.10
+
+### 1.10.0
+Released May 14th, 2015
+* Add Javascript support
+* Various refactoring
+
 ## 1.9
 
 ### 1.9.0

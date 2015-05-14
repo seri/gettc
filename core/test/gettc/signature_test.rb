@@ -7,7 +7,7 @@ class SignatureTest < Test::Unit::TestCase
         assert_raise CannotParseSignature do 
             parse_signature "invalid_signature" 
         end
-        assert_raise UnrecognizedType do 
+        assert_raise UnsupportedType do 
             parse_signature "strange_type name" 
         end
         assert_raise InvalidVariableName do 

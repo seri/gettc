@@ -1,5 +1,5 @@
 /pkg/
 /plugins/java/class/
 temp/
-
+npm-debug.log
 __pycache__/

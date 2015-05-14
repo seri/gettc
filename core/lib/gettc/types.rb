@@ -1,6 +1,6 @@
 module Gettc
     TypeError = Class.new StandardError        
-    class UnrecognizedType < TypeError
+    class UnsupportedType < TypeError
         attr_accessor :type
         def initialize type = nil, msg = "Not a valid TopCoder type"
             @type = type
@@ -49,7 +49,7 @@ module Gettc
     class TArray < Type
         attr_accessor :subtype
         def initialize subtype
-            raise UnrecognizedType.new subtype unless subtype.is_a? Type
+            raise UnsupportedType.new subtype unless subtype.is_a? Type
             @subtype = subtype
         end
         def == ary
@@ -78,6 +78,6 @@ module Gettc
         when "String"
             return TString
         end
-        raise UnrecognizedType.new str
+        raise UnsupportedType.new str
     end
 end

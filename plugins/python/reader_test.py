@@ -18,7 +18,7 @@ class ReaderTest(unittest.TestCase):
 
     def test_unsupported_type(self):
         reader = tc.Reader("whatever")
-        with self.assertRaises(tc.UnsupportedTypeError):
+        with self.assertRaises(tc.UnsupportedType):
             reader.next("object")
 
 
@@ -32,7 +32,7 @@ class ReaderTest(unittest.TestCase):
 
     def test_read_boolean_error(self):
         reader = tc.Reader("lol")
-        with self.assertRaises(tc.ReadError):
+        with self.assertRaises(tc.ParseError):
             flag = reader.next("boolean")
 
     def test_read_positive_int(self):
@@ -47,7 +47,7 @@ class ReaderTest(unittest.TestCase):
 
     def test_read_int_error(self):
         reader = tc.Reader("NaN")
-        with self.assertRaises(tc.ReadError):
+        with self.assertRaises(tc.ParseError):
             number = reader.next("int")
 
     def test_read_long(self):
@@ -78,7 +78,7 @@ class ReaderTest(unittest.TestCase):
 
     def test_read_char_error(self):
         reader = tc.Reader("'@ '")
-        with self.assertRaises(tc.ReadError):
+        with self.assertRaises(tc.ParseError):
             number = reader.next("char")
 
 
@@ -89,10 +89,10 @@ class ReaderTest(unittest.TestCase):
 
     def test_read_string_error(self):
         reader = tc.Reader('"Eddard Stark')
-        with self.assertRaises(tc.ReadError):
+        with self.assertRaises(tc.ParseError):
             name = reader.next("String")
         reader = tc.Reader('Eddard Stark"')
-        with self.assertRaises(tc.ReadError):
+        with self.assertRaises(tc.ParseError):
             name = reader.next("String")
 
     def test_read_string_with_quote(self):

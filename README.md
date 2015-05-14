@@ -7,6 +7,7 @@ system tests, then finally generate a naive solution for the following languages
 - Python 3
 - Go
 - Ruby
+- Javascript
 
 And support for more languages is just around the corner. 
     
@@ -171,6 +172,7 @@ Now there are a couple things you need to get depending on your desired language
 - For Python: [Come here](plugins/python/README.md)
 - For Go: [Come here](plugins/go/README.md)
 - For Ruby: [Come here](plugins/ruby/README.md)
+- For Javascript: [Come here](plugins/javascript/README.md)
 
 # Tips
 

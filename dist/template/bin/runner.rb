@@ -87,6 +87,9 @@ class GettcRunner
         if ret != true
             @errors << n
             @log.debug "Error (cannot execute solver)\n"
+        elsif !File.exists? received
+            @errors << n
+            @log.debug "Error (solver did not produce an output file)\n"
         else
             system "#{@checker} #{expected} #{received}"
             ret = $?.exitstatus

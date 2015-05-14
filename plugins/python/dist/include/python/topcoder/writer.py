@@ -1,4 +1,4 @@
-from topcoder.errors import UnsupportedTypeError
+from topcoder.errors import UnsupportedType
 
 def write(value, type):
     if type in ["int", "long", "float", "double", "boolean"]:
@@ -10,4 +10,4 @@ def write(value, type):
     elif type.endswith("[]"):
         elem_type = type[:-2]
         return "[" + ", ".join(map(lambda elem: write(elem, elem_type), value)) + "]"
-    raise UnsupportedTypeError(type)
+    raise UnsupportedType(type)

@@ -6,7 +6,7 @@ module TopCoder
         def initialize text, pos, info = ""
             message = text
             if pos < text.size && pos >= 0
-                message = text[0..pos]
+                message = pos == 0 ? "" : text[0..(pos - 1)]
                 message << "|"
                 message << text[pos]
                 message << "|"
@@ -53,7 +53,7 @@ module TopCoder
                 end
             end
 
-            raise UnrecognizedType.new typ
+            raise UnsupportedType.new typ
         end
 
     private

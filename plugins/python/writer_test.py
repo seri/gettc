@@ -22,7 +22,7 @@ class WriterTest(unittest.TestCase):
         self.check([[[]]], "boolean[][][]")
         self.check(False, "boolean")
         self.check([["Jon Snow"],['The "Little Finger"']], "String[][]")
-        with self.assertRaises(tc.UnsupportedTypeError):
+        with self.assertRaises(tc.UnsupportedType):
             tc.write({}, "dict")
 
 if __name__ == "__main__":

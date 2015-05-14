@@ -1,3 +1,3 @@
-from topcoder.errors import UnsupportedTypeError
-from topcoder.reader import ReadError, Reader
+from topcoder.errors import UnsupportedType
+from topcoder.reader import ParseError, Reader
 from topcoder.writer import write

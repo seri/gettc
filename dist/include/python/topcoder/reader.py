@@ -1,6 +1,6 @@
-from topcoder.errors import UnsupportedTypeError
+from topcoder.errors import UnsupportedType
 
-class ReadError(Exception):
+class ParseError(Exception):
     def __init__(self, text, pos, info = ""):
         if (pos < len(text)) and (pos >= 0):
             text = text[:pos] + "|" + text[pos] + "|" + text[(pos + 1):]
@@ -41,10 +41,10 @@ class ReaderInternal(object):
         if type.endswith("[]"):
             return self.next_array(type[:-2])
         
-        raise UnsupportedTypeError(type)
+        raise UnsupportedType(type)
 
     def raise_here(self, message):
-        raise ReadError(self.text, self.pos, message)
+        raise ParseError(self.text, self.pos, message)
 
     def check_pos(self):
         if self.pos >= self.len:

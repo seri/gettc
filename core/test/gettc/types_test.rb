@@ -4,12 +4,12 @@ include Gettc
 
 class TypesTest < Test::Unit::TestCase
     def test_parse_type
-        assert_raise UnrecognizedType do array = TArray.new 123 end
-        assert_raise UnrecognizedType do type = parse_type "" end
-        assert_raise UnrecognizedType do type = parse_type " " end
-        assert_raise UnrecognizedType do type = parse_type "[]" end       
-        assert_raise UnrecognizedType do type = parse_type "vector" end       
-        assert_raise UnrecognizedType do type = parse_type "vector[]" end       
+        assert_raise UnsupportedType do array = TArray.new 123 end
+        assert_raise UnsupportedType do type = parse_type "" end
+        assert_raise UnsupportedType do type = parse_type " " end
+        assert_raise UnsupportedType do type = parse_type "[]" end       
+        assert_raise UnsupportedType do type = parse_type "vector" end       
+        assert_raise UnsupportedType do type = parse_type "vector[]" end       
         assert_equal TBoolean, parse_type("boolean")
         assert_equal TInt, parse_type("int")
         assert_equal TLong, parse_type("long")

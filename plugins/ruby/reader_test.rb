@@ -9,7 +9,7 @@ include TopCoder
 class ReaderTest < Test::Unit::TestCase
     def test_unsupported_type
         reader = Reader.new "whatever"
-        assert_raise UnrecognizedType do
+        assert_raise UnsupportedType do
             reader.next "object"
         end
     end

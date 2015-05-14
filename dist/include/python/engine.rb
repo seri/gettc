@@ -3,7 +3,7 @@ require "gettc/types"
 module Gettc
     class Type
         def dumb_python
-            if self.is_a? TArray then
+            if is_a? TArray then
                 return "[]"
             end
 
