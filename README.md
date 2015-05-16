@@ -1,5 +1,6 @@
-Download a [TopCoder](http://topcoder.com/tc) problem, parse the examples and
-system tests, then finally generate a naive solution for the following languages:
+Download a [TopCoder](http://community.topcoder.com/tc?module=MatchList) problem, 
+parse the examples and system tests, then finally generate a naive solution for
+the following languages:
 
 - C++
 - Haskell
@@ -166,13 +167,13 @@ standard procedure is:
 
 Now there are a couple things you need to get depending on your desired language.
 
-- For C++: You are already ready to solve problems [using C++](plugins/cpp/README.md).
-- For Haskell: [Come here](plugins/haskell/README.md)
-- For Java: [Come here](plugins/java/README.md)
-- For Python: [Come here](plugins/python/README.md)
-- For Go: [Come here](plugins/go/README.md)
-- For Ruby: [Come here](plugins/ruby/README.md)
-- For Javascript: [Come here](plugins/javascript/README.md)
+- For C++: You are already ready to solve problems [using C++](https://github.com/seri/gettc/blob/master/plugins/cpp/README.md).
+- For Haskell: [Come here](https://github.com/seri/gettc/blob/master/plugins/haskell/README.md)
+- For Java: [Come here](https://github.com/seri/gettc/blob/master/plugins/java/README.md)
+- For Python: [Come here](https://github.com/seri/gettc/blob/master/plugins/python/README.md)
+- For Go: [Come here](https://github.com/seri/gettc/blob/master/plugins/go/README.md)
+- For Ruby: [Come here](https://github.com/seri/gettc/blob/master/plugins/ruby/README.md)
+- For Javascript: [Come here](https://github.com/seri/gettc/blob/master/plugins/javascript/README.md)
 
 # Known issues
 

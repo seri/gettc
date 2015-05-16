@@ -9,7 +9,7 @@ You also need the following NPM packages:
 
 ## Known issues
 
-If you're on Windows and you get an error like `cannot execute checker`, you can
+If you're on Windows and you get an error like `cannot execute solver`, you can
 fix by deleting or commenting the line `delegate` in `runner.sh` (line 132). To
 make the change permanent, apply the fix in `~/.gettc/template/bin/runner.sh`.
 
