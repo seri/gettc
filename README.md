@@ -1,3 +1,13 @@
+# HELP WANTED Currently not able to download
+
+> Recently, TopCoder has changed their authentication mechanism to OAuth, and the
+> current code is no longer able to download anything. I will come back to this
+> when I have time, but I appreciate help. Basically, if you are able to request
+> a problem statement provided a username/password pair from the command line or
+> a script, please send me an email, thank you.
+
+# Introduction
+
 Download a [TopCoder](http://community.topcoder.com/tc?module=MatchList) problem, 
 parse the examples and system tests, then finally generate a naive solution for
 the following languages:
