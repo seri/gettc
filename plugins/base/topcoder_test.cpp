@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <topcoder>
-using namespace TopCoder; 
-using namespace std; 
+using namespace TopCoder;
+using namespace std;
 
 TEST(IsSameTest, Numbers) {
   EXPECT_TRUE(same(1, 1));
@@ -42,7 +42,7 @@ TEST(IsSameTest, TwoDimensionalArrays) {
 
   EXPECT_TRUE(same(v1, v2));
 }
-  
+
 TEST(ReadTest, StringMissingClosingQuote) {
   istringstream iss("\"I'm not gonna close the quote, kay?");
   string name; EXPECT_THROW(read(iss, name), ParseException);
@@ -103,12 +103,12 @@ TEST(ReadTest, ReadStringWithQuotesThenComma) {
   EXPECT_EQ(", The Red Wedding", _rest(iss));
 }
 
-TEST(ReadTest, ReadEverything) { 
+TEST(ReadTest, ReadEverything) {
   istringstream iss("1.23, True, \n[ \"The \"Red\" Wedding\",\n\"The Hound\" ],\n2014, false, ");
 
-  double grade; read(iss, grade); next(iss); 
+  double grade; read(iss, grade); next(iss);
   bool gender; read(iss, gender); next(iss);
-  vector<string> names; read(iss, names); next(iss); 
+  vector<string> names; read(iss, names); next(iss);
   int year; read(iss, year); next(iss);
   bool passed; read(iss, passed); next(iss);
 
