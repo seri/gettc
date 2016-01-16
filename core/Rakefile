@@ -14,27 +14,27 @@ end
 
 def inspector name, output
   unless File.exists? output then
-    ruby "-Ilib inspect/gettc/#{name}_inspect.rb"  
+    ruby "-Ilib inspect/gettc/#{name}_inspect.rb"
   end
 end
 
 def tester name
-  ruby "-Ilib test/gettc/#{name}_test.rb"    
+  ruby "-Ilib test/gettc/#{name}_test.rb"
 end
 
 namespace :inspect do
   desc "Inspect the downloader"
-  task :download => "temp" do 
+  task download: "temp" do
     inspector "download", "temp/download_problem_statement/Checker.htm"
   end
 
   desc "Inspect the parser"
-  task :parse => "inspect:download" do 
+  task parse: "inspect:download" do
     inspector "parse", "temp/parse_problem/Checker.yml"
   end
 
   desc "Inspect the generator"
-  task :generate => "inspect:parse" do 
+  task generate: "inspect:parse" do
     inspector "generate", "temp/generate_problem_dir/BuildingRoads"
   end
 
@@ -42,31 +42,31 @@ end
 
 namespace :test do
   desc "Test the types"
-  task :types do 
+  task :types do
     tester "types"
   end
 
   desc "Test the signature"
-  task :signature do 
+  task :signature do
     tester "signature"
   end
 
   desc "Test the downloader"
-  task :download do 
+  task :download do
     tester "download"
   end
 
   desc "Test the parser"
-  task :parse => "inspect:download" do 
-    tester "parse" 
+  task :parse => "inspect:download" do
+    tester "parse"
   end
 
   desc "Test the generator"
-  task :generate do 
-    tester "generate" 
+  task :generate do
+    tester "generate"
   end
 
   desc "Test everything"
-  task :all => %w[test:types test:signature test:download test:parse test:generate] do
+  task all: %w[test:types test:signature test:download test:parse test:generate] do
   end
 end

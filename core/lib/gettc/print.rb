@@ -10,28 +10,27 @@ module Gettc
       out << "## Statement\n"
       out << @statement << "\n\n"
 
-      unless @definitions.empty? then
+      unless @definitions.empty?
         out << "## Definitions\n"
-        @definitions.each do |k, v| out << "- *#{k}*: `#{v}`\n" end 
+        @definitions.each { |k, v| out << "- *#{k}*: `#{v}`\n" }
         out << "\n"
-      end 
+      end
 
-      unless @notes.empty? then
+      unless @notes.empty?
         out << "## Notes\n"
-        @notes.each do |note| out << "- #{note}\n" end 
+        @notes.each { |note| out << "- #{note}\n" }
         out << "\n"
-      end 
+      end
 
-      unless @constraints.empty? then
+      unless @constraints.empty?
         out << "## Constraints\n"
-        @constraints.each do |constraint|
-          out << "- #{constraint}\n"
-        end 
+        @constraints.each { |constraint| out << "- #{constraint}\n" }
         out << "\n"
-      end 
+      end
 
-      unless @examples.empty? then
+      unless @examples.empty?
         out << "## Examples\n"
+
         @examples.each_index do |i|
           example = @examples[i]
           out << "### Example #{i + 1}\n"
@@ -41,16 +40,15 @@ module Gettc
           out << "#### Output\n<c>"
           out << example.output.gsub("\n", "<br />")
           out << "</c>\n"
-          unless example.reason.empty? then
-            out << "#### Reason\n#{example.reason}\n\n"
-          end 
+          out << "#### Reason\n#{example.reason}\n\n" unless example.reason.empty?
         end
-      end 
-      return out
+      end
+
+      out
     end
+
     def to_html
-      markdown = RDiscount.new to_md
-      return markdown.to_html
+      RDiscount.new(to_md).to_html
     end
   end
 end

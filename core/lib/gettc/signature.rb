@@ -1,55 +1,63 @@
 require "gettc/types"
-  
+
 module Gettc
   class SignatureError < StandardError
   end
+
   class CannotParseSignature < SignatureError
     attr_accessor :source
-    def initialize source, msg = "Cannot parse signature"
+
+    def initialize(source, msg = "Cannot parse signature")
       @source = source
       super "#{msg} (#{source}"
     end
   end
+
   class InvalidVariableName < SignatureError
     attr_accessor :name
-    def initialize name, msg = "Invalid variable name"
+
+    def initialize(name, msg = "Invalid variable name")
       @name = name
-      super "#{msg} (#{name})"      
+      super "#{msg} (#{name})"
     end
   end
+
   class Signature
     attr_accessor :type, :name
-    def initialize type, name
+
+    def initialize(type, name)
       @type = type
       @name = name
     end
   end
-  def parse_signature str
+
+  def parse_signature(str)
     str.strip!
+
     parts = str.split
-    raise CannotParseSignature.new str if parts.size != 2
-    type = parse_type parts[0]
+    raise CannotParseSignature.new(str) unless parts.size == 2
+
+    type = parse_type(parts[0])
     name = parts[1]
-    if name =~ /^[a-zA-Z_]\w*$/
-      return Signature.new type, name        
-    else
-      raise InvalidVariableName.new name
-    end
+
+    raise InvalidVariableName.new(name) unless name =~ /^[a-zA-Z_]\w*$/
+    Signature.new(type, name)
   end
-  def parse_method_signature str
-    str.strip!      
+
+  def parse_method_signature(str)
+    str.strip!
+
     sigs = []
-    parts = str.split "("
-    raise CannotParseSignature.new str if parts.size != 2
+
+    parts = str.split("(")
+    raise CannotParseSignature.new(str) unless parts.size == 2
     sigs << parse_signature(parts[0])
 
     str = parts[1]
-    raise CannotParseSignature.new str if str[-1] != ")"
-    str.chop!    
+    raise CannotParseSignature.new(str) unless str[-1] == ")"
 
-    parts = str.split ","
-    parts.each do |sig| sigs << parse_signature(sig) end
+    str.chop.split(",").each { |sig| sigs << parse_signature(sig) }
 
-    return sigs
+    sigs
   end
 end

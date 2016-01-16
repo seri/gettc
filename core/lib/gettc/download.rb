@@ -86,7 +86,7 @@ module Gettc
     def download_problem(id)
       body = download("/stat?c=problem_statement&pm=#{id}")
       raise IDNotAvailable.new(id) unless body.match("<h3>Problem Statement</h3>")
-      return body
+      body
     end
 
     private
@@ -96,9 +96,9 @@ module Gettc
       proxy = OpenStruct.new
       proxy.host, proxy.port = uri.host, uri.port
       proxy.user, proxy.pass = uri.userinfo ? uri.userinfo.split(/:/) : nil, nil
-      return proxy
+      proxy
     rescue URI::InvalidURIError
-      return nil
+      nil
     end
 
     def connect(uri)
@@ -133,8 +133,7 @@ module Gettc
       cookie = CGI::Cookie.parse(raw)
       raise LoginFailed.new(@account, cookie) if cookie["tcsso"].empty?
 
-      return raw
+      raw
     end 
   end
 end
-
