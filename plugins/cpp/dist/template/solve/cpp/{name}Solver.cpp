@@ -7,20 +7,20 @@ namespace tc = TopCoder;
 %>
 int main(int argc, char const *argv[]) {
     try {
-        std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1]);
 <%=
     engine.input.gsub(/^/, ' ' * 8)
 %>
-        ifs.close();
+    ifs.close();
 
-        std::ofstream ofs(argv[2]);
-        <%= prob.name %> solver;
+    std::ofstream ofs(argv[2]);
+    <%= prob.name %> solver;
 <%=
     engine.output.gsub(/^/, ' ' * 8)
 %>
-        ofs.close();
+    ofs.close();
     } catch (std::exception &e) {
-        std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << std::endl;
     }
     return 0;
 }

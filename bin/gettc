@@ -8,83 +8,83 @@ require "fileutils"
 require "yaml" 
 
 def init
-    $config_d = ENV.fetch "GETTC_HOME", File.expand_path("~/.gettc")
-    gem_d = Gem.loaded_specs["gettc"]
-    if gem_d.nil? then
-        $root_d = File.join File.dirname(__FILE__), "../"
-    else
-        $root_d = gem_d.full_gem_path
-    end
+  $config_d = ENV.fetch "GETTC_HOME", File.expand_path("~/.gettc")
+  gem_d = Gem.loaded_specs["gettc"]
+  if gem_d.nil? then
+    $root_d = File.join File.dirname(__FILE__), "../"
+  else
+    $root_d = gem_d.full_gem_path
+  end
 end
 
 def replace_config
-    FileUtils.mkdir $config_d
-    default_d = File.join $root_d, "dist/."
-    FileUtils.cp_r default_d, $config_d        
+  FileUtils.mkdir $config_d
+  default_d = File.join $root_d, "dist/."
+  FileUtils.cp_r default_d, $config_d      
 end
 
 def load_config
-    replace_config unless Dir.exists? $config_d
-    config = YAML.load_file File.join($config_d, 'config.yml')
+  replace_config unless Dir.exists? $config_d
+  config = YAML.load_file File.join($config_d, 'config.yml')
 
-    version = config["version"]
-    unless version.nil? then
-        version = Gem::Version.new version
-    end
+  version = config["version"]
+  unless version.nil? then
+    version = Gem::Version.new version
+  end
 
-    if version.nil? or version < Gem::Version.new(VERSION) then
-        FileUtils.rm_rf $config_d
-        replace_config
-    end
+  if version.nil? or version < Gem::Version.new(VERSION) then
+    FileUtils.rm_rf $config_d
+    replace_config
+  end
 
-    account = Account.new config["username"], config["password"]
-    return account
+  account = Account.new config["username"], config["password"]
+  return account
 end 
 
 def main
-    prog = File.basename __FILE__
-    usage = <<-eos.strip
+  prog = File.basename __FILE__
+  usage = <<-eos.strip
 gettc <id>: Generate a solution for the TopCoder problem with that ID, eg 11138.
 gettc version: Print version string.
 gettc reset: Bring all settings to default state.
-    eos
-    if ARGV.empty?  
-        puts usage 
-        return
-    end
-    command = ARGV[0]
-    if command == "version"
-        puts VERSION
-    elsif command == "reset"
-        FileUtils.rm_rf $config_d
-        replace_config
-    else
-        id = ARGV[0].to_i
-        puts "You have given ID = #{id}" 
-    begin
-        account = load_config 
-        robot = Downloader.new account
-        parser = Parser.new robot
-        generator = Generator.new $config_d, Dir.getwd
-        
-        print "Downloading problem to raw HTML ... "
-        html = robot.download_problem id
-        puts "Done"
-        
-        print "Parsing problem from raw HTML ... "
-        prob = parser.parse html
-        puts "Done"
-        
-        print "Generating problem directory for #{prob.name} ... "
-        generator.generate prob
-        puts "Done"
-    rescue TemplateError => terr
-        puts terr
-    rescue StandardError => err
-        puts err
-        exit -1
-    end        
-    end
+  eos
+  if ARGV.empty?  
+    puts usage 
+    return
+  end
+  command = ARGV[0]
+  if command == "version"
+    puts VERSION
+  elsif command == "reset"
+    FileUtils.rm_rf $config_d
+    replace_config
+  else
+    id = ARGV[0].to_i
+    puts "You have given ID = #{id}" 
+  begin
+    account = load_config 
+    robot = Downloader.new account
+    parser = Parser.new robot
+    generator = Generator.new $config_d, Dir.getwd
+    
+    print "Downloading problem to raw HTML ... "
+    html = robot.download_problem id
+    puts "Done"
+    
+    print "Parsing problem from raw HTML ... "
+    prob = parser.parse html
+    puts "Done"
+    
+    print "Generating problem directory for #{prob.name} ... "
+    generator.generate prob
+    puts "Done"
+  rescue TemplateError => terr
+    puts terr
+  rescue StandardError => err
+    puts err
+    exit -1
+  end      
+  end
 end
 
 init

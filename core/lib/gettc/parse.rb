@@ -1,25 +1,26 @@
 require "gettc/problem"
-require "gettc/download" 
+require "gettc/download"
 
-require "uri" 
-require "pathname" 
+require "uri"
+require "pathname"
 require "hpricot"
 
 module Gettc
-  class Parser 
-    def initialize downloader
+  class Parser
+    def initialize(downloader)
       @downloader = downloader
-      @images = []      
+      @images = []
     end
+
     def parse html
-      @images = []      
-      prob = Problem.new 
+      @images = []
+      prob = Problem.new
       doc = Hpricot(html)
 
       prob.name = parse_name doc.search("tr/td.statTextBig").html
       prob.notes = nil
       prob.constraints = nil
-      prob.examples = nil 
+      prob.examples = nil
 
       html = doc.search("td.problemText/table").html
 
@@ -37,43 +38,43 @@ module Gettc
           if x.nil? then
             prob.examples = []
             x = -2
-          end 
-        end 
-      end 
+          end
+        end
+      end
       prob.definitions = parse_definitions html[z .. x]
 
       if prob.notes.nil? then
         z, x = indexes html, h3("Constraints")
         if z.nil? then
           prob.constraints = []
-          z, x = indexes html, h3("Examples") 
+          z, x = indexes html, h3("Examples")
           if z.nil? then
             prob.examples = []
             z = - 2
-          end 
-        end 
+          end
+        end
         prob.notes = parse_notes html[y .. z]
         x, y = z, x
-      end 
+      end
 
       if prob.constraints.nil? then
         z, x = indexes html, h3("Examples")
         if z.nil? then
           prob.examples = []
           z = -2
-        end 
+        end
         prob.constraints = parse_constraints html[y .. z]
-      end 
+      end
 
       if prob.examples.nil? then
         prob.examples = parse_examples html[x .. -2]
-      end 
+      end
 
       prob.images = @images
       prob.url, prob.source, prob.systests = parse_details doc
 
       return prob
-    end    
+    end
   private
     ## @section General helpers
 
@@ -84,16 +85,16 @@ module Gettc
       return from - 1, to
     end
     def filter html
-      html = html.force_encoding("ISO-8859-1").encode("utf-8", 
-                              invaid: :replace, 
-                              undef: :replace, 
+      html = html.force_encoding("ISO-8859-1").encode("utf-8",
+                              invaid: :replace,
+                              undef: :replace,
                               replace: "")
-      html.gsub! /<b>(\w*)<\/b>/ do |match| 
-        "*#{$1}*" 
-      end 
-      html.gsub! /<sup>(\w*)<\/sup>/ do |match| 
-        "^(#{$1})" 
-      end 
+      html.gsub! /<b>(\w*)<\/b>/ do |match|
+        "*#{$1}*"
+      end
+      html.gsub! /<sup>(\w*)<\/sup>/ do |match|
+        "^(#{$1})"
+      end
       html.gsub! "&#160;", ""
       html.gsub! "&nbsp;", " "
       text = Hpricot(html).to_plain_text
@@ -108,7 +109,7 @@ module Gettc
         rescue StandardError
           "![image](#{url})"
         end
-      end 
+      end
       return text
     end
     def h3 tag
@@ -132,8 +133,8 @@ module Gettc
           key = tds[0].to_plain_text[0 .. -2]
           value = tds[1].to_plain_text
           defs[key] = value
-        end 
-      end 
+        end
+      end
       return defs
     end
     def parse_notes html
@@ -141,7 +142,7 @@ module Gettc
       Hpricot(html).search "/tr" do |tr|
         tds = tr.search "/td.statText"
         notes << filter(tds[1].html) if tds.size == 2
-      end 
+      end
       return notes
     end
     def parse_constraints html
@@ -163,7 +164,7 @@ module Gettc
           text = input
         else
           text << ",\n" << input
-        end 
+        end
       end
       return filter_inout text
     end
@@ -184,7 +185,7 @@ module Gettc
         example.input = parse_input tds[i].html
         example.output = parse_output tds[i += 1].html
         example.reason = parse_reason tds[i += 1].html
-        examples << example 
+        examples << example
         i += 1
       end
       return examples
@@ -195,14 +196,14 @@ module Gettc
       z, _ = indexes html, "<!-- End System Testing -->"
       return systests unless y and z
       Hpricot(html[y .. z]).search "/table/tr[@valign=top]" do |tr|
-        tds = tr.search "/td.statText"    
+        tds = tr.search "/td.statText"
         if tds.size == 3 then
           test = Case.new
           test.input = filter_inout tds[0].to_plain_text
           test.output = filter_inout tds[1].to_plain_text
-          systests << test 
-        end 
-      end 
+          systests << test
+        end
+      end
       return systests
     end
     def download_systests detail_url
@@ -211,7 +212,7 @@ module Gettc
         solution = @downloader.download url.attributes["href"]
         systests = parse_systests solution
         return systests unless systests.empty?
-      end 
+      end
       return []
     end
     def parse_details doc
@@ -223,10 +224,10 @@ module Gettc
           systests = download_systests url
           unless systests.empty? then
             return url, source, systests
-          end 
+          end
         rescue DownloadError
         end
-      end 
+      end
       return url, source, systests
     end
   end
