@@ -4,9 +4,6 @@ import Test.HUnit
 import Text.Parsec.Error (ParseError)
 
 
-instance Eq ParseError where
-    (==) e1 e2 = True
-
 isLeft :: Either a b -> Bool
 isLeft (Left _) = True
 isLeft _ = False
@@ -24,7 +21,7 @@ shouldFail context parser source = do
 
 
 testParsePrimitives :: Test
-testParsePrimitives = TestCase (do 
+testParsePrimitives = TestCase (do
     shouldParse "parse an int" parseInt "123456" 123456
     shouldParse "parse a normal string" parseString "\"Hello World\"" "Hello World"
     shouldParse "parse a nasty string with a quote" parseString "\"The \"Red Wedding\"" "The \"Red Wedding"
@@ -36,7 +33,7 @@ testParsePrimitives = TestCase (do
     shouldParse "parse a boolean value" parseBool "fAlSe" False)
 
 testParseArray :: Test
-testParseArray = TestCase (do 
+testParseArray = TestCase (do
     shouldParse "parse an empty int array" (parseList parseInt) "[]" []
     shouldParse "parse a double array" (parseList parseDouble) "[ 1.23, 4.56, 78.9 ]" [1.23, 4.56, 78.9]
     shouldParse "parse a string array" (parseList parseString) "[\"Hello\",\"World\"]" ["Hello", "World"])
@@ -47,7 +44,7 @@ getVars = do names <- spaces >> (parseList (parseList parseString)) ; spaces >> 
              grade <- spaces >> parseChar ; spaces >> next
              year <- spaces >> parseDouble ; spaces >> next
              released <- spaces >> parseBool ; spaces >> next
-             code <- spaces >> parseChar ; spaces >> next  
+             code <- spaces >> parseChar ; spaces >> next
              numbers <- spaces >> (parseList parseInt)
              return (names, grade, year, released, code, numbers)
 
@@ -60,7 +57,7 @@ complexInput = intercalate "\n" [ "[ [ \"Jon Snow\""
                                 , ", [ -2 , 0 , 1 , 4 ]" ]
 
 testParseEverything :: Test
-testParseEverything = TestCase (do 
+testParseEverything = TestCase (do
     let result = parse getVars "parsing variables" complexInput
     let Right (names, grade, year, released, code, numbers) = result
     assertEqual "string[][] names" [["Jon Snow", "Lord Varys", "The \"Little Finger\""], []] names
@@ -71,8 +68,8 @@ testParseEverything = TestCase (do
     assertEqual "int[] numbers" [-2, 0, 1, 4] numbers)
 
 
-tests = TestList [ TestLabel "testParsePrimitives" testParsePrimitives 
-                 , TestLabel "testParseArray" testParseArray 
+tests = TestList [ TestLabel "testParsePrimitives" testParsePrimitives
+                 , TestLabel "testParseArray" testParseArray
                  , TestLabel "testParseEverything" testParseEverything ]
 
 main = do
