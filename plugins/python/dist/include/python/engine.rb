@@ -23,7 +23,7 @@ module Gettc
   class PythonEngine
     attr_reader :arglist, :input, :shebang
 
-    def initialize func, vars
+    def initialize(func, vars)
       @arglist = vars.map(&:name).join(", ")
 
       @input = vars.map do |var|
@@ -49,7 +49,7 @@ module Gettc
       return default
     end
 
-    def system_q command
+    def system_q(command)
       IO.popen(command, err: [:child, :out]) { |f| f.gets }
     end
   end

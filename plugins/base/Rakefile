@@ -12,7 +12,7 @@ end
 
 namespace :test do
   desc "Test the C++ library"
-  task :cpp => "temp/topcoder_test" do
+  task cpp: "temp/topcoder_test" do
     sh "temp/topcoder_test"
   end
 

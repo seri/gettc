@@ -3,60 +3,55 @@ require "gettc/types"
 module Gettc
   class Type
     def to_ruby
-      if is_a? TArray
-        return "TArray.new(#{subtype.to_ruby})"
-      end 
+      return "TArray.new(#{subtype.to_ruby})" if self.is_a?(TArray)
 
       case self
       when TInt
-        return "TInt"
+        "TInt"
       when TLong
-        return "TLong"
+        "TLong"
       when TFloat
-        return "TFloat"
+        "TFloat"
       when TDouble
-        return "TDouble"
+        "TDouble"
       when TChar
-        return "TChar"
+        "TChar"
       when TString
-        return "TString"
+        "TString"
       when TBoolean
-        return "TBoolean"
+        "TBoolean"
+      else
+        "Object"
       end
-
-      return "Object"
     end
+
     def dumb_ruby
-      if is_a? TArray then
-        return "[]"
-      end
+      return "[]" if self.is_a?(TArray)
 
       case self
       when TInt, TLong, TFloat, TDouble
-        return "0"
+        "0"
       when TChar
-        return "?$"
+        "?$"
       when TString
-        return '"$"'
+        '"$"'
       when TBoolean
-        return "true"
+        "true"
+      else
+        "nil"
       end
-
-      return "nil"
     end
   end
+
   class RubyEngine
     attr_reader :arglist, :input
-    def initialize func, vars
-      temp = vars.map do |var|
-        var.name
-      end
-      @arglist = temp.join ", "
 
-      temp = vars.map do |var| 
-        var.name + " = reader.next(" + var.type.to_ruby + ")"
-      end
-      @input = temp.join "\nreader.next()\n"
+    def initialize(func, vars)
+      @arglist = vars.map(&:name).join(", ")
+
+      @input = vars.map do |var|
+        "#{var.name} = reader.next(#{var.type.to_ruby})"
+      end.join("\nreader.next()\n")
     end
   end
 end

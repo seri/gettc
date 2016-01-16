@@ -1,8 +1,8 @@
 <%
-    engine = JavaEngine.new func, vars 
+    engine = JavaEngine.new(func, vars )
 %>public class <%= prob.name %> {
-<%= 
-    engine.declare.gsub(/^/, ' ' * 4) 
+<%=
+    engine.declare.gsub(/^/, ' ' * 4)
 %> {
         return <%= func.type.dumb_java %>;
     }
