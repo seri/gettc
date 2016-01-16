@@ -1,70 +1,62 @@
-require "gettc/types" 
+require "gettc/types"
 
 module Gettc
-    class Type
-        def to_go
-            if is_a? TArray
-                return "[]#{subtype.to_go}"
-            end
+  class Type
+    def to_go
+      return "[]#{subtype.to_go}" if self.is_a?(TArray)
 
-            case self 
-            when TInt
-                return "int"
-            when TLong
-                return "int64"        
-            when TFloat
-                return "float32"
-            when TDouble
-                return "float64"
-            when TChar
-                return "byte"
-            when TString
-                return "string"
-            when TBoolean
-                return "bool"
-            end 
-
-            return "unknown"
-        end
-        def dumb_go
-            if is_a? TArray
-                return to_go + " {}"
-            end
-
-            case self
-            when TInt, TLong, TDouble, TFloat
-                return "0"
-            when TChar
-                return "'$'"
-            when TString
-                return '"$"'
-            when TBoolean
-                return "true"
-            end
-
-            return "nil"
-        end
+      case self
+      when TInt
+        "int"
+      when TLong
+        "int64"
+      when TFloat
+        "float32"
+      when TDouble
+        "float64"
+      when TChar
+        "byte"
+      when TString
+        "string"
+      when TBoolean
+        "bool"
+      else
+        "unknown"
+      end
     end
-    class Signature
-        def to_go
-            return @name + " " + @type.to_go
-        end
+
+    def dumb_go
+      return "#{self.to_go} {}" if self.is_a?(TArray)
+
+      case self
+      when TInt, TLong, TDouble, TFloat
+        "0"
+      when TChar
+        "'$'"
+      when TString
+        '"$"'
+      when TBoolean
+        "true"
+      else
+        "nil"
+      end
     end
-    class GoEngine
-        attr_reader :declare, :input, :output, :func_name
-        def initialize func, vars
-            @declare = vars.map do |var| 
-                var.to_go 
-            end
-            temp = vars.map do |var| 
-                var.name 
-            end
-            @output = temp.join ", "
-            temp = temp.map do |name|
-                "&" + name
-            end
-            @input = temp.join ", "
-            @func_name = func.name[0, 1].upcase + func.name[1..-1]
-        end
+  end
+
+  class Signature
+    def to_go
+      "#{@name} #{@type.to_go}"
     end
+  end
+
+  class GoEngine
+    attr_reader :declare, :input, :output, :func_name
+
+    def initialize(func, vars)
+      @declare = vars.map(&:to_go)
+      @output = vars.map(&:name).join(", ")
+      @input = vars.map { |var| "&#{var.name}" }.join(", ")
+      @func_name = func.name[0, 1].upcase + func.name[1..-1]
+    end
+  end
 end

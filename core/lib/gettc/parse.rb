@@ -83,7 +83,8 @@ module Gettc
 
     def indexes(str, substr)
       from = str.index(substr)
-      from.nil? ? nil : (from - 1, from + substr.size)
+      return nil if from.nil?
+      return from - 1, from + substr.size
     end
 
     def filter html
@@ -156,10 +157,14 @@ module Gettc
     end
 
     def parse_input(html)
-      filter_inout(Hpricot(html).search("/table/tr/td.statText").each_with_object(nil) do |td, memo|
+      filter_inout Hpricot(html).search("/table/tr/td.statText").each_with_object(nil) do |td, memo|
         input = td.to_plain_text.strip
-        memo.nil? (memo = input) : (text << ",\n" << input)
-      end)
+        if memo.nil?
+          memo = input
+        else
+          memo << ",\n" << input
+        end
+      end
     end
 
     def parse_output(html)
@@ -206,9 +211,8 @@ module Gettc
 
     def download_systests(detail_url)
       Hpricot(@downloader.download(detail_url))
-        .search("a[@href^=/stat?c=problem_solution]")
-        .each_with_object([])
-      do |url|
+      .search("a[@href^=/stat?c=problem_solution]")
+      .each_with_object([]) do |url|
         solution = @downloader.download(url.attributes["href"])
         systests = parse_systests(solution)
         return systests unless systests.empty?
@@ -223,8 +227,7 @@ module Gettc
         systests = download_systests(url) rescue []
         return url, filter(elem.html), systests unless systests.empty?
       end
-
-      ("", "", [])
+      return "", "", []
     end
   end
 end

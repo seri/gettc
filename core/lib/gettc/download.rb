@@ -1,6 +1,6 @@
 require "net/https"
 require "cgi"
-require "uri" 
+require "uri"
 require "ostruct"
 
 module Gettc
@@ -33,7 +33,7 @@ module Gettc
   class IDNotAvailable < DownloadError
     attr_accessor :id
 
-    def initialize(idw msg = "ID not available")
+    def initialize(id, msg = "ID not available")
       @id = id
       super "#{msg} (#{id})"
     end
@@ -61,26 +61,26 @@ module Gettc
     def download(url)
       uri = url
       unless uri.is_a?(URI)
-        uri = url.start_with?("http") ? URI.parse(url) : URI.join(ROOT, url) 
-      end 
+        uri = url.start_with?("http") ? URI.parse(url) : URI.join(ROOT, url)
+      end
 
       connect uri do |http|
         LIMIT.times do
           req = Net::HTTP::Get.new uri.request_uri
           req["cookie"] = @raw
 
-          res = http.request req   
+          res = http.request req
           return res.body if res.is_a? Net::HTTPSuccess
           unless res.is_a? Net::HTTPMovedPermanently then
 
-            raise DownloadError.new res.class.to_s 
+            raise DownloadError.new res.class.to_s
           end
 
           uri = URI.parse res["location"]
         end
 
         raise DownloadError.new("Tried #{LIMIT} times without success")
-      end 
+      end
     end
 
     def download_problem(id)
@@ -105,8 +105,8 @@ module Gettc
       if @proxy.nil?
         Net::HTTP.start(uri.host, uri.port) { |http| yield http }
       else
-        Net::HTTP.start(uri.host, uri.port, 
-                        @proxy.host, @proxy.port, 
+        Net::HTTP.start(uri.host, uri.port,
+                        @proxy.host, @proxy.port,
                         @proxy.user, @proxy.pass) do |http|
           begin
             yield http
@@ -114,7 +114,7 @@ module Gettc
             raise ProxyError.new @proxy
           end
         end
-      end 
+      end
     end
 
     def get_cookie
@@ -124,7 +124,7 @@ module Gettc
       req.set_form_data({
         "username" => @account.username,
          "password" => @account.password,
-         "rem" => "on" 
+         "rem" => "on"
       })
 
       res = connect(uri) { |http| http.request(req) }
@@ -134,6 +134,6 @@ module Gettc
       raise LoginFailed.new(@account, cookie) if cookie["tcsso"].empty?
 
       raw
-    end 
+    end
   end
 end

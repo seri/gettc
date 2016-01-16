@@ -4,35 +4,44 @@ include Gettc
 
 class SignatureTest < Test::Unit::TestCase
   def test_parse_signature
-    assert_raise CannotParseSignature do 
-      parse_signature "invalid_signature" 
+    assert_raise CannotParseSignature do
+      parse_signature "invalid_signature"
     end
-    assert_raise UnsupportedType do 
-      parse_signature "strange_type name" 
+
+    assert_raise UnsupportedType do
+      parse_signature "strange_type name"
     end
-    assert_raise InvalidVariableName do 
-      parse_signature "int not&ok&name" 
+
+    assert_raise InvalidVariableName do
+      parse_signature "int not&ok&name"
     end
-    assert_raise InvalidVariableName do 
-      parse_signature "int 0zero" 
+
+    assert_raise InvalidVariableName do
+      parse_signature "int 0zero"
     end
+
     sig = parse_signature "String[] a_valid_nam3"
     assert_equal TArray.new(TString), sig.type
     assert_equal "a_valid_nam3", sig.name
   end
+
   def test_parse_method_signature
     assert_raise CannotParseSignature do
       parse_method_signature "there are no brackets"
     end
+
     assert_raise CannotParseSignature do
       parse_method_signature "int main(int main())"
     end
+
     assert_raise CannotParseSignature do
       parse_method_signature "int main(oops forget to close bracket"
     end
+
     method  =  "  int leastBorders(String[] X  , int[] Y, double[] R,"
     method += "  char my_x1,   long y1  ,  float x2, int[][] y2) "
-    sigs = parse_method_signature method
+    sigs = parse_method_signature(method)
+
     assert_equal 8, sigs.size
     assert_equal TInt, sigs[0].type
     assert_equal "leastBorders", sigs[0].name

@@ -1,6 +1,6 @@
-require "rubygems/package_task" 
-require "rubygems/installer" 
-require "rake/clean" 
+require "rubygems/package_task"
+require "rubygems/installer"
+require "rake/clean"
 require "fileutils"
 
 require_relative "helper"
@@ -9,7 +9,7 @@ require_relative "core/lib/version"
 CLEAN << "pkg"
 CLEAN << "temp"
 
-spec = Gem::Specification.new do |s| 
+spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.name = "gettc"
   s.summary = "TopCoder offline arena supporting multiple languages"
@@ -30,7 +30,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_dependency "hpricot"
   s.add_dependency "rdiscount"
-end 
+end
 Gem::PackageTask.new spec do |pkg|
   pkg.need_tar = true
 end
@@ -69,6 +69,6 @@ task :dist do
       end
     end
   end
-  command << " -t ." 
+  command << " -t ."
   sh command
 end

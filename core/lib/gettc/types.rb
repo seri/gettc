@@ -86,8 +86,8 @@ module Gettc
       TChar
     when "String"
       TString
+    else
+      raise UnsupportedType.new(str)
     end
-
-    raise UnsupportedType.new(str)
   end
 end
