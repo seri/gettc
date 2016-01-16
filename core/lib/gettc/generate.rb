@@ -42,18 +42,17 @@ module Gettc
     def initialize(err, source, msg = "Template error")
       @err = err
       @source = source
-
       super "#{msg} (#{source})\n#{err}"
     end
   end
 
   class Generator
-    def initialize(config_d, target_d)
-      @source_d = File.join(config_d, "template")
-      raise SourceDirNotExist.new(@source_d) unless File.directory?(@source_d)
+    def initialize(config_d, target_dir)
+      @source_dir = File.join(config_d, "template")
+      raise SourceDirNotExist.new(@source_dir) unless File.directory?(@source_dir)
 
-      @target_d = target_d
-      raise TargetDirNotExist.new(@target_d) unless File.directory?(@target_d)
+      @target_dir = target_dir
+      raise TargetDirNotExist.new(@target_dir) unless File.directory?(@target_dir)
 
       load_engines(File.join(config_d, "include"))
     end
@@ -61,10 +60,10 @@ module Gettc
     def generate(prob)
       @prob = prob
 
-      @prob_d = File.join(@target_d, prob.name)
-      raise ProblemDirExists.new(@prob_d) if File.exists?(@prob_d)
+      @prob_dir = File.join(@target_dir, prob.name)
+      raise ProblemDirExists.new(@prob_d) if File.exists?(@prob_dir)
 
-      FileUtils.mkdir @prob_d
+      FileUtils.mkdir(@prob_dir)
 
       method_sig = @prob.definitions["Method signature"]
       if method_sig.nil?
@@ -75,29 +74,22 @@ module Gettc
       end
       @context = binding
 
-      walk(@source_d, @prob_d)
+      walk(@source_dir, @prob_dir)
     end
 
     private
 
-    def generate_images(images, images_d)
+    def generate_images(images, images_dir)
       images.each do |image|
-        filename = File.join(images_d, image.name)
+        filename = File.join(images_dir, image.name)
         File.open(filename, "wb") { |f| f.write(image.content) }
       end
     end
 
-    def generate_test_case(cases, data_d)
-      cases.each_index do |i|
-        c = cases[i]
-
-        File.open(File.join(data_d, "#{i.to_s}.in"), "w") do |f|
-          f.write(c.input)
-        end
-
-        File.open(File.join(data_d, "#{i.to_s}.out"), "w") do |f|
-          f.write(c.output)
-        end
+    def generate_test_case(cases, data_dir)
+      cases.each_with_index do |case_data, case_id|
+        File.open(File.join(data_dir, "#{case_id.to_s}.in"), "w") { |f| f.write(case_data.input) }
+        File.open(File.join(data_dir, "#{case_id.to_s}.out"), "w") { |f| f.write(case_data.output) }
       end
     end
 
@@ -107,20 +99,20 @@ module Gettc
       begin
         after = ERB.new(before).result(@context)
       rescue SyntaxError, NameError => err
-        raise TemplateError.new err, source
+        raise TemplateError.new(err, source)
       end
 
       File.open(target, "w") { |f| f.write(after) }
     end
 
-    def filter(target_d, name)
+    def filter(target_dir, name)
       case name
-      when "{images_d}"
-        generate_images(@prob.images, target_d)
+      when "{images_dir}"
+        generate_images(@prob.images, target_dir)
       when "{examples_d}"
-        generate_test_case(@prob.examples, target_d)
+        generate_test_case(@prob.examples, target_dir)
       when "{systests_d}"
-        generate_test_case(@prob.systests, target_d)
+        generate_test_case(@prob.systests, target_dir)
       else
         return name.gsub(/\{(\w*)\}/) { |match| @prob.name if $1 == "name" }
       end
@@ -128,13 +120,12 @@ module Gettc
       return nil
     end
 
-    def load_engines(include_d)
-      return unless File.exists?(include_d)
+    def load_engines(include_dir)
+      return unless File.exists?(include_dir)
 
-      Dir.foreach(include_d) do |name|
-        if File.directory?(child = File.join(include_d, name))
-          engine = File.join(child, "engine.rb")
-          if File.exists?(engine)
+      Dir.foreach(include_dir) do |name|
+        if File.directory?(child = File.join(include_dir, name))
+          if File.exists?(engine = File.join(child, "engine.rb"))
             engine = "./#{engine}" unless Pathname.new(engine).absolute?
             require engine
           end
@@ -142,21 +133,21 @@ module Gettc
       end
     end
 
-    def walk(source_d, target_d)
-      Dir.foreach(source_d) do |name|
+    def walk(source_parent, target_parent)
+      Dir.foreach(source_parent) do |name|
         next if [".", ".."].include?(name)
 
-        target_n = filter(target_d, name)
-        next if target_n.nil?
+        target_name = filter(target_parent, name)
+        next if target_name.nil?
 
-        source_p = File.join(source_d, name)
-        target_p = File.join(target_d, target_n)
+        source_child = File.join(source_parent, name)
+        target_child = File.join(target_parent, target_name)
 
-        if File.directory?(source_p) then
-          FileUtils.mkdir(target_p) unless File.exists?(target_p)
-          walk(source_p, target_p)
-        elsif File.file?(source_p) then
-          generate_template(source_p, target_p)
+        if File.directory?(source_child)
+          FileUtils.mkdir(target_child) unless File.exists?(target_child)
+          walk(source_child, target_child)
+        elsif File.file?(source_child)
+          generate_template(source_child, target_child)
         end
       end
     end
