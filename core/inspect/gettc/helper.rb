@@ -1,5 +1,5 @@
 module Gettc
-  def benchmark message
+  def benchmark(message)
     print "#{message} .. "
     before = Time.now
     yield

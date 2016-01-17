@@ -2,6 +2,7 @@ require "net/https"
 require "cgi"
 require "uri"
 require "ostruct"
+require "json"
 
 module Gettc
   class Account
@@ -49,13 +50,12 @@ module Gettc
   end
 
   class Downloader
-    ROOT = "http://community.topcoder.com"
+    ROOT = "https://community.topcoder.com"
     LIMIT = 10
 
     def initialize(account)
       @account = account
       @proxy = get_proxy
-      @raw = get_cookie
     end
 
     def download(url)
@@ -64,19 +64,19 @@ module Gettc
         uri = url.start_with?("http") ? URI.parse(url) : URI.join(ROOT, url)
       end
 
-      connect uri do |http|
+      connect(uri) do |http|
         LIMIT.times do
-          req = Net::HTTP::Get.new uri.request_uri
-          req["cookie"] = @raw
+          request = Net::HTTP::Get.new(uri.request_uri)
+          request["cookie"] = cookie
 
-          res = http.request req
-          return res.body if res.is_a? Net::HTTPSuccess
-          unless res.is_a? Net::HTTPMovedPermanently then
+          response = http.request(request)
+          return response.body if response.is_a?(Net::HTTPSuccess)
 
-            raise DownloadError.new res.class.to_s
+          unless response.is_a?(Net::HTTPMovedPermanently) then
+            raise DownloadError.new(response.class.to_s)
           end
 
-          uri = URI.parse res["location"]
+          uri = URI.parse(response["location"])
         end
 
         raise DownloadError.new("Tried #{LIMIT} times without success")
@@ -102,38 +102,57 @@ module Gettc
     end
 
     def connect(uri)
+      uri = URI.parse(uri) unless uri.is_a?(URI)
+      options = { use_ssl: uri.scheme == 'https' }
+
       if @proxy.nil?
-        Net::HTTP.start(uri.host, uri.port) { |http| yield http }
+        Net::HTTP.start(uri.host, uri.port, options) { |http| yield http }
       else
         Net::HTTP.start(uri.host, uri.port,
                         @proxy.host, @proxy.port,
-                        @proxy.user, @proxy.pass) do |http|
+                        @proxy.user, @proxy.pass,
+                        options) do |http|
           begin
             yield http
           rescue Errno::ECONNRESET
-            raise ProxyError.new @proxy
+            raise ProxyError.new(@proxy)
           end
         end
       end
     end
 
-    def get_cookie
-      uri = URI.join(ROOT, "tc?&module=Login")
+    def post_json(uri, params)
+      uri = URI.parse(uri) unless uri.is_a?(URI)
+      connect(uri) do |http|
+        request = Net::HTTP::Post.new(uri.request_uri)
+        request["Content-Type"] = "application/json"
+        request.body = params.to_json
+        http.request(request)
+      end
+    end
 
-      req = Net::HTTP::Post.new(uri.request_uri)
-      req.set_form_data({
-        "username" => @account.username,
-         "password" => @account.password,
-         "rem" => "on"
+    def cookie
+      return @cookie if @cookie
+
+      jwt_token = JSON(post_json("http://api.topcoder.com/v2/auth", {
+        username: @account.username,
+        password: @account.password
+      }).body)["token"]
+
+      refresh_token = JSON(post_json("http://api.topcoder.com/v2/reauth", {
+        token: jwt_token
+      }).body)["token"]
+
+      response = post_json("https://api.topcoder.com/v3/authorizations", {
+        param: {
+          externalToken: refresh_token
+        }
       })
 
-      res = connect(uri) { |http| http.request(req) }
-      raw = res["set-cookie"]
+      @cookie = CGI::Cookie.parse(response["set-cookie"])
+      raise LoginFailed.new(@account, @cookie) unless @cookie.has_key?("tcsso")
 
-      cookie = CGI::Cookie.parse(raw)
-      raise LoginFailed.new(@account, cookie) if cookie["tcsso"].empty?
-
-      raw
+      @cookie
     end
   end
 end

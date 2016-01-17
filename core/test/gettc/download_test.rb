@@ -8,7 +8,9 @@ class DownloadTest < Test::Unit::TestCase
   end
 
   def test_wrong_account
-    assert_raises LoginFailed do Downloader.new(Account.new("username", "password")) end
+    assert_raises LoginFailed do
+      Downloader.new(Account.new("username", "password")).download_problem(11127)
+    end
   end
 
   def test_wrong_id

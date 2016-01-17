@@ -1,15 +1,13 @@
 require "fileutils"
 require "rake/clean"
 
-CLEAN << "temp"
-
-file "temp" do
-  mkdir "temp"
-  mkdir "temp/parse_problem"
-  mkdir "temp/download_problem_statement"
-  mkdir "temp/download_problem_detail"
-  mkdir "temp/download_problem_solution"
-  mkdir "temp/generate_problem_dir"
+file "data" do
+  mkdir "data"
+  mkdir "data/parse_problem"
+  mkdir "data/download_problem_statement"
+  mkdir "data/download_problem_detail"
+  mkdir "data/download_problem_solution"
+  mkdir "data/generate_problem_dir"
 end
 
 def inspector name, output
@@ -24,18 +22,18 @@ end
 
 namespace :inspect do
   desc "Inspect the downloader"
-  task download: "temp" do
-    inspector "download", "temp/download_problem_statement/Checker.htm"
+  task download: "data" do
+    inspector "download", "data/download_problem_statement/Checker.htm"
   end
 
   desc "Inspect the parser"
   task parse: "inspect:download" do
-    inspector "parse", "temp/parse_problem/Checker.yml"
+    inspector "parse", "data/parse_problem/Checker.yml"
   end
 
   desc "Inspect the generator"
   task generate: "inspect:parse" do
-    inspector "generate", "temp/generate_problem_dir/BuildingRoads"
+    inspector "generate", "data/generate_problem_dir/BuildingRoads"
   end
 
 end

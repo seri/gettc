@@ -5,11 +5,11 @@ include Gettc
 class ParseTest < Test::Unit::TestCase
   def setup
     @parser = Parser.new(Downloader.new(Account.new("gettc", "algorithm")))
-    @data_d = File.join(File.dirname(__FILE__), "../../temp/download_problem_statement")
+    @data_dir = File.join(File.dirname(__FILE__), "../../data/download_problem_statement")
   end
 
   def get_problem_raw(prob)
-    return File.read(File.join(@data_d, prob + ".htm"))
+    return File.read(File.join(@data_dir, prob + ".htm"))
   end
 
   def test_indexes
