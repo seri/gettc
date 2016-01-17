@@ -4,24 +4,24 @@ include Gettc
 require_relative "helper"
 
 def filename(dir_name, prob_name)
-  return File.join(File.dirname(__FILE__), "../../data/#{dir_name}/#{prob_name}.htm")
+  File.join(File.dirname(__FILE__), "../../data/#{dir_name}/#{prob_name}.htm")
 end
 
 def download_all(id, name, detail_url = nil, solution_url = nil)
-  benchmark "Downloading #{name}" do
-    File.open(filename("download_problem_statement", name), "w") do |f|
-      f.write($robot.download_problem(id))
+  benchmark("Downloading #{name}") do
+    write_unless_exists(filename("download_problem_statement", name)) do |file|
+      file.write($robot.download_problem(id))
     end
 
     unless detail_url.nil?
-      File.open(filename("download_problem_detail", name), "w") do |f|
-        f.write($robot.download(detail_url))
+      write_unless_exists(filename("download_problem_detail", name)) do |file|
+        file.write($robot.download(detail_url))
       end
     end
 
     unless solution_url.nil?
-      File.open(filename("download_problem_solution", name), "w") do |f|
-        f.write($robot.download(solution_url))
+      write_unless_exists(filename("download_problem_solution", name)) do |file|
+        file.write($robot.download(solution_url))
       end
     end
   end
@@ -31,7 +31,7 @@ def main
   $robot = Downloader.new(Account.new("gettc", "algorithm"))
 
   download_all(10297, "CirclesCountry",
-               "/tc?module=ProblemDetail&rd=13751&pm=10297",
+               "/tc?module=problemdetail&rd=13751&pm=10297",
                "/stat?c=problem_solution&cr=22504795&rd=13751&pm=10297")
 
   download_all(10329, "PageNumbers",
@@ -62,4 +62,6 @@ def main
   download_all(358, "Checker")
 end
 
-main
+$robot = Downloader.new(Account.new("gettc", "algorithm"))
+response = $robot.download("https://community.topcoder.com/stat?c=problem_solution&cr=22504795&rd=13751&pm=10297")
+File.open("solution.html", "w") { |file| file.write(response) }

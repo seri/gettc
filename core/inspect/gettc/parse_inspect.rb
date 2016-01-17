@@ -12,10 +12,8 @@ end
 
 def parse_all(name)
   benchmark "Parsing #{name}" do
-    stat_file = filename("download_problem_statement", name, "htm")
-    prob = $parser.parse(File.open(stat_file, "r") { |f| f.read })
-    File.open filename("parse_problem", name, "yml"), "w" do |f|
-      f.write(prob.to_yaml)
+    write_unless_exists(filename("parse_problem", name, "yml")) do |file|
+      file.write($parser.parse(File.read(filename("download_problem_statement", name, "htm"))))
     end
   end
 end

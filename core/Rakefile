@@ -10,8 +10,8 @@ file "data" do
   mkdir "data/generate_problem_dir"
 end
 
-def inspector name, output
-  unless File.exists? output then
+def inspector(name, output)
+  unless File.exists?(output) then
     ruby "-Ilib inspect/gettc/#{name}_inspect.rb"
   end
 end

@@ -56,6 +56,7 @@ module Gettc
     def initialize(account)
       @account = account
       @proxy = get_proxy
+      @sso_token = get_sso_token
     end
 
     def download(url)
@@ -67,7 +68,7 @@ module Gettc
       connect(uri) do |http|
         LIMIT.times do
           request = Net::HTTP::Get.new(uri.request_uri)
-          request["cookie"] = cookie
+          request["cookie"] = "tcsso=#{@sso_token}"
 
           response = http.request(request)
           return response.body if response.is_a?(Net::HTTPSuccess)
@@ -131,9 +132,7 @@ module Gettc
       end
     end
 
-    def cookie
-      return @cookie if @cookie
-
+    def get_sso_token
       jwt_token = JSON(post_json("http://api.topcoder.com/v2/auth", {
         username: @account.username,
         password: @account.password
@@ -149,10 +148,10 @@ module Gettc
         }
       })
 
-      @cookie = CGI::Cookie.parse(response["set-cookie"])
-      raise LoginFailed.new(@account, @cookie) unless @cookie.has_key?("tcsso")
+      cookie = CGI::Cookie.parse(response["set-cookie"])
+      raise LoginFailed.new(@account, cookie) unless cookie.has_key?("tcsso")
 
-      @cookie
+      cookie["tcsso"].to_s.split(";").first.split("=")[1].gsub("%7C", "|")
     end
   end
 end

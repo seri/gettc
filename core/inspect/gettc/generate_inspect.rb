@@ -12,7 +12,7 @@ def get_prob name
 end
 
 def generate_all name
-  benchmark "Generating problem directory for #{name}" do
+  benchmark("Generating problem directory for #{name}") do
     $generator.generate(get_prob(name))
   end
 end

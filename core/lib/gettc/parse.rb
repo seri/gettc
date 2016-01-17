@@ -157,14 +157,15 @@ module Gettc
     end
 
     def parse_input(html)
-      filter_inout Hpricot(html).search("/table/tr/td.statText").each_with_object(nil) do |td, memo|
+      text = Hpricot(html).search("/table/tr/td.statText").each_with_object("") do |td, memo|
         input = td.to_plain_text.strip
-        if memo.nil?
+        if memo.empty?
           memo = input
         else
           memo << ",\n" << input
         end
       end
+      filter_inout(text)
     end
 
     def parse_output(html)
