@@ -1,9 +1,9 @@
-# Fix is underway for the recent change in Topcoder
+# Fix is underway
 
-> Recently, TopCoder has changed their authentication mechanism to OAuth, and the
-> current code is no longer able to download anything. I have got a solution, but
-> have not quite gotten the time to wrap up. I plan to publish the new bugfix
-> version at some point toward the end of January, 2016.
+Recently, TopCoder has changed their authentication mechanism to OAuth, and the
+current code is no longer able to download anything. I have got a solution, but
+have not quite gotten the time to wrap up. I plan to publish the new bugfix
+version at some point toward the end of January, 2016.
 
 # Introduction
 
