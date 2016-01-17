@@ -20,20 +20,17 @@
 
     <section class="main-content">
       <h1>
-<a id="help-wanted-currently-not-able-to-download" class="anchor" href="#help-wanted-currently-not-able-to-download" aria-hidden="true"><span class="octicon octicon-link"></span></a>HELP WANTED Currently not able to download</h1>
+<a id="fix-is-underway" class="anchor" href="#fix-is-underway" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fix is underway</h1>
 
-<blockquote>
 <p>Recently, TopCoder has changed their authentication mechanism to OAuth, and the
-current code is no longer able to download anything. I will come back to this
-when I have time, but I appreciate help. Basically, if you are able to request
-a problem statement provided a username/password pair from the command line or
-a script, please send me an email, thank you.</p>
-</blockquote>
+current code is no longer able to download anything. I have got a solution, but
+have not quite gotten the time to wrap up. I plan to publish the new bugfix
+version at some point toward the end of January, 2016.</p>
 
 <h1>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
-<p>Download a <a href="http://community.topcoder.com/tc?module=MatchList">TopCoder</a> problem, 
+<p>Download a <a href="http://community.topcoder.com/tc?module=MatchList">TopCoder</a> problem,
 parse the examples and system tests, then finally generate a naive solution for
 the following languages:</p>
 
@@ -47,7 +44,7 @@ the following languages:</p>
 <li>Javascript</li>
 </ul>
 
-<p>And support for more languages is just around the corner. </p>
+<p>And support for more languages is just around the corner.</p>
 
 <blockquote>
 <p>You can email me to request support for your favourite language. I will
@@ -58,11 +55,11 @@ prioritize development on the most requested ones.</p>
 running it against the downloaded input and output files.</p>
 
 <p>TopCoder is a heaven for programmers. Solving algorithmic problems is a great
-way to embrace the passion for programming. There are problems for all levels. 
+way to embrace the passion for programming. There are problems for all levels.
 A strong academic background is not required to enjoy it. If you like Project
-Euler, you will probably love TopCoder. </p>
+Euler, you will probably love TopCoder.</p>
 
-<p>However, the TopCoder online arena is quite inconvenient and supports only a 
+<p>However, the TopCoder online arena is quite inconvenient and supports only a
 few languages. Gettc's goal is to make the practice of solving algorithmic
 problems convenient and fun, and in your desired language.</p>
 
@@ -74,8 +71,8 @@ $ gettc 11127
 </code></pre>
 
 <p>Note that 11127 is the ID that TopCoder gives to the problem named <code>DigitHoles</code>. You
-can find the ID for any problem if you look at the URL for 
-<a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=11127">that problem's statement</a> 
+can find the ID for any problem if you look at the URL for
+<a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=11127">that problem's statement</a>
 (you need to have a TopCoder account). Output:</p>
 
 <pre><code>You have given ID = 11127
@@ -92,18 +89,18 @@ $ make demo
 
 <p>Output:</p>
 
-<pre><code>[gettc] Compile solver                                                                   
-[gettc] Compile checker                                                                  
-[gettc] Run test cases                                                                   
-Case 0 ... 2ms Failed                                                                    
-    Input: &lt;42&gt;                                                                          
-    Expected: &lt;1&gt;                                                                        
-    Received: &lt;0&gt;                                                                        
-Case 1 ... 1ms Failed                                                                    
-    Input: &lt;669&gt;                                                                         
-    Expected: &lt;3&gt;                                                                        
-    Received: &lt;0&gt;                                                                        
-Case 2 ... 1ms Failed                                                                    
+<pre><code>[gettc] Compile solver
+[gettc] Compile checker
+[gettc] Run test cases
+Case 0 ... 2ms Failed
+    Input: &lt;42&gt;
+    Expected: &lt;1&gt;
+    Received: &lt;0&gt;
+Case 1 ... 1ms Failed
+    Input: &lt;669&gt;
+    Expected: &lt;3&gt;
+    Received: &lt;0&gt;
+Case 2 ... 1ms Failed
     Input: &lt;688&gt;
     Expected: &lt;5&gt;
     Received: &lt;0&gt;
@@ -124,7 +121,7 @@ Failures: 0, 1, 2, 4, 5
     Slowest running case: 2 ms (case 0)
 </code></pre>
 
-<p>As you can see, the generated solution actually managed to solve 1 test case. 
+<p>As you can see, the generated solution actually managed to solve 1 test case.
 Gettc is pretty smart after all. Anyway, you still need to do the hard work.
 Open the file <code>DigitHoles.cpp</code> in your favourite editor and enter the following
 content:</p>
@@ -196,7 +193,7 @@ while we are it?</p>
 <ul>
 <li>
 <a href="http://www.ruby-lang.org/en/downloads/">Ruby</a>: The
-<a href="http://rubyinstaller.org/">Ruby installer</a> is recommend for Windows users. </li>
+<a href="http://rubyinstaller.org/">Ruby installer</a> is recommend for Windows users.</li>
 <li>
 <a href="http://rubygems.org/pages/download">RubyGems</a>: Many Ruby installations
 already bundle RubyGems.</li>
@@ -246,7 +243,7 @@ $ make
 
 <ul>
 <li>I remember having encountered a problem where gettc failed to download the system
-tests while it is in fact possible to get the system tests. However, I forgot the 
+tests while it is in fact possible to get the system tests. However, I forgot the
 problem ID. If you meet such problems, please file an issue so I can fix this.</li>
 <li>There are a few problems that allow multiple answers (such as
 <a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=13748&amp;rd=16416">CorruptedMessage</a>).
@@ -264,7 +261,7 @@ smallest possible value.</li>
 <li>You can play with the contents of the directory <code>~/.gettc</code> to, say, remove things
 you don't want to be generated. If you mess up, run <code>gettc reset</code>.</li>
 <li>You can bring the solutions generated by gettc to another computer to run.
-Such system doesn't need to have gettc, or even ruby, but it will need the 
+Such system doesn't need to have gettc, or even ruby, but it will need the
 standard gcc toolchain, and of course the compiler for your desired language
 (if it isn't C++). You will also need to copy <code>~/.gettc</code> to that system.</li>
 </ul>
