@@ -39,7 +39,7 @@ module Gettc
         end
     end
     class Downloader
-        ROOT = "http://community.topcoder.com"
+        ROOT = "https://community.topcoder.com/"
         LIMIT = 10
         def initialize account
             @account = account
@@ -92,12 +92,12 @@ module Gettc
         end
         def connect uri
             if @proxy.nil? then
-                Net::HTTP.start(uri.host, uri.port) do |http|
+                Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
                     yield http
                 end
             else
                 Net::HTTP.start(uri.host, uri.port, @proxy.host, @proxy.port,
-                                @proxy.user, @proxy.pass) do |http|
+                                @proxy.user, @proxy.pass, :use_ssl => uri.scheme == 'https') do |http|
                 begin
                     yield http
                 rescue Errno::ECONNRESET
@@ -107,12 +107,12 @@ module Gettc
             end 
         end
         def get_cookie
-            uri = URI.join(ROOT, "tc?&module=Login")
+            uri = URI("https://community.topcoder.com/tc")
 
             req = Net::HTTP::Post.new uri.request_uri
-            req.set_form_data({"username" => @account.username,
-                               "password" => @account.password,
-                               "rem" => "on" })
+            req.set_form_data({"module" => "Login",
+                               "username" => @account.username,
+                               "password" => @account.password})
 
             res = connect uri do |http|
                 http.request req
@@ -121,7 +121,7 @@ module Gettc
 
             cookie = CGI::Cookie.parse raw
             if cookie["tcsso"].empty? then
-                raise LoginFailed.new @account, cookie
+                raise LoginFailed.new @account, cookie, res.body
             end
 
             return raw
