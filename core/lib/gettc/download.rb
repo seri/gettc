@@ -21,31 +21,40 @@ module Gettc
   class DownloadError < StandardError
   end
 
-  class LoginFailed < DownloadError
-    attr_accessor :account, :cookie
+  class AuthTokenError < DownloadError
+    attr_accessor :account, :server_response
 
-    def initialize(account, cookie, msg = "Wrong username or password")
+    def initialize(account, server_response, message = "Failed to acquire an OAuth token")
       @account = account
+      @server_response = server_response
+      super "#{message}\nAccount: #{@account}\nServer Response:\n#{JSON.pretty_generate(server_response)}"
+    end
+  end
+
+  class CookieError < DownloadError
+    attr_accessor :cookie
+
+    def initialize(cookie, message = "Cookie is in bad format")
       @cookie = cookie
-      super "#{msg}\nAccount: #{@account}\nCookie: #{@cookie}\n"
+      super "#{message}\nCookie: #{@cookie}"
     end
   end
 
   class IDNotAvailable < DownloadError
     attr_accessor :id
 
-    def initialize(id, msg = "ID not available")
+    def initialize(id, message = "ID not available")
       @id = id
-      super "#{msg} (#{id})"
+      super "#{message} (#{id})"
     end
   end
 
   class ProxyError < DownloadError
     attr_accessor :proxy
 
-    def initialize(proxy, msg = "Proxy error")
+    def initialize(proxy, message = "Proxy error")
       @proxy = proxy
-      super "#{msg}: http_proxy = #{proxy}"
+      super "#{message}: http_proxy = #{proxy}"
     end
   end
 
@@ -56,7 +65,7 @@ module Gettc
     def initialize(account)
       @account = account
       @proxy = get_proxy
-      @sso_token = get_sso_token
+      @cookie = get_cookie
     end
 
     def download(url)
@@ -68,7 +77,7 @@ module Gettc
       connect(uri) do |http|
         LIMIT.times do
           request = Net::HTTP::Get.new(uri.request_uri)
-          request["cookie"] = "tcsso=#{@sso_token}"
+          request["cookie"] = @cookie
 
           response = http.request(request)
           return response.body if response.is_a?(Net::HTTPSuccess)
@@ -132,26 +141,31 @@ module Gettc
       end
     end
 
-    def get_sso_token
-      jwt_token = JSON(post_json("http://api.topcoder.com/v2/auth", {
+    def get_cookie
+      jwt_token_response = JSON(post_json("http://api.topcoder.com/v2/auth", {
         username: @account.username,
         password: @account.password
-      }).body)["token"]
+      }).body)
+      jwt_token = jwt_token_response["token"]
+      raise AuthTokenError.new(@account, jwt_token_response, "Failed to acquire a JWT token") unless jwt_token
 
-      refresh_token = JSON(post_json("http://api.topcoder.com/v2/reauth", {
+      refresh_token_response = JSON(post_json("http://api.topcoder.com/v2/reauth", {
         token: jwt_token
-      }).body)["token"]
+      }).body)
+      refresh_token = refresh_token_response["token"]
+      raise AuthTokenError.new(@account, refresh_token_response, "Failed to acquire a Refresh token") unless refresh_token
 
       response = post_json("https://api.topcoder.com/v3/authorizations", {
         param: {
           externalToken: refresh_token
         }
       })
+      raw_cookie = response["set-cookie"]
 
-      cookie = CGI::Cookie.parse(response["set-cookie"])
-      raise LoginFailed.new(@account, cookie) unless cookie.has_key?("tcsso")
-
-      cookie["tcsso"].to_s.split(";").first.split("=")[1].gsub("%7C", "|")
+      unless CGI::Cookie.parse(raw_cookie).has_key?("tcsso")
+        raise DownloadError.new(raw_cookie, "Server refused to send a tcsso cookie")
+      end
+      raw_cookie
     end
   end
 end

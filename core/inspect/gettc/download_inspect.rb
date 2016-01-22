@@ -62,6 +62,4 @@ def main
   download_all(358, "Checker")
 end
 
-$robot = Downloader.new(Account.new("gettc", "algorithm"))
-response = $robot.download("https://community.topcoder.com/stat?c=problem_solution&cr=22504795&rd=13751&pm=10297")
-File.open("solution.html", "w") { |file| file.write(response) }
+main

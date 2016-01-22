@@ -12,37 +12,37 @@ module Gettc
   class ProblemDirExists < GenerateError
     attr_accessor :dir
 
-    def initialize(dir, msg = nil)
+    def initialize(dir, message = "Problem directory already exists")
       @dir = dir
-      super "#{msg} (#{dir})"
+      super "#{message}: (#{dir})"
     end
   end
 
   class SourceDirNotExist < GenerateError
     attr_accessor :dir
 
-    def initialize(dir, msg = "Source directory does not exist")
+    def initialize(dir, message = "Source directory does not exist")
       @dir = dir
-      super "#{msg} (#{dir})"
+      super "#{message}: (#{dir})"
     end
   end
 
   class TargetDirNotExist < GenerateError
     attr_accessor :dir
 
-    def initialize(dir, msg = "Target directory does not exist")
+    def initialize(dir, message = "Target directory does not exist")
       @dir = dir
-      super "#{msg} (#{dir})"
+      super "#{message}: (#{dir})"
     end
   end
 
   class TemplateError < GenerateError
     attr_accessor :dir
 
-    def initialize(err, source, msg = "Template error")
+    def initialize(err, source, message = "Template error")
       @err = err
       @source = source
-      super "#{msg} (#{source})\n#{err}"
+      super "#{message} (#{source})\n#{err}"
     end
   end
 

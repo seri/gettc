@@ -4,9 +4,9 @@ module Gettc
   class UnsupportedType < TypeError
     attr_accessor :type
 
-    def initialize(type = nil, msg = "Not a valid TopCoder type")
+    def initialize(type = nil, message = "Not a valid TopCoder type")
       @type = type
-      super "#{msg} (#{type})"
+      super "#{message}: (#{type})"
     end
   end
 

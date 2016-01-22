@@ -7,18 +7,18 @@ module Gettc
   class CannotParseSignature < SignatureError
     attr_accessor :source
 
-    def initialize(source, msg = "Cannot parse signature")
+    def initialize(source, message = "Cannot parse signature")
       @source = source
-      super "#{msg} (#{source}"
+      super "#{message}: (#{source}"
     end
   end
 
   class InvalidVariableName < SignatureError
     attr_accessor :name
 
-    def initialize(name, msg = "Invalid variable name")
+    def initialize(name, message = "Invalid variable name")
       @name = name
-      super "#{msg} (#{name})"
+      super "#{message} (#{name})"
     end
   end
 

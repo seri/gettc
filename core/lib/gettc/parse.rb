@@ -12,10 +12,8 @@ module Gettc
       @images = []
     end
 
-    def parse(html)
-      @images = []
-
-      doc = Hpricot(html)
+    def parse(statement_html)
+      doc = Hpricot(statement_html)
 
       prob = Problem.new
       prob.name = parse_name(doc.search("tr/td.statTextBig").html)
@@ -140,10 +138,12 @@ module Gettc
     end
 
     def parse_notes(html)
-      Hpricot(html).search("/tr").each_with_object([]) do |tr, memo|
-        tds = tr.search "/td.statText"
-        memo << filter(tds[1].html) if tds.size == 2
+      notes = []
+      Hpricot(html).search("/tr") do |tr|
+        tds = tr.search("/td.statText")
+        notes << filter(tds[1].html) if tds.size == 2
       end
+      notes
     end
 
     def parse_constraints(html)
@@ -199,7 +199,7 @@ module Gettc
       z, _ = indexes(html, "<!-- End System Testing -->")
       return [] unless y && z
 
-      Hpricot(html[y .. z]).search "/table/tr[@valign=top]".each_with_object([]) do |tr, memo|
+      Hpricot(html[y .. z]).search("/table/tr[@valign=top]").each_with_object([]) do |tr, memo|
         tds = tr.search("/td.statText")
         next unless tds.size == 3
 
@@ -211,21 +211,19 @@ module Gettc
     end
 
     def download_systests(detail_url)
-      Hpricot(@downloader.download(detail_url))
-      .search("a[@href^=/stat?c=problem_solution]")
-      .each_with_object([]) do |url|
-        solution = @downloader.download(url.attributes["href"])
-        systests = parse_systests(solution)
+      detail_html = @downloader.download(detail_url)
+      Hpricot(detail_html).search("a[@href^=/stat?c=problem_solution]") do |elem|
+        solution_html = @downloader.download(elem.attributes["href"])
+        systests = parse_systests(solution_html)
         return systests unless systests.empty?
       end
-
       []
     end
 
     def parse_details(doc)
       doc.search("a[@href^=/tc?module=ProblemDetail]") do |elem|
         url = URI.join(Downloader::ROOT, elem.attributes["href"]).to_s
-        systests = download_systests(url) rescue []
+        systests = download_systests(url)
         return url, filter(elem.html), systests unless systests.empty?
       end
       return "", "", []
