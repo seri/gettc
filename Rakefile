@@ -4,10 +4,12 @@ require "rake/clean"
 require "fileutils"
 
 require_relative "helper"
-require_relative "core/lib/version"
+require_relative "lib/version"
 
 CLEAN << "pkg"
 CLEAN << "temp"
+
+STATEMENT_FILE = "data/statements/CirlesCountry.html"
 
 spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
@@ -21,8 +23,8 @@ spec = Gem::Specification.new do |s|
   s.homepage = "http://seri.github.io/gettc"
 
   s.files = FileList["{bin,dist}/**/*"].include("core/lib/**/*").to_a
-  s.test_files = FileList["core/test/**/*_test.rb"].to_a
-  s.require_path = "core/lib"
+  s.test_files = FileList["test/**/*_test.rb"].to_a
+  s.require_path = "lib"
   s.has_rdoc = false
 
   s.bindir = "bin"
@@ -31,7 +33,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency "hpricot"
   s.add_dependency "rdiscount"
 end
-Gem::PackageTask.new spec do |pkg|
+
+Gem::PackageTask.new(spec) do |pkg|
   pkg.need_tar = true
 end
 
@@ -71,4 +74,50 @@ task :dist do
   end
   command << " -t ."
   sh command
+end
+
+file "test/data" do
+  mkdir "test/data"
+  mkdir "test/data/statement"
+  mkdir "test/data/detail"
+  mkdir "test/data/solution"
+  mkdir "test/data/parsed"
+  mkdir "test/data/generated"
+end
+
+file STATEMENT_FILE => "test:download" do
+end
+
+def execute_test(name)
+  ruby "-Ilib -Itest test/gettc/#{name}_test.rb"
+end
+
+namespace :test do
+  desc "Test the types"
+  task :types do
+    execute_test("types")
+  end
+
+  desc "Test the signature"
+  task :signature do
+    execute_test("signature")
+  end
+
+  desc "Test the downloader"
+  task download: "test/data" do
+    execute_test("download")
+  end
+
+  desc "Test the parser"
+  task parse: STATEMENT_FILE do
+    execute_test("parse")
+  end
+
+  desc "Test the generator"
+  task :generate do
+    execute_test("generate")
+  end
+end
+
+task test: %w[test:types test:signature test:download test:parse test:generate] do
 end
