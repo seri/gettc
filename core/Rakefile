@@ -1,67 +1,48 @@
 require "fileutils"
 require "rake/clean"
 
+STATEMENT_FILE = "data/statements/CirlesCountry.html"
+
 file "data" do
   mkdir "data"
-  mkdir "data/parse_problem"
-  mkdir "data/download_problem_statement"
-  mkdir "data/download_problem_detail"
-  mkdir "data/download_problem_solution"
-  mkdir "data/generate_problem_dir"
+  mkdir "data/statements"
+  mkdir "data/details"
+  mkdir "data/solutions"
+  mkdir "data/parsed"
+  mkdir "data/generated"
 end
 
-def inspector(name, output)
-  unless File.exists?(output) then
-    ruby "-Ilib inspect/gettc/#{name}_inspect.rb"
-  end
+file STATEMENT_FILE => "test:download" do
 end
 
-def tester name
-  ruby "-Ilib test/gettc/#{name}_test.rb"
-end
-
-namespace :inspect do
-  desc "Inspect the downloader"
-  task download: "data" do
-    inspector "download", "data/download_problem_statement/Checker.htm"
-  end
-
-  desc "Inspect the parser"
-  task parse: "inspect:download" do
-    inspector "parse", "data/parse_problem/Checker.yml"
-  end
-
-  desc "Inspect the generator"
-  task generate: "inspect:parse" do
-    inspector "generate", "data/generate_problem_dir/BuildingRoads"
-  end
-
+def execute_test(name)
+  ruby "-Ilib -I. test/gettc/#{name}_test.rb"
 end
 
 namespace :test do
   desc "Test the types"
   task :types do
-    tester "types"
+    execute_test("types")
   end
 
   desc "Test the signature"
   task :signature do
-    tester "signature"
+    execute_test("signature")
   end
 
   desc "Test the downloader"
-  task :download do
-    tester "download"
+  task download: "data" do
+    execute_test("download")
   end
 
   desc "Test the parser"
-  task :parse => "inspect:download" do
-    tester "parse"
+  task parse: STATEMENT_FILE do
+    execute_test("parse")
   end
 
   desc "Test the generator"
   task :generate do
-    tester "generate"
+    execute_test("generate")
   end
 
   desc "Test everything"

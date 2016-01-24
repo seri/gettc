@@ -85,7 +85,7 @@ module Gettc
       return from - 1, from + substr.size
     end
 
-    def filter html
+    def filter(html)
       html = html.force_encoding("ISO-8859-1")
         .encode("utf-8", {
           invaid: :replace,

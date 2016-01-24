@@ -1,0 +1,28 @@
+account:
+  username: "gettc"
+  password: "algorithm"
+
+problems:
+  -
+    name: "CirclesCountry"
+    id: 10297
+    round_id: 13751
+    solution_id: 22504795
+    definitions_count: 5
+    notes_count: 1
+    contraints_count: 1
+    examples_count: 5
+    systests_count: 118
+    images_count: 0
+
+  -
+    name: "PageNumbers"
+    id: 10329
+    round_id: 13757
+    solution_id: 16063200
+    definitions_count: 5
+    notes_count: 0
+    contraints_count: 7
+    examples_count: 5
+    systests_count: 228
+    images_count: 4

@@ -1,4 +1,4 @@
-- 
+-
   name: "AntsMeet"
   signature: "int countAnts(int[] x, int[] y, String direction)"
   example:

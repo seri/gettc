@@ -4,21 +4,42 @@ require "uri"
 require "ostruct"
 require "json"
 
-module Gettc
-  class Account
-    attr_accessor :username, :password
+require "gettc/account"
 
-    def initialize(username, password)
-      @username = username
-      @password = password
+module Gettc
+  class DownloadError < StandardError
+  end
+
+  class HttpError < DownloadError
+    attr_accessor :request, :response
+
+    def initialize(request, response, message = "An error occurred while making Http request")
+      @request = request
+      @response = response
+
+      filename = "gettc_http_response-#{Time.now.to_i}.html"
+      File.write(filename, @response.body)
+
+      super [ message, "Request: #{get_url(@request)}", http_to_s(@request), @request.body,
+                       "Response: #{@response.class.to_s}", http_to_s(@response),
+                       "Response body written to #{filename}" ].join("\n")
     end
 
-    def to_s
-      "#{@username}|#{@password}"
+    private
+
+    def http_to_s(http)
+      http.to_hash.map { |name, value| "  #{name}: #{value}" }.join("\n")
+    end
+
+    def get_url(request)
+      request["host"].to_s + request.path
     end
   end
 
-  class DownloadError < StandardError
+  class BadResponseError < HttpError
+    def initialize(request, response, message = "Server response is in bad format")
+      super request, response, message
+    end
   end
 
   class AuthTokenError < DownloadError
@@ -40,12 +61,12 @@ module Gettc
     end
   end
 
-  class IDNotAvailable < DownloadError
+  class IDNotAvailable < HttpError
     attr_accessor :id
 
-    def initialize(id, message = "ID not available")
+    def initialize(id, request, response, message = "Problem ID not available")
       @id = id
-      super "#{message} (#{id})"
+      super request, response, "#{message}: #{id}"
     end
   end
 
@@ -80,11 +101,11 @@ module Gettc
           request["cookie"] = @cookie
 
           response = http.request(request)
-          return response.body if response.is_a?(Net::HTTPSuccess)
-
-          unless response.is_a?(Net::HTTPMovedPermanently) then
-            raise DownloadError.new(response.class.to_s)
+          if response.is_a?(Net::HTTPSuccess)
+            raise BadResponseError.new(request, response) if block_given? && !yield(response.body)
+            return response.body
           end
+          raise HttpError.new(request, response) unless response.is_a?(Net::HTTPMovedPermanently)
 
           uri = URI.parse(response["location"])
         end
@@ -93,10 +114,22 @@ module Gettc
       end
     end
 
-    def download_problem(id)
-      body = download("/stat?c=problem_statement&pm=#{id}")
-      raise IDNotAvailable.new(id) unless body.match("<h3>Problem Statement</h3>")
-      body
+    def download_statement(problem_id)
+      download("/stat?c=problem_statement&pm=#{problem_id}") do |body|
+        body.match("<h3>Problem Statement</h3>")
+      end
+    rescue BadResponseError => error
+      raise IDNotAvailable.new(problem_id, error.request, error.response)
+    end
+
+    def download_detail(problem_id, round_id)
+      download("/tc?module=ProblemDetail&rd=#{round_id}&pm=#{problem_id}") do |body|
+        body.match("Problem Detail")
+        body.match("Problem Name")
+        body.match("Used As")
+        body.match("Categories")
+        body.match("Top Submission")
+      end
     end
 
     private
