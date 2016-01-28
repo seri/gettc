@@ -3,39 +3,20 @@ require "gettc/parse"
 include Gettc
 
 class FakeDownloader
-  DEFAULT_RESPONSE = "stub_server_response"
-
   def initialize(problem_name = nil)
     @problem_name = problem_name
   end
 
-  def download(url)
-    if @problem_name
-      return get_detail_html if url.include?("problemdetail")
-      return get_solution_html if url.include?("problem_solution")
-    end
-    DEFAULT_RESPONSE
+  def download_statement(problem_id)
+    read_problem(:statement, @problem_name)
   end
 
-  def get_statement_html
-    get_data_file_from_dir("download_problem_statement")
+  def download_detail(problem_id, round_id)
+    read_problem(:detail, @problem_name)
   end
 
-  def get_detail_html
-    get_data_file_from_dir("download_problem_detail")
-  end
-
-  def get_solution_html
-    "zozo"
-    get_data_file_from_dir("download_problem_solution")
-  end
-
-  private
-
-  def get_data_file_from_dir(category_dir)
-    return DEFAULT_RESPONSE unless @problem_name
-    filename = File.join(DATA_DIR, category_dir, "#{@problem_name}.htm")
-    File.exists?(filename) ? File.read(filename) : DEFAULT_RESPONSE
+  def download_solution(problem_id, round_id, solution_id)
+    read_problem(:solution, @problem_name)
   end
 end
 
@@ -60,6 +41,14 @@ class ParseTest < Test::Unit::TestCase
       "http://www.topcoder.com/contest/problem/CirclesCountry/case1.gif">
     END
     assert_equal "![image](images/case1.gif)", @parser.send(:filter, html)
+  end
+
+  def test_parse_problems
+    $problems.each do |hash|
+      downloader = FakeDownloader.new(hash["name"])
+      problem = Parser.new(downloader).parse(downloader.download_statement(nil))
+      assert_equal hash["name"]
+    end
   end
 
   #def test_PageNumbers

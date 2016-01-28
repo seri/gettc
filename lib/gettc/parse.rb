@@ -12,7 +12,7 @@ module Gettc
       @images = []
     end
 
-    def parse(statement_html)
+    def parse(problem_id)
       doc = Hpricot(statement_html)
 
       prob = Problem.new
