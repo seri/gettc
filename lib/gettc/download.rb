@@ -132,6 +132,13 @@ module Gettc
       end
     end
 
+    def download_solution(problem_id, round_id, solution_id)
+      download("/stat?c=problem_solution&cr=#{solution_id}&rd=#{round_id}&pm=#{problem_id}") do |body|
+        body.match("<TITLE>TopCoder Statistics - Problem Solution</TITLE>")
+        body.match("System Test Results")
+      end
+    end
+
     private
 
     def get_proxy
