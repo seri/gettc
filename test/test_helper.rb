@@ -11,6 +11,14 @@ module TestHelper
       account_data = fixtures_data["account"]
 
       $problems = fixtures_data["problems"]
+      $problems.each do |hash|
+        message = "Test failed for #{hash['name']}"
+        if description = hash["description"]
+          message << " (#{description})"
+        end
+        hash["message"] = message
+      end
+
       $account = Account.new(account_data["username"], account_data["password"])
     end
 
@@ -33,7 +41,8 @@ def write_problem(data_type, problem_name, file_content)
 end
 
 def read_problem(data_type, problem_name)
-  File.read(TestHelper::Internal.data_file_for(data_type, problem_name))
+  filename = TestHelper::Internal.data_file_for(data_type, problem_name)
+  File.exists?(filename) ? File.read(filename) : ""
 end
 
 TestHelper::Internal.setup_fixtures
