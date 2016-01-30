@@ -11,15 +11,15 @@ class FakeDownloader
   end
 
   def download_statement(problem_id)
-    read_problem(:statement, @problem_name)
+    read_problem_html(:statement, @problem_name)
   end
 
   def download_detail(problem_id, round_id)
-    read_problem(:detail, @problem_name)
+    read_problem_html(:detail, @problem_name)
   end
 
   def download_solution(problem_id, round_id, solution_id)
-    read_problem(:solution, @problem_name)
+    read_problem_html(:solution, @problem_name)
   end
 
 end
@@ -66,6 +66,8 @@ class ParseTest < Test::Unit::TestCase
       assert_equal hash["examples_count"], problem.examples.size, hash["message"]
       assert_equal hash["systests_count"], problem.systests.size, hash["message"]
       assert_equal hash["images_count"], problem.images.size, hash["message"]
+
+      write_problem_yaml(problem)
     end
   end
 end

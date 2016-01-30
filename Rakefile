@@ -9,8 +9,6 @@ require_relative "lib/version"
 CLEAN << "pkg"
 CLEAN << "temp"
 
-STATEMENT_FILE = "data/statements/CirlesCountry.html"
-
 spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.name = "gettc"
@@ -62,18 +60,17 @@ end
 desc "Merge the core and all plugins dists into a final dist"
 task :dist do
   rm_rf "dist"
-  command = "cp -r core/dist "
-  dir = Dir.new "plugins"
-  dir.each do |plugin|
-    if plugin != "." and plugin != ".."
-      dist = File.join "plugins", plugin, "dist"
-      if File.exists? dist
-        command << dist << " "
-      end
+  sh "cp -R base dist"
+
+  plugin_dists = Dir.new("plugins").map do |plugin_dir|
+    if [".", ".."].include?(plugin_dir)
+      ""
+    else
+      plugin_dist = File.join("plugins", plugin_dir, "dist")
+      File.exists?(plugin_dist) ? plugin_dist : ""
     end
   end
-  command << " -t ."
-  sh command
+  sh "cp -R #{plugin_dists.join(" ")} -t ."
 end
 
 file "test/data" do
@@ -83,9 +80,6 @@ file "test/data" do
   mkdir "test/data/solution"
   mkdir "test/data/parsed"
   mkdir "test/data/generated"
-end
-
-file STATEMENT_FILE => "test:download" do
 end
 
 def execute_test(name)
@@ -109,8 +103,12 @@ namespace :test do
   end
 
   desc "Test the parser"
-  task parse: STATEMENT_FILE do
-    execute_test("parse")
+  task :parse do
+    if File.exists?("test/data/statement/PageNumbers.html")
+      execute_test("parse")
+    else
+      puts "Run rake test:download first"
+    end
   end
 
   desc "Test the generator"

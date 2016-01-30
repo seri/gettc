@@ -1,0 +1,115 @@
+<html>
+<head>
+    <title>PageNumbers</title>
+</head>
+<body>
+<h1><a href="/tc?module=ProblemDetail&amp;rd=13757&amp;pm=10329">PageNumbers</a></h1>
+
+<p><em>2009 TCO Algorithm Qualification Round 2 - Division I, Level Two</em></p>
+
+<h2>Statement</h2>
+
+<p>We have a book with <em>N</em> pages, numbered 1 to <em>N</em>.
+How many times does each digit occur in the page numbers?</p>
+
+<p>You are given an int <em>N</em>. Return a int[] with 10 elements, where for all i between 0 and 9, inclusive, the element i will be the number of times digit i occurs when we write down all the numbers between 1 and <em>N</em>, inclusive.</p>
+
+<h2>Definitions</h2>
+
+<ul>
+<li><em>Class</em>: <code>PageNumbers</code></li>
+<li><em>Method</em>: <code>getCounts</code></li>
+<li><em>Parameters</em>: <code>int</code></li>
+<li><em>Returns</em>: <code>int[]</code></li>
+<li><em>Method signature</em>: <code>int[] getCounts(int N)</code></li>
+</ul>
+
+
+<h2>Notes</h2>
+
+<ul>
+<li>You may assume that for any valid input each of the output values fits into an int.</li>
+</ul>
+
+
+<h2>Constraints</h2>
+
+<ul>
+<li><em>N</em> will be between 1 and 1,000,000,000, inclusive.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<h3>Example 1</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>[0, 1, 1, 1, 1, 1, 1, 1, 0, 0 ]</c></p>
+
+<h4>Reason</h4>
+
+<p>The page numbers in this case are simply 1, 2, 3, 4, 5, 6, and 7.</p>
+
+<h3>Example 2</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>[1, 4, 1, 1, 1, 1, 1, 1, 1, 1 ]</c></p>
+
+<h4>Reason</h4>
+
+<p>In comparison to the previous case, we added the pages 8, 9, 10, and 11. Now we have each digit exactly once, except for the digit 1 that occurs four times: once in 1 and 10, and twice in 11.</p>
+
+<h3>Example 3</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>[1, 12, 2, 2, 2, 2, 2, 2, 2, 2 ]</c></p>
+
+<h4>Reason</h4>
+
+<p>Digits 2 to 9 now occur twice each, and we have plenty of occurrences of the digit 1.</p>
+
+<h3>Example 4</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>[189, 300, 300, 300, 300, 300, 300, 300, 300, 300 ]</c></p>
+
+<h4>Reason</h4>
+
+<p>Due to symmetry, each of the digits 1 to 9 occurs equally many times in the sequence 1,2,...,999.</p>
+
+<h3>Example 5</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>[429904664, 541008121, 540917467, 540117067, 533117017, 473117011, 429904664, 429904664, 429904664, 429904664 ]</c></p>
+
+<h4>Reason</h4>
+
+<p>Watch out for the time limit.</p>
+
+</body>
+</html>

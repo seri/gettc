@@ -20,7 +20,7 @@ class DownloadTest < Test::Unit::TestCase
     $problems.each do |hash|
       html = @downloader.download_statement(hash["id"])
       assert_match "<h3>Problem Statement</h3>", html, hash["message"]
-      write_problem(:statement, hash["name"], html)
+      write_problem_html(:statement, hash["name"], html)
     end
   end
 
@@ -34,7 +34,7 @@ class DownloadTest < Test::Unit::TestCase
     $problems.each do |hash|
       html = @downloader.download_detail(hash["id"], hash["round_id"])
       assert_match "Problem Detail", html, hash["message"]
-      write_problem(:detail, hash["name"], html)
+      write_problem_html(:detail, hash["name"], html)
     end
   end
 
@@ -49,7 +49,7 @@ class DownloadTest < Test::Unit::TestCase
       next unless hash["solution_id"]
       html = @downloader.download_solution(hash["id"], hash["round_id"], hash["solution_id"])
       assert_match "TopCoder Statistics - Problem Solution", html, hash["message"]
-      write_problem(:solution, hash["name"], html)
+      write_problem_html(:solution, hash["name"], html)
     end
   end
 

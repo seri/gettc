@@ -4,85 +4,97 @@ require "gettc/download"
 require "uri"
 require "pathname"
 require "hpricot"
+require "logger"
 
 module Gettc
   class Parser
     def initialize(downloader)
       @downloader = downloader
-      @images = []
+      @problem = Problem.new
     end
 
     def parse(problem_id)
-      doc = Hpricot(statement_html)
+      doc = Hpricot(@downloader.download_statement(problem_id))
 
-      prob = Problem.new
-      prob.name = parse_name(doc.search("tr/td.statTextBig").html)
-      prob.notes = nil
-      prob.constraints = nil
-      prob.examples = nil
+      @problem = Problem.new
+      @problem.id = problem_id
+      @problem.name = parse_name(doc.search("tr/td.statTextBig").html)
 
       html = doc.search("td.problemText/table").html
 
-      _, x = indexes(html, h3("Problem Statement"))
-      y, z = indexes(html, h3("Definition"))
-      prob.statement = parse_statement(html[x .. y])
+      has_notes = true
+      has_constraints = true
+      has_examples = true
 
-      x, y = indexes(html, h3("Notes"))
+      _, x = self.class.indexes(html, self.class.h3("Problem Statement"))
+      y, z = self.class.indexes(html, self.class.h3("Definition"))
+      parse_statement(html[x .. y])
+
+      x, y = self.class.indexes(html, self.class.h3("Notes"))
       if x.nil?
-        prob.notes = []
-        x, y = indexes(html, h3("Constraints"))
+        has_notes = false
+        x, y = self.class.indexes(html, self.class.h3("Constraints"))
         if x.nil?
-          prob.constraints = []
-          x, y = indexes(html, h3("Examples"))
+          has_constraints = false
+          x, y = self.class.indexes(html, self.class.h3("Examples"))
           if x.nil?
-            prob.examples = []
+            has_examples = false
             x = -2
           end
         end
       end
 
-      prob.definitions = parse_definitions(html[z .. x])
+      parse_definitions(html[z .. x])
 
-      if prob.notes.nil?
-        z, x = indexes(html, h3("Constraints"))
+      if has_notes
+        z, x = self.class.indexes(html, self.class.h3("Constraints"))
         if z.nil?
-          prob.constraints = []
-          z, x = indexes(html, h3("Examples"))
+          has_constraints = false
+          z, x = self.class.indexes(html, self.class.h3("Examples"))
           if z.nil?
-            prob.examples = []
+            has_examples = false
             z = - 2
           end
         end
-        prob.notes = parse_notes(html[y .. z])
+        parse_notes(html[y .. z])
         x, y = z, x
       end
 
-      if prob.constraints.nil?
-        z, x = indexes(html, h3("Examples"))
+      if has_constraints
+        z, x = self.class.indexes(html, self.class.h3("Examples"))
         if z.nil?
-          prob.examples = []
+          has_examples = false
           z = -2
         end
-        prob.constraints = parse_constraints(html[y .. z])
+        parse_constraints(html[y .. z])
       end
 
-      prob.examples = parse_examples(html[x .. -2]) if prob.examples.nil?
+      parse_examples(html[x .. -2]) if has_examples
+      parse_details(doc)
 
-      prob.images = @images
-      prob.url, prob.source, prob.systests = parse_details(doc)
-
-      prob
+      @problem
     end
 
     private
 
-    ## General helpers
-    ## ===============
-
-    def indexes(str, substr)
+    def self.indexes(str, substr)
       from = str.index(substr)
       return nil if from.nil?
       return from - 1, from + substr.size
+    end
+
+    def self.h3(tag)
+      "<h3>#{tag}</h3>"
+    end
+
+    def self.filter_inout(text)
+      text.gsub("{", "[").gsub("}", "]").strip
+    end
+
+    def self.get_param_value(url, param_key)
+      if (match_data = url.match("[&|&amp;]#{param_key}=(\\d+)"))
+        match_data[1] if match_data.size > 1
+      end
     end
 
     def filter(html)
@@ -105,9 +117,9 @@ module Gettc
         image.name = Pathname.new(url).basename
         begin
           image.content = @downloader.download(url)
-          @images << image
+          @problem.images << image
           "![image](images/#{image.name})"
-        rescue StandardError
+        rescue HttpError
           "![image](#{url})"
         end
       end
@@ -115,45 +127,36 @@ module Gettc
       text
     end
 
-    def h3(tag)
-      "<h3>#{tag}</h3>"
+    def parse_list_table(html)
+      result = []
+      Hpricot(html).search("/tr").each do |tr|
+        tds = tr.search("/td.statText")
+        result << filter(tds[1].html) if tds.size == 2
+      end
+      result
     end
 
-    ## Parse problem parts
-    ## ===================
-
     def parse_name(html)
-      filter(html.sub("Problem Statement for", ""))
+      @problem.name = filter(html.sub("Problem Statement for", ""))
     end
 
     def parse_statement(html)
-      filter(html)
+      @problem.statement = filter(html)
     end
 
     def parse_definitions(html)
-      Hpricot(html).search("/tr/td.statText/table/tr").each_with_object({}) do |tr, memo|
+      Hpricot(html).search("/tr/td.statText/table/tr").each do |tr|
         tds = tr.search("/td.statText")
-        memo[tds[0].to_plain_text[0 .. -2]] = tds[1].to_plain_text if tds.size == 2
+        @problem.definitions[tds[0].to_plain_text[0 .. -2]] = tds[1].to_plain_text if tds.size == 2
       end
     end
 
     def parse_notes(html)
-      notes = []
-      Hpricot(html).search("/tr") do |tr|
-        tds = tr.search("/td.statText")
-        notes << filter(tds[1].html) if tds.size == 2
-      end
-      notes
+      @problem.notes = parse_list_table(html)
     end
 
     def parse_constraints(html)
-      return parse_notes(html)
-    end
-
-    ## @section Parse cases
-
-    def filter_inout(text)
-      text.gsub("{", "[").gsub("}", "]").strip
+      @problem.constraints = parse_list_table(html)
     end
 
     def parse_input(html)
@@ -165,11 +168,11 @@ module Gettc
           memo << ",\n" << input
         end
       end
-      filter_inout(text)
+      self.class.filter_inout(text)
     end
 
     def parse_output(html)
-      filter_inout(Hpricot(html).to_plain_text.sub("Returns: ", ""))
+      self.class.filter_inout(Hpricot(html).to_plain_text.sub("Returns: ", ""))
     end
 
     def parse_reason(html)
@@ -177,26 +180,21 @@ module Gettc
     end
 
     def parse_examples(html)
-      examples = []
-
       tds = Hpricot(html).search("/tr/td.statText/table/tr/td.statText")
-
       i = 0
-      while i < tds.size do
+      while i < tds.size
         example = Case.new
         example.input = parse_input(tds[i].html)
         example.output = parse_output(tds[i += 1].html)
         example.reason = parse_reason(tds[i += 1].html)
-        examples << example
+        @problem.examples << example
         i += 1
       end
-
-      examples
     end
 
     def parse_systests(html)
-      _, y = indexes(html, "<!-- System Testing -->")
-      z, _ = indexes(html, "<!-- End System Testing -->")
+      _, y = self.class.indexes(html, "<!-- System Testing -->")
+      z, _ = self.class.indexes(html, "<!-- End System Testing -->")
       return [] unless y && z
 
       Hpricot(html[y .. z]).search("/table/tr[@valign=top]").each_with_object([]) do |tr, memo|
@@ -204,29 +202,35 @@ module Gettc
         next unless tds.size == 3
 
         test = Case.new
-        test.input = filter_inout(tds[0].to_plain_text)
-        test.output = filter_inout(tds[1].to_plain_text)
-        memo << test
+        test.input = self.class.filter_inout(tds[0].to_plain_text)
+        test.output = self.class.filter_inout(tds[1].to_plain_text)
+        @problem.systests << test
       end
     end
 
-    def download_systests(detail_url)
-      detail_html = @downloader.download(detail_url)
+    def download_systests(round_id)
+      detail_html = @downloader.download_detail(@problem.id, round_id)
+
       Hpricot(detail_html).search("a[@href^=/stat?c=problem_solution]") do |elem|
-        solution_html = @downloader.download(elem.attributes["href"])
-        systests = parse_systests(solution_html)
-        return systests unless systests.empty?
+        url = elem.attributes["href"]
+
+        if solution_id = self.class.get_param_value(url, "cr")
+          parse_systests(@downloader.download_solution(@problem.id, round_id, solution_id))
+          return unless @problem.systests.empty?
+        end
       end
-      []
     end
 
     def parse_details(doc)
       doc.search("a[@href^=/tc?module=ProblemDetail]") do |elem|
-        url = URI.join(Downloader::ROOT, elem.attributes["href"]).to_s
-        systests = download_systests(url)
-        return url, filter(elem.html), systests unless systests.empty?
+        @problem.url = elem.attributes["href"]
+        @problem.source = filter(elem.html)
+
+        if round_id = self.class.get_param_value(@problem.url, "rd")
+          download_systests(round_id)
+          return unless @problem.systests.empty?
+        end
       end
-      return "", "", []
     end
   end
 end

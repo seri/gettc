@@ -30,19 +30,28 @@ module TestHelper
       File.join(script_dir, "data")
     end
 
-    def self.data_file_for(data_type, basename)
-      File.join(data_dir, data_type.to_s, "#{basename}.html")
+    def self.data_file_for(data_type, basename, extension)
+      File.join(data_dir, data_type.to_s, "#{basename}.#{extension}")
     end
   end
 end
 
-def write_problem(data_type, problem_name, file_content)
-  File.write(TestHelper::Internal.data_file_for(data_type, problem_name), file_content)
+def write_problem_html(data_type, problem_name, html)
+  File.write(TestHelper::Internal.data_file_for(data_type, problem_name, "html"), html)
 end
 
-def read_problem(data_type, problem_name)
-  filename = TestHelper::Internal.data_file_for(data_type, problem_name)
+def read_problem_html(data_type, problem_name)
+  filename = TestHelper::Internal.data_file_for(data_type, problem_name, "html")
   File.exists?(filename) ? File.read(filename) : ""
+end
+
+def write_problem_yaml(problem)
+  File.write(TestHelper::Internal.data_file_for(:parsed, problem.name, "yaml"), problem.to_yaml)
+end
+
+def read_problem_yaml(problem_name)
+  filename = TestHelper::Internal.data_file_for(:parsed, problem_name, "yaml")
+  File.exists?(filename) ? YAML.load(File.read(filename)) : nil
 end
 
 TestHelper::Internal.setup_fixtures

@@ -47,23 +47,22 @@ module Gettc
   end
 
   class Generator
-    def initialize(config_d, target_dir)
-      @source_dir = File.join(config_d, "template")
+    def initialize(config_dir, target_dir)
+      @source_dir = File.join(config_dir, "template")
       raise SourceDirNotExist.new(@source_dir) unless File.directory?(@source_dir)
 
       @target_dir = target_dir
       raise TargetDirNotExist.new(@target_dir) unless File.directory?(@target_dir)
 
-      load_engines(File.join(config_d, "include"))
+      load_engines(File.join(config_dir, "include"))
     end
 
     def generate(prob)
       @prob = prob
 
-      @prob_dir = File.join(@target_dir, prob.name)
-      raise ProblemDirExists.new(@prob_d) if File.exists?(@prob_dir)
-
-      FileUtils.mkdir(@prob_dir)
+      @problem_dir = File.join(@target_dir, prob.name)
+      raise ProblemDirExists.new(@problem_dir) if File.exists?(@problem_dir)
+      FileUtils.mkdir(@problem_dir)
 
       method_sig = @prob.definitions["Method signature"]
       if method_sig.nil?
@@ -74,7 +73,7 @@ module Gettc
       end
       @context = binding
 
-      walk(@source_dir, @prob_dir)
+      walk(@source_dir, @problem_dir)
     end
 
     private
@@ -88,13 +87,13 @@ module Gettc
 
     def generate_test_case(cases, data_dir)
       cases.each_with_index do |case_data, case_id|
-        File.open(File.join(data_dir, "#{case_id.to_s}.in"), "w") { |f| f.write(case_data.input) }
-        File.open(File.join(data_dir, "#{case_id.to_s}.out"), "w") { |f| f.write(case_data.output) }
+        File.write(File.join(data_dir, "#{case_id.to_s}.in"), case_data.input)
+        File.write(File.join(data_dir, "#{case_id.to_s}.out"), case_data.output)
       end
     end
 
     def generate_template(source, target)
-      before = File.open(source, "r") { |f| f.read }
+      before = File.read(source)
 
       begin
         after = ERB.new(before).result(@context)
@@ -102,12 +101,16 @@ module Gettc
         raise TemplateError.new(err, source)
       end
 
-      File.open(target, "w") { |f| f.write(after) }
+      begin
+        File.write(target, after)
+      rescue StandardError
+        raise target
+      end
     end
 
     def filter(target_dir, name)
       case name
-      when "{images_dir}"
+      when "{images_d}"
         generate_images(@prob.images, target_dir)
       when "{examples_d}"
         generate_test_case(@prob.examples, target_dir)
@@ -116,13 +119,11 @@ module Gettc
       else
         return name.gsub(/\{(\w*)\}/) { |match| @prob.name if $1 == "name" }
       end
-
-      return nil
+      nil
     end
 
     def load_engines(include_dir)
       return unless File.exists?(include_dir)
-
       Dir.foreach(include_dir) do |name|
         if File.directory?(child = File.join(include_dir, name))
           if File.exists?(engine = File.join(child, "engine.rb"))

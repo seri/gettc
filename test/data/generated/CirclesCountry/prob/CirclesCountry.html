@@ -1,0 +1,109 @@
+<html>
+<head>
+    <title>CirclesCountry</title>
+</head>
+<body>
+<h1><a href="/tc?module=ProblemDetail&amp;rd=13751&amp;pm=10297">CirclesCountry</a></h1>
+
+<p><em>Single Round Match 443 Round 1 - Division I, Level One</em></p>
+
+<h2>Statement</h2>
+
+<p>Circles Country is a country that contains several circular-shaped districts.  Some districts may be situated inside other districts, but their borders do not intersect or touch.  Qatam is a resident of Circles Country.  When he travels between two locations, he always tries to cross the fewest number of district borders as possible because crossing borders is usually a laborious task.</p>
+
+<p>Imagine Circles Country as an infinite plane.  You are given int[]s <em>X</em>, <em>Y</em> and <em>R</em>, where (<em>X</em>[i], <em>Y</em>[i]) are the coordinates of the i-th district's center and <em>R</em>[i] is its radius.  Qatam is currently at point (<em>x1</em>,<em>y1</em>) and he needs to get to point (<em>x2</em>,<em>y2</em>).  Neither of these points lies on a district border.  Return the minimal number of district borders he must cross to get to his destination.</p>
+
+<h2>Definitions</h2>
+
+<ul>
+<li><em>Class</em>: <code>CirclesCountry</code></li>
+<li><em>Method</em>: <code>leastBorders</code></li>
+<li><em>Parameters</em>: <code>int[], int[], int[], int, int, int, int</code></li>
+<li><em>Returns</em>: <code>int</code></li>
+<li><em>Method signature</em>: <code>int leastBorders(int[] X, int[] Y, int[] R, int x1, int y1, int x2, int y2)</code></li>
+</ul>
+
+
+<h2>Constraints</h2>
+
+<ul>
+<li><em>X</em> will contain between 1 and 50 elements, inclusive.</li>
+<li><em>X</em>, <em>Y</em> and <em>R</em> will each contain the same number of elements.</li>
+<li>Each element of <em>X</em> and <em>Y</em> will be between -1000 and 1000, inclusive.</li>
+<li>Each element of <em>R</em> will be between 1 and 1000, inclusive.</li>
+<li><em>x1</em>, <em>y1</em>, <em>x2</em> and <em>y2</em> will be between -1000 and 1000, inclusive.</li>
+<li>No two circumferences will have common points.</li>
+<li>The points (<em>x1</em>,<em>y1</em>) and (<em>x2</em>,<em>y2</em>) will not lie on any of the circumferences.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<h3>Example 1</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>0</c></p>
+
+<h4>Reason</h4>
+
+<p><img src="images/case1.gif" alt="image" /></p>
+
+<h3>Example 2</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>2</c></p>
+
+<h4>Reason</h4>
+
+<p><img src="images/case2.gif" alt="image" /></p>
+
+<h3>Example 3</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>3</c></p>
+
+<h4>Reason</h4>
+
+<p><img src="images/case3.gif" alt="image" /></p>
+
+<h3>Example 4</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>5</c></p>
+
+<h4>Reason</h4>
+
+<p><img src="images/case4.gif" alt="image" /></p>
+
+<h3>Example 5</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>3</c></p>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>BackyardTrees</title>
+</head>
+<body>
+<h1><a href="/tc?module=ProblemDetail&amp;rd=10008&amp;pm=6620">BackyardTrees</a></h1>
+
+<p><em>Single Round Match 328 Round 1 - Division I, Level Three</em></p>
+
+<h2>Statement</h2>
+
+<p>This problem statement contains images that may not display properly if viewed outside of the applet.</p>
+
+<p>Your backyard is a rectangular grid that measures <em>width</em> x <em>height</em> square meters.  You would like to plant <em>treeCount</em> trees using the following rules:</p>
+
+<pre><code>- All trees must be planted at integer coordinates on the grid.
+
+- All trees must lie on the same straight line.
+
+- Each pair of trees must be at least *distance* meters away from each other.
+</code></pre>
+
+<p>For example, two (of many) ways in which four trees could be planted on a 10x10 grid if <em>distance</em> is 2 are depicted below:</p>
+
+<p><img src="images/BackyardTrees1.png" alt="image" />   <img src="images/BackyardTrees2.png" alt="image" /></p>
+
+<p>Return the number of distinct ways in which the trees could be planted, modulo 1,000,000,000.  Two layouts are considered distinct if there exists a point (x, y) such that one layout contains a tree at (x, y) and the other layout does not.</p>
+
+<h2>Definitions</h2>
+
+<ul>
+<li><em>Class</em>: <code>BackyardTrees</code></li>
+<li><em>Method</em>: <code>countWays</code></li>
+<li><em>Parameters</em>: <code>int, int, int, int</code></li>
+<li><em>Returns</em>: <code>int</code></li>
+<li><em>Method signature</em>: <code>int countWays(int treeCount, int width, int height, int distance)</code></li>
+</ul>
+
+
+<h2>Constraints</h2>
+
+<ul>
+<li><em>treeCount</em> will be between 1 and 50, inclusive.</li>
+<li><em>width</em> will be between 1 and 500, inclusive.</li>
+<li><em>height</em> will be between 1 and 500, inclusive.</li>
+<li><em>distance</em> will be between 1 and 50, inclusive.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<h3>Example 1</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>300</c></p>
+
+<h4>Reason</h4>
+
+<p>There are only two trees, and the distance between any two points with integer coordinates is always at least 1.  Therefore, you can place the two trees at any two points with integer coordinates.  There are 25 such points and this gives you 300 different ways to plant the trees.</p>
+
+<h3>Example 2</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>2</c></p>
+
+<h4>Reason</h4>
+
+<p>The diagonal of the backyard has a length of 60, which is just enough to place 13 trees with a distance of 5 between each adjacent pair.  Luckily, these 13 points are at integer coordinates, so you can place the trees along either of the two diagonals while satisfying all the rules.</p>
+
+<h3>Example 3</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>88</c></p>
+
+<h3>Example 4</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>102</c></p>
+
+<h4>Reason</h4>
+
+<p>You can place the trees along the rows or the columns of the grid, as well as on the two diagonals.</p>
+
+<h3>Example 5</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>0</c></p>
+
+<h4>Reason</h4>
+
+<p>You can't plant 6 trees on the same line with the necessary distance between them on this grid.</p>
+
+<h3>Example 6</h3>
+
+<h4>Input</h4>
+
+<p><c></c></p>
+
+<h4>Output</h4>
+
+<p><c>490260662</c></p>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<project name="PageNumbers" basedir="." default="demo">
+    <property environment="env"/>
+
+    <condition property="gettc.home" value="${env.GETTC_HOME}" else="${env.HOME}/.gettc">
+        <isset property="env.GETTC_HOME" />
+    </condition>
+
+    <property name="data.dir" value="${basedir}/../../data"/>
+    <property name="output.dir" value="${basedir}/../../build/java"/>
+    <property name="lib" value="${gettc.home}/include/java/TopCoder.jar"/>
+    <property name="java.sh" value="${output.dir}/java.sh"/>
+    <property name="runner.sh" value="${basedir}/../../bin/runner.sh"/>
+
+    <path id="classpath">
+        <pathelement location="${output.dir}"/>
+        <pathelement location="${lib}"/>
+    </path>
+
+    <target name="runner">
+        <echo file="${java.sh}" append="no">#! /bin/sh
+java -cp "`dirname $0`${path.separator}${lib}" PageNumbersSolver $$*
+        </echo>
+        <chmod file="${java.sh}" perm="+x"/>
+    </target>
+    
+    <target name="compile-main">
+        <mkdir dir="${output.dir}"/>
+        <javac srcdir="." destdir="${output.dir}" 
+               includes="PageNumbers.java,PageNumbersSolver.java"
+               includeantruntime="no">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+    
+    <target name="demo" depends="compile-main,runner">
+        <exec executable="sh">
+            <arg value="${runner.sh}"/>
+            <arg value="verbose"/>
+            <arg value="${java.sh}"/>
+            <arg value="${data.dir}/demo"/>
+            <arg value="${output.dir}/demo"/>
+        </exec>
+    </target>
+    <target name="sys" depends="compile-main,runner">
+        <exec executable="sh">
+            <arg value="${runner.sh}"/>
+            <arg value="quiet"/>
+            <arg value="${java.sh}"/>
+            <arg value="${data.dir}/sys"/>
+            <arg value="${output.dir}/sys"/>
+        </exec>
+    </target>
+    <target name="sysv" depends="compile-main,runner">
+        <exec executable="sh">
+            <arg value="${runner.sh}"/>
+            <arg value="verbose"/>
+            <arg value="${java.sh}"/>
+            <arg value="${data.dir}/sys"/>
+            <arg value="${output.dir}/sys"/>
+        </exec>
+    </target>
+    
+    <target name="clean">
+        <delete dir="${output.dir}"/>
+    </target>
+</project>

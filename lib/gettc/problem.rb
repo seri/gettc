@@ -19,15 +19,16 @@ module Gettc
   end
 
   class Problem
-    attr_accessor :name, :url, :source, :statement, :definitions, :notes,
+    attr_accessor :id, :name, :url, :source, :statement, :definitions, :notes,
                   :constraints, :examples, :systests, :images
 
     def initialize
+      @id = 0
       @name = ""
       @url = ""
       @source = ""
       @statement = ""
-      @definitions = { }
+      @definitions = {}
       @notes = []
       @constraints = []
       @examples = []
@@ -36,4 +37,3 @@ module Gettc
     end
   end
 end
-
