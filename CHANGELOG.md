@@ -1,15 +1,18 @@
-This document is useful to both developers and users who may be curious to know 
+This document is useful to both developers and users who may be curious to know
 what has changed after an update. By the way, you can update just by
-`[sudo] gem install gettc` or `[sudo] gem update` (which will update all gems). 
+`[sudo] gem install gettc` or `[sudo] gem update` (which will update all gems).
 
 Updating is usually backward-compatible, which means that the problems generated
 by an older version should continue to work after an update.
 
 As of version 1.6 and onward, gettc will replace the contents in `$GETTC_HOME`
-(defaults to `~/.gettc`) if they are outdated. If you are a power user and you 
+(defaults to `~/.gettc`) if they are outdated. If you are a power user and you
 make heavy customisation in your `$GETTC_HOME`, make sure to back up before
 updating.
 
+## 2.0
+Released Jan 30th, 2016
+* Import bugfix because of changes in Topcoder authentication mechanism.
 
 ## 1.10
 
@@ -89,7 +92,7 @@ Released July 25th, 2014
 Released July 25th, 2014
 * Add Python plugin.
 * Fixed string parsing when there is a quote character in between.
-* Fixed ambiguity of the name of solution method by using namespace whenever 
+* Fixed ambiguity of the name of solution method by using namespace whenever
 that makes sense.
 * Change runner.sh to be more portable w/r/t the time command (issue reported by Mukesh).
 * Now gettc will respect `$GETTC_HOME` if it is set (default is still `~/.gettc`)
@@ -104,7 +107,7 @@ Released February 20th, 2014
 
 ## 1.4
 Released December 24th, 2013
-* Important change to `download.rb` due to changes TopCoder authentication (issue 
+* Important change to `download.rb` due to changes TopCoder authentication (issue
 reported by romand).
 
 ## 1.3
