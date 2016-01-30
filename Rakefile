@@ -20,7 +20,7 @@ spec = Gem::Specification.new do |s|
   s.email = "seritrinh@gmail.com"
   s.homepage = "http://seri.github.io/gettc"
 
-  s.files = FileList["{bin,dist}/**/*"].include("core/lib/**/*").to_a
+  s.files = FileList["{bin,dist}/**/*"].include("lib/**/*").to_a
   s.test_files = FileList["test/**/*_test.rb"].to_a
   s.require_path = "lib"
   s.has_rdoc = false

@@ -1,14 +1,10 @@
-# HELP WANTED Currently not able to download
+# Download problem has been fixed
 
-> Recently, TopCoder has changed their authentication mechanism to OAuth, and the
-> current code is no longer able to download anything. I will come back to this
-> when I have time, but I appreciate help. Basically, if you are able to request
-> a problem statement provided a username/password pair from the command line or
-> a script, please send me an email, thank you.
+Gettc 2.0 has shipped with a fix for the authentication bug. Enjoy!
 
 # Introduction
 
-Download a [TopCoder](http://community.topcoder.com/tc?module=MatchList) problem, 
+Download a [TopCoder](http://community.topcoder.com/tc?module=MatchList) problem,
 parse the examples and system tests, then finally generate a naive solution for
 the following languages:
 
@@ -20,8 +16,8 @@ the following languages:
 - Ruby
 - Javascript
 
-And support for more languages is just around the corner. 
-    
+And support for more languages is just around the corner.
+
 > You can email me to request support for your favourite language. I will
 > prioritize development on the most requested ones.
 
@@ -29,11 +25,11 @@ You write the function definition and the generated solution will take care of
 running it against the downloaded input and output files.
 
 TopCoder is a heaven for programmers. Solving algorithmic problems is a great
-way to embrace the passion for programming. There are problems for all levels. 
+way to embrace the passion for programming. There are problems for all levels.
 A strong academic background is not required to enjoy it. If you like Project
-Euler, you will probably love TopCoder. 
+Euler, you will probably love TopCoder.
 
-However, the TopCoder online arena is quite inconvenient and supports only a 
+However, the TopCoder online arena is quite inconvenient and supports only a
 few languages. Gettc's goal is to make the practice of solving algorithmic
 problems convenient and fun, and in your desired language.
 
@@ -43,14 +39,14 @@ problems convenient and fun, and in your desired language.
     $ gettc 11127
 
 Note that 11127 is the ID that TopCoder gives to the problem named `DigitHoles`. You
-can find the ID for any problem if you look at the URL for 
-[that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127) 
+can find the ID for any problem if you look at the URL for
+[that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127)
 (you need to have a TopCoder account). Output:
 
-    You have given ID = 11127
-    Downloading problem to raw HTML ... Done
-    Parsing problem from raw HTML ... Done
-    Generating problem directory for DigitHoles ... Done
+    DigitHoles was used for Single Round Match 483 Round 1 - Division II, Level One.
+    All done. Start solving with:
+        $ cd DigitHoles/solve/<your_language>
+        $ make demo
 
 Now:
 
@@ -59,18 +55,18 @@ Now:
 
 Output:
 
-    [gettc] Compile solver                                                                   
-    [gettc] Compile checker                                                                  
-    [gettc] Run test cases                                                                   
-    Case 0 ... 2ms Failed                                                                    
-        Input: <42>                                                                          
-        Expected: <1>                                                                        
-        Received: <0>                                                                        
-    Case 1 ... 1ms Failed                                                                    
-        Input: <669>                                                                         
-        Expected: <3>                                                                        
-        Received: <0>                                                                        
-    Case 2 ... 1ms Failed                                                                    
+    [gettc] Compile solver
+    [gettc] Compile checker
+    [gettc] Run test cases
+    Case 0 ... 2ms Failed
+        Input: <42>
+        Expected: <1>
+        Received: <0>
+    Case 1 ... 1ms Failed
+        Input: <669>
+        Expected: <3>
+        Received: <0>
+    Case 2 ... 1ms Failed
         Input: <688>
         Expected: <5>
         Received: <0>
@@ -90,7 +86,7 @@ Output:
         Average time taken: 1 ms
         Slowest running case: 2 ms (case 0)
 
-As you can see, the generated solution actually managed to solve 1 test case. 
+As you can see, the generated solution actually managed to solve 1 test case.
 Gettc is pretty smart after all. Anyway, you still need to do the hard work.
 Open the file `DigitHoles.cpp` in your favourite editor and enter the following
 content:
@@ -154,7 +150,7 @@ Gettc works on most operating systems, including Linux, Windows, and Mac OS.
 The following packages are hard dependencies:
 
 - [Ruby](http://www.ruby-lang.org/en/downloads/): The
-[Ruby installer](http://rubyinstaller.org/) is recommend for Windows users. 
+[Ruby installer](http://rubyinstaller.org/) is recommend for Windows users.
 - [RubyGems](http://rubygems.org/pages/download): Many Ruby installations
 already bundle RubyGems.
 - The standard GCC toolset: Specifically, you should be able to run g++ and make
@@ -188,7 +184,7 @@ Now there are a couple things you need to get depending on your desired language
 # Known issues
 
 - I remember having encountered a problem where gettc failed to download the system
-tests while it is in fact possible to get the system tests. However, I forgot the 
+tests while it is in fact possible to get the system tests. However, I forgot the
 problem ID. If you meet such problems, please file an issue so I can fix this.
 - There are a few problems that allow multiple answers (such as
 [CorruptedMessage](http://community.topcoder.com/stat?c=problem_statement&pm=13748&rd=16416)).
@@ -203,7 +199,7 @@ smallest possible value.
 - You can play with the contents of the directory `~/.gettc` to, say, remove things
 you don't want to be generated. If you mess up, run `gettc reset`.
 - You can bring the solutions generated by gettc to another computer to run.
-Such system doesn't need to have gettc, or even ruby, but it will need the 
+Such system doesn't need to have gettc, or even ruby, but it will need the
 standard gcc toolchain, and of course the compiler for your desired language
 (if it isn't C++). You will also need to copy `~/.gettc` to that system.
 
