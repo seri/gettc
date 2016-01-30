@@ -164,12 +164,9 @@ With those in place, we are aready to go:
 
     $ [sudo] gem install gettc
 
-Once that is done, you should be able to run gettc on the command line. The
-standard procedure is:
+Once that is done, you should be able to run gettc on the command line. Just run this for a help message:
 
-    $ gettc problem_id
-    $ cd ProblemName/solve/your_language
-    $ make
+    $ gettc
 
 Now there are a couple things you need to get depending on your desired language.
 
@@ -183,9 +180,13 @@ Now there are a couple things you need to get depending on your desired language
 
 # Known issues
 
+- If you encounter a "too many requests" error, consider changing to a new account
+in `~/.gettc/config.yml`.
+
 - I remember having encountered a problem where gettc failed to download the system
 tests while it is in fact possible to get the system tests. However, I forgot the
 problem ID. If you meet such problems, please file an issue so I can fix this.
+
 - There are a few problems that allow multiple answers (such as
 [CorruptedMessage](http://community.topcoder.com/stat?c=problem_statement&pm=13748&rd=16416)).
 Gettc cannot deal with this because it can only extract the single answer that
