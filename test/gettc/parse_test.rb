@@ -67,6 +67,11 @@ class ParseTest < Test::Unit::TestCase
       assert_equal hash["systests_count"], problem.systests.size, hash["message"]
       assert_equal hash["images_count"], problem.images.size, hash["message"]
 
+      (problem.examples + problem.systests).each do |test_case|
+        assert !test_case.input.empty?
+        assert !test_case.output.empty?
+      end
+
       write_problem_yaml(problem)
     end
   end

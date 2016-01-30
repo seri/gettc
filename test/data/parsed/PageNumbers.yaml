@@ -20,27 +20,27 @@ constraints:
 - "*N* will be between 1 and 1,000,000,000, inclusive."
 examples:
 - !ruby/object:Gettc::Case
-  input: ''
+  input: '7'
   output: "[0, 1, 1, 1, 1, 1, 1, 1, 0, 0 ]"
   reason: The page numbers in this case are simply 1, 2, 3, 4, 5, 6, and 7.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: '11'
   output: "[1, 4, 1, 1, 1, 1, 1, 1, 1, 1 ]"
   reason: 'In comparison to the previous case, we added the pages 8, 9, 10, and 11.
     Now we have each digit exactly once, except for the digit 1 that occurs four times:
     once in 1 and 10, and twice in 11.'
 - !ruby/object:Gettc::Case
-  input: ''
+  input: '19'
   output: "[1, 12, 2, 2, 2, 2, 2, 2, 2, 2 ]"
   reason: Digits 2 to 9 now occur twice each, and we have plenty of occurrences of
     the digit 1.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: '999'
   output: "[189, 300, 300, 300, 300, 300, 300, 300, 300, 300 ]"
   reason: Due to symmetry, each of the digits 1 to 9 occurs equally many times in
     the sequence 1,2,...,999.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: '543212345'
   output: "[429904664, 541008121, 540917467, 540117067, 533117017, 473117011, 429904664,
     429904664, 429904664, 429904664 ]"
   reason: Watch out for the time limit.

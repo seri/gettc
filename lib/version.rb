@@ -1,3 +1,3 @@
 module Gettc
-    VERSION = "1.10"
+  VERSION = "2.0"
 end

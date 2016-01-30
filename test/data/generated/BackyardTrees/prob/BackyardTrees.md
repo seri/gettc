@@ -34,7 +34,7 @@ Return the number of distinct ways in which the trees could be planted, modulo 1
 ## Examples
 ### Example 1
 #### Input
-<c></c>
+<c>2,<br />4,<br />4,<br />1</c>
 #### Output
 <c>300</c>
 #### Reason
@@ -42,7 +42,7 @@ There are only two trees, and the distance between any two points with integer c
 
 ### Example 2
 #### Input
-<c></c>
+<c>13,<br />36,<br />48,<br />5</c>
 #### Output
 <c>2</c>
 #### Reason
@@ -50,12 +50,12 @@ The diagonal of the backyard has a length of 60, which is just enough to place 1
 
 ### Example 3
 #### Input
-<c></c>
+<c>5,<br />5,<br />5,<br />1</c>
 #### Output
 <c>88</c>
 ### Example 4
 #### Input
-<c></c>
+<c>50,<br />49,<br />49,<br />1</c>
 #### Output
 <c>102</c>
 #### Reason
@@ -63,7 +63,7 @@ You can place the trees along the rows or the columns of the grid, as well as on
 
 ### Example 5
 #### Input
-<c></c>
+<c>6,<br />5,<br />5,<br />2</c>
 #### Output
 <c>0</c>
 #### Reason
@@ -71,7 +71,7 @@ You can't plant 6 trees on the same line with the necessary distance between the
 
 ### Example 6
 #### Input
-<c></c>
+<c>10,<br />55,<br />75,<br />5</c>
 #### Output
 <c>490260662</c>
 

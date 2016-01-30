@@ -23,7 +23,7 @@ You are given an int *N*. Return a int[] with 10 elements, where for all i betwe
 ## Examples
 ### Example 1
 #### Input
-<c></c>
+<c>7</c>
 #### Output
 <c>[0, 1, 1, 1, 1, 1, 1, 1, 0, 0 ]</c>
 #### Reason
@@ -31,7 +31,7 @@ The page numbers in this case are simply 1, 2, 3, 4, 5, 6, and 7.
 
 ### Example 2
 #### Input
-<c></c>
+<c>11</c>
 #### Output
 <c>[1, 4, 1, 1, 1, 1, 1, 1, 1, 1 ]</c>
 #### Reason
@@ -39,7 +39,7 @@ In comparison to the previous case, we added the pages 8, 9, 10, and 11. Now we 
 
 ### Example 3
 #### Input
-<c></c>
+<c>19</c>
 #### Output
 <c>[1, 12, 2, 2, 2, 2, 2, 2, 2, 2 ]</c>
 #### Reason
@@ -47,7 +47,7 @@ Digits 2 to 9 now occur twice each, and we have plenty of occurrences of the dig
 
 ### Example 4
 #### Input
-<c></c>
+<c>999</c>
 #### Output
 <c>[189, 300, 300, 300, 300, 300, 300, 300, 300, 300 ]</c>
 #### Reason
@@ -55,7 +55,7 @@ Due to symmetry, each of the digits 1 to 9 occurs equally many times in the sequ
 
 ### Example 5
 #### Input
-<c></c>
+<c>543212345</c>
 #### Output
 <c>[429904664, 541008121, 540917467, 540117067, 533117017, 473117011, 429904664, 429904664, 429904664, 429904664 ]</c>
 #### Reason

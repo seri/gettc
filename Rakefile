@@ -42,7 +42,7 @@ task :inspect do
   mkdir "temp"
   with_env "GETTC_HOME", File.expand_path("dist") do
     with_dir "temp" do
-      ruby "-I../core/lib ../bin/gettc 11127"
+      ruby "-I../lib ../bin/gettc 11127"
       chdir "DigitHoles/solve/cpp"
       sh "make demo"
       chdir "../haskell"

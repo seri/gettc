@@ -34,7 +34,7 @@ If *points* doesn't represent a valid state, return -1 instead.
 ## Examples
 ### Example 1
 #### Input
-<c></c>
+<c>[10, 1, 1],<br />2,<br />1</c>
 #### Output
 <c>6</c>
 #### Reason
@@ -43,7 +43,7 @@ The second and the third teams each has one draw.
 
 ### Example 2
 #### Input
-<c></c>
+<c>[1, 1, 1],<br />2,<br />1</c>
 #### Output
 <c>-1</c>
 #### Reason
@@ -53,7 +53,7 @@ There is no way for three teams to have each played in exactly one game.
 
 ### Example 3
 #### Input
-<c></c>
+<c>[1, 4, 0, 2],<br />3,<br />1</c>
 #### Output
 <c>3</c>
 #### Reason
@@ -61,7 +61,7 @@ The only win goes to the second team.
 
 ### Example 4
 #### Input
-<c></c>
+<c>[8, 3, 8, 5, 9, 2, 7, 11],<br />3,<br />2</c>
 #### Output
 <c>15</c>
 

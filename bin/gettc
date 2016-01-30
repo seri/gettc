@@ -7,48 +7,45 @@ require "rubygems"
 require "fileutils"
 require "yaml"
 
-def init
-  $config_d = ENV.fetch("GETTC_HOME", File.expand_path("~/.gettc"))
-  gem_d = Gem.loaded_specs["gettc"]
-  $root_d = gem_d ? gem_d.full_gem_path || File.join(File.dirname(__FILE__), "../")
-end
-
 def replace_config
-  FileUtils.mkdir($config_d)
-  FileUtils.cp_r(File.join($root_d, "dist/."), $config_d)
+  FileUtils.mkdir($config_dir)
+  FileUtils.cp_r(File.join($root_dir, "dist/."), $config_dir)
 end
 
 def load_config
-  replace_config unless Dir.exists?($config_d)
-  config = YAML.load_file(File.join($config_d, "config.yml"))
+  replace_config unless Dir.exists?($config_dir)
+  config = YAML.load_file(File.join($config_dir, "config.yml"))
 
-  version = config["version"] || Gem::Version.new(version)
+  version = config["version"]
+  version = Gem::Version.new(version) unless version.nil?
+
   if version.nil? || version < Gem::Version.new(VERSION)
-    FileUtils.rm_rf($config_d)
+    FileUtils.rm_rf($config_dir)
     replace_config
   end
 
-  Account.new(config["username"], config["password"])
+  $account = Account.new(config["username"], config["password"])
 end
 
-def gett(id)
-  puts "You have given ID = #{id}"
-  account = load_config
-  robot = Downloader.new(account)
-  parser = Parser.new(robot)
-  generator = Generator.new($config_d, Dir.getwd)
+def init
+  $config_dir = ENV.fetch("GETTC_HOME", File.expand_path("~/.gettc"))
+  gem_d = Gem.loaded_specs["gettc"]
+  $root_dir = gem_d ? gem_d.full_gem_path : File.join(File.dirname(__FILE__), "../")
 
-  print "Downloading problem to raw HTML ... "
-  html = robot.download_problem(id)
-  puts "Done"
+  load_config
+  $downloader = Downloader.new($account)
+  $parser = Parser.new($downloader)
+  $generator = Generator.new($config_dir, Dir.getwd)
+end
 
-  print "Parsing problem from raw HTML ... "
-  prob = parser.parse(html)
-  puts "Done"
+def gettc(id)
+  problem = $parser.parse(id)
+  puts "#{problem.name} was used for #{problem.source}."
+  $generator.generate(problem)
 
-  print "Generating problem directory for #{prob.name} ... "
-  generator.generate(prob)
-  puts "Done"
+  puts "All done. Start solving with:"
+  puts "    $ cd #{problem.name}/solve/<your_language>"
+  puts "    $ make demo"
 rescue TemplateError => err
   puts err
 end
@@ -71,7 +68,7 @@ gettc reset: Bring all settings to default state.
   when "version"
     puts VERSION
   when "reset"
-    FileUtils.rm_rf($config_d)
+    FileUtils.rm_rf($config_dir)
     replace_config
   else
     gettc(command.to_i)

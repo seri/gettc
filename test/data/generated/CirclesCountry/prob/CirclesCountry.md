@@ -25,7 +25,7 @@ Imagine Circles Country as an infinite plane.  You are given int[]s *X*, *Y* and
 ## Examples
 ### Example 1
 #### Input
-<c></c>
+<c>[0],<br />[0],<br />[2],<br />-5,<br />1,<br />5,<br />1</c>
 #### Output
 <c>0</c>
 #### Reason
@@ -33,7 +33,7 @@ Imagine Circles Country as an infinite plane.  You are given int[]s *X*, *Y* and
 
 ### Example 2
 #### Input
-<c></c>
+<c>[0,-6,6],<br />[0,1,2],<br />[2,2,2],<br />-5,<br />1,<br />5,<br />1</c>
 #### Output
 <c>2</c>
 #### Reason
@@ -41,7 +41,7 @@ Imagine Circles Country as an infinite plane.  You are given int[]s *X*, *Y* and
 
 ### Example 3
 #### Input
-<c></c>
+<c>[1,-3,2,5,-4,12,12],<br />[1,-1,2,5,5,1,1],<br />[8,1,2,1,1,1,2],<br />-5,<br />1,<br />12,<br />1</c>
 #### Output
 <c>3</c>
 #### Reason
@@ -49,7 +49,7 @@ Imagine Circles Country as an infinite plane.  You are given int[]s *X*, *Y* and
 
 ### Example 4
 #### Input
-<c></c>
+<c>[-3,2,2,0,-4,12,12,12],<br />[-1,2,3,1,5,1,1,1],<br />[1,3,1,7,1,1,2,3],<br />2,<br />3,<br />13,<br />2</c>
 #### Output
 <c>5</c>
 #### Reason
@@ -57,7 +57,7 @@ Imagine Circles Country as an infinite plane.  You are given int[]s *X*, *Y* and
 
 ### Example 5
 #### Input
-<c></c>
+<c>[-107,-38,140,148,-198,172,-179,148,176,153,-56,-187],<br />[175,-115,23,-2,-49,-151,-52,42,0,68,109,-174],<br />[135,42,70,39,89,39,43,150,10,120,16,8],<br />102,<br />16,<br />19,<br />-108</c>
 #### Output
 <c>3</c>
 

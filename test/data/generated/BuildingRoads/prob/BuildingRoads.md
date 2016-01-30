@@ -44,7 +44,7 @@ You must build a road between each pair of cities denoted by the same character.
 ## Examples
 ### Example 1
 #### Input
-<c></c>
+<c>["!1.!",<br /> "aab2"]</c>
 #### Output
 <c>3</c>
 #### Reason
@@ -54,7 +54,7 @@ You must destroy the two rocks which cover the purple cells. The total cost is 3
 
 ### Example 2
 #### Input
-<c></c>
+<c>["#@",<br /> "A.",<br /> "A1",<br /> "@#"]</c>
 #### Output
 <c>100</c>
 #### Reason
@@ -62,17 +62,17 @@ You must destroy the two rocks which cover the purple cells. The total cost is 3
 
 ### Example 3
 #### Input
-<c></c>
+<c>["$....",<br /> "BBBBB",<br /> "B000B",<br /> "B0$0B",<br /> "B000B",<br /> "BBBBB"]</c>
 #### Output
 <c>100200</c>
 ### Example 4
 #### Input
-<c></c>
+<c>["$a",<br /> ".B",<br /> "$3"]</c>
 #### Output
 <c>0</c>
 ### Example 5
 #### Input
-<c></c>
+<c>[".#!@.$",<br /> ".11111",<br /> "..AB..",<br /> "33AB..",<br /> "$3AB..",<br /> "88888a",<br /> "#!@..."]</c>
 #### Output
 <c>30301</c>
 

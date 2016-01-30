@@ -28,35 +28,59 @@ constraints:
 - "*distance* will be between 1 and 50, inclusive."
 examples:
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    2,
+    4,
+    4,
+    1
   output: '300'
   reason: There are only two trees, and the distance between any two points with integer
     coordinates is always at least 1.  Therefore, you can place the two trees at any
     two points with integer coordinates.  There are 25 such points and this gives
     you 300 different ways to plant the trees.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    13,
+    36,
+    48,
+    5
   output: '2'
   reason: The diagonal of the backyard has a length of 60, which is just enough to
     place 13 trees with a distance of 5 between each adjacent pair.  Luckily, these
     13 points are at integer coordinates, so you can place the trees along either
     of the two diagonals while satisfying all the rules.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    5,
+    5,
+    5,
+    1
   output: '88'
   reason: ''
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    50,
+    49,
+    49,
+    1
   output: '102'
   reason: You can place the trees along the rows or the columns of the grid, as well
     as on the two diagonals.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    6,
+    5,
+    5,
+    2
   output: '0'
   reason: You can't plant 6 trees on the same line with the necessary distance between
     them on this grid.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    10,
+    55,
+    75,
+    5
   output: '490260662'
   reason: ''
 systests: []

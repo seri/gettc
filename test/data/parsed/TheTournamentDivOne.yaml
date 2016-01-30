@@ -33,24 +33,36 @@ constraints:
 - "*d* will be between 1 and *w*, inclusive."
 examples:
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    [10, 1, 1],
+    2,
+    1
   output: '6'
   reason: |-
     The first team has five wins or four wins and two draws.
     The second and the third teams each has one draw.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    [1, 1, 1],
+    2,
+    1
   output: "-1"
   reason: |-
     These standings are impossible.
     For each of the three teams to have one point, each one must have played in a game that resulted in a draw.
     There is no way for three teams to have each played in exactly one game.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    [1, 4, 0, 2],
+    3,
+    1
   output: '3'
   reason: The only win goes to the second team.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    [8, 3, 8, 5, 9, 2, 7, 11],
+    3,
+    2
   output: '15'
   reason: ''
 systests: []

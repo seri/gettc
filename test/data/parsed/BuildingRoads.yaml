@@ -43,26 +43,48 @@ constraints:
   in the problem statement).
 examples:
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    ["!1.!",
+     "aab2"]
   output: '3'
   reason: |-
     ![image](images/buildingroads1.png)
 
     You must destroy the two rocks which cover the purple cells. The total cost is 3.
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    ["#@",
+     "A.",
+     "A1",
+     "@#"]
   output: '100'
   reason: "![image](images/buildingroads2.png)"
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    ["$....",
+     "BBBBB",
+     "B000B",
+     "B0$0B",
+     "B000B",
+     "BBBBB"]
   output: '100200'
   reason: ''
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    ["$a",
+     ".B",
+     "$3"]
   output: '0'
   reason: ''
 - !ruby/object:Gettc::Case
-  input: ''
+  input: |-
+    [".#!@.$",
+     ".11111",
+     "..AB..",
+     "33AB..",
+     "$3AB..",
+     "88888a",
+     "#!@..."]
   output: '30301'
   reason: ''
 systests: []

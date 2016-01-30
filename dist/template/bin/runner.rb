@@ -117,7 +117,7 @@ class GettcRunner
     @errors = Array.new
 
     inputs.each do |input|
-      run_case(Pathname.new(input).to_s[0..-4])
+      run_case(Pathname.new(input).basename.to_s[0..-4])
     end
   end
 
