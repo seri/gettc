@@ -20,15 +20,12 @@
 
     <section class="main-content">
       <h1>
-<a id="fix-is-underway" class="anchor" href="#fix-is-underway" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fix is underway</h1>
+<a id="download-problem-has-been-fixed" class="anchor" href="#download-problem-has-been-fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download problem has been fixed</h1>
 
-<p>Recently, TopCoder has changed their authentication mechanism to OAuth, and the
-current code is no longer able to download anything. I have got a solution, but
-have not quite gotten the time to wrap up. I plan to publish the new bugfix
-version at some point toward the end of January, 2016.</p>
+<p>Gettc 2.0 has shipped with a fix for the authentication bug. Enjoy!</p>
 
 <h1>
-<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>Download a <a href="http://community.topcoder.com/tc?module=MatchList">TopCoder</a> problem,
 parse the examples and system tests, then finally generate a naive solution for
@@ -64,7 +61,7 @@ few languages. Gettc's goal is to make the practice of solving algorithmic
 problems convenient and fun, and in your desired language.</p>
 
 <h1>
-<a id="at-a-glance" class="anchor" href="#at-a-glance" aria-hidden="true"><span class="octicon octicon-link"></span></a>At a glance</h1>
+<a id="at-a-glance" class="anchor" href="#at-a-glance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>At a glance</h1>
 
 <pre><code>$ [sudo] gem install gettc
 $ gettc 11127
@@ -75,10 +72,10 @@ can find the ID for any problem if you look at the URL for
 <a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=11127">that problem's statement</a>
 (you need to have a TopCoder account). Output:</p>
 
-<pre><code>You have given ID = 11127
-Downloading problem to raw HTML ... Done
-Parsing problem from raw HTML ... Done
-Generating problem directory for DigitHoles ... Done
+<pre><code>DigitHoles was used for Single Round Match 483 Round 1 - Division II, Level One.
+All done. Start solving with:
+    $ cd DigitHoles/solve/&lt;your_language&gt;
+    $ make demo
 </code></pre>
 
 <p>Now:</p>
@@ -184,7 +181,7 @@ while we are it?</p>
 <p>Congratulations! You have solved a TopCoder problem like a boss!</p>
 
 <h1>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>Gettc works on most operating systems, including Linux, Windows, and Mac OS.</p>
 
@@ -212,12 +209,9 @@ Cygwin.</li>
 <pre><code>$ [sudo] gem install gettc
 </code></pre>
 
-<p>Once that is done, you should be able to run gettc on the command line. The
-standard procedure is:</p>
+<p>Once that is done, you should be able to run gettc on the command line. Just run this for a help message:</p>
 
-<pre><code>$ gettc problem_id
-$ cd ProblemName/solve/your_language
-$ make
+<pre><code>$ gettc
 </code></pre>
 
 <p>Now there are a couple things you need to get depending on your desired language.</p>
@@ -239,21 +233,23 @@ $ make
 </ul>
 
 <h1>
-<a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Known issues</h1>
+<a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Known issues</h1>
 
 <ul>
-<li>I remember having encountered a problem where gettc failed to download the system
+<li><p>If you encounter a "too many requests" error, consider changing to a new account
+in <code>~/.gettc/config.yml</code>.</p></li>
+<li><p>I remember having encountered a problem where gettc failed to download the system
 tests while it is in fact possible to get the system tests. However, I forgot the
-problem ID. If you meet such problems, please file an issue so I can fix this.</li>
-<li>There are a few problems that allow multiple answers (such as
+problem ID. If you meet such problems, please file an issue so I can fix this.</p></li>
+<li><p>There are a few problems that allow multiple answers (such as
 <a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=13748&amp;rd=16416">CorruptedMessage</a>).
 Gettc cannot deal with this because it can only extract the single answer that
 TopCoder shows. If you meet such problems, a good guess is to always return the
-smallest possible value.</li>
+smallest possible value.</p></li>
 </ul>
 
 <h1>
-<a id="tips" class="anchor" href="#tips" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tips</h1>
+<a id="tips" class="anchor" href="#tips" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tips</h1>
 
 <ul>
 <li>It's good practice to provide your own username/password in <code>~/.gettc/config.yml</code>.</li>
