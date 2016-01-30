@@ -1,45 +1,45 @@
-- 
-    name: "AntsMeet"
-    signature: "int countAnts(int[] x, int[] y, String direction)"
-    example:
-        input: |
-            [0,10,20,30],
-            [0,10,20,30],
-            "NWNE"
-        output: 2
 -
-    name: "CandyOnDisk"
-    signature: "String ableToAchieve(int[] x, int[] y, int[] r, int sx, int sy, int tx, int ty)"
-    example:
-        input: |
-            [0, 4],
-            [0, 0],
-            [3, 3],
-            -1,
-            -2,
-            6,
-            1
-        output: "\"YES\""
+  name: "AntsMeet"
+  signature: "int countAnts(int[] x, int[] y, String direction)"
+  example:
+    input: |
+      [0,10,20,30],
+      [0,10,20,30],
+      "NWNE"
+    output: 2
 -
-    name: "CurvyonRails"
-    signature: "int getmin(String[] field)"
-    example:
-        input: |
-            [".."
-            ,".."]
-        output: 0
+  name: "CandyOnDisk"
+  signature: "String ableToAchieve(int[] x, int[] y, int[] r, int sx, int sy, int tx, int ty)"
+  example:
+    input: |
+      [0, 4],
+      [0, 0],
+      [3, 3],
+      -1,
+      -2,
+      6,
+      1
+    output: "\"YES\""
 -
-    name: "GettcContrivedProblem"
-    signature: "int[] contrivedMethod(int[][] matrix, double[] imdb, String[] names, boolean flag)"
-    example:
-        input: |
-            [[0, 1, 2],
-             [2, 3, 4],
-             [5, 6, 7]],
-            [9.2, 8.7],
-            ["Tyrion Lannister",
-             "Robb Stark",
-             "Daenerys Targaryen",
-             "Jon Snow"],
-            true
-        output: []
+  name: "CurvyonRails"
+  signature: "int getmin(String[] field)"
+  example:
+    input: |
+      [".."
+      ,".."]
+    output: 0
+-
+  name: "GettcContrivedProblem"
+  signature: "int[] contrivedMethod(int[][] matrix, double[] imdb, String[] names, boolean flag)"
+  example:
+    input: |
+      [[0, 1, 2],
+       [2, 3, 4],
+       [5, 6, 7]],
+      [9.2, 8.7],
+      ["Tyrion Lannister",
+       "Robb Stark",
+       "Daenerys Targaryen",
+       "Jon Snow"],
+      true
+    output: []

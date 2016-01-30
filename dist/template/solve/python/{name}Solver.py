@@ -1,4 +1,4 @@
-<%= engine = PythonEngine.new func, vars
+<%= engine = PythonEngine.new(func, vars)
     engine.shebang %>
 import os, sys
 import <%= prob.name %>
@@ -14,7 +14,7 @@ def main():
     with open(sys.argv[1], "r") as fi:
         input = fi.read()
         reader = tc.Reader(input)
-    
+
 <%= engine.input.gsub(/^/, ' ' * 8) %>
 
     result = <%= prob.name %>.<%= func.name %>(<%= engine.arglist %>)

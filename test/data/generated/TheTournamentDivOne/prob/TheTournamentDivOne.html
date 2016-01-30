@@ -1,0 +1,107 @@
+<html>
+<head>
+    <title>TheTournamentDivOne</title>
+</head>
+<body>
+<h1><a href="/tc?module=ProblemDetail&amp;rd=13907&amp;pm=10685">TheTournamentDivOne</a></h1>
+
+<p><em>Single Round Match 453 Round 1 - Division I, Level Two</em></p>
+
+<h2>Statement</h2>
+
+<p>John and Brus have an interest in team sports tournaments.
+They are currently investigating the intermediate standings of a tournament.
+They don't know which games have been played so far.
+They only know that the tournament is played using the following rules:</p>
+
+<p>Each game is played between two teams and results in either a victory for one team or a draw.
+If a team wins a game, it gains <em>w</em> points and its opponent gains no points.
+In case of a draw, each team gains <em>d</em> points.
+The score of a team is the sum of all the points it has gained from all its games.
+There are no restrictions on which teams can play against each other, and each pair of teams can play against each other any number of times (possibly zero).</p>
+
+<p>You are given a int[] <em>points</em> representing the intermediate standings of the tournament.
+The i-th element of <em>points</em> is the score of the i-th team.
+Return the minimum number of games that could have been played to achieve those standings.
+If <em>points</em> doesn't represent a valid state, return -1 instead.</p>
+
+<h2>Definitions</h2>
+
+<ul>
+<li><em>Class</em>: <code>TheTournamentDivOne</code></li>
+<li><em>Method</em>: <code>find</code></li>
+<li><em>Parameters</em>: <code>int[], int, int</code></li>
+<li><em>Returns</em>: <code>int</code></li>
+<li><em>Method signature</em>: <code>int find(int[] points, int w, int d)</code></li>
+</ul>
+
+
+<h2>Constraints</h2>
+
+<ul>
+<li><em>points</em> will contain between 2 and 50 elements, inclusive.</li>
+<li>Each element of <em>points</em> will be between 0 and 10,000, inclusive.</li>
+<li><em>w</em> will be between 1 and 10,000, inclusive.</li>
+<li><em>d</em> will be between 1 and <em>w</em>, inclusive.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<h3>Example 1</h3>
+
+<h4>Input</h4>
+
+<p><c>[10, 1, 1],<br />2,<br />1</c></p>
+
+<h4>Output</h4>
+
+<p><c>6</c></p>
+
+<h4>Reason</h4>
+
+<p>The first team has five wins or four wins and two draws.
+The second and the third teams each has one draw.</p>
+
+<h3>Example 2</h3>
+
+<h4>Input</h4>
+
+<p><c>[1, 1, 1],<br />2,<br />1</c></p>
+
+<h4>Output</h4>
+
+<p><c>-1</c></p>
+
+<h4>Reason</h4>
+
+<p>These standings are impossible.
+For each of the three teams to have one point, each one must have played in a game that resulted in a draw.
+There is no way for three teams to have each played in exactly one game.</p>
+
+<h3>Example 3</h3>
+
+<h4>Input</h4>
+
+<p><c>[1, 4, 0, 2],<br />3,<br />1</c></p>
+
+<h4>Output</h4>
+
+<p><c>3</c></p>
+
+<h4>Reason</h4>
+
+<p>The only win goes to the second team.</p>
+
+<h3>Example 4</h3>
+
+<h4>Input</h4>
+
+<p><c>[8, 3, 8, 5, 9, 2, 7, 11],<br />3,<br />2</c></p>
+
+<h4>Output</h4>
+
+<p><c>15</c></p>
+
+</body>
+</html>

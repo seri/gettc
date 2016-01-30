@@ -13,7 +13,7 @@ If you're on Windows and you get an error like `cannot execute solver`, you can
 fix by deleting or commenting the line `delegate` in `runner.sh` (line 132). To
 make the change permanent, apply the fix in `~/.gettc/template/bin/runner.sh`.
 
-If you have a nicer solution, please send me an email.
+If you have a nicer solution, consider making a pull request.
 
 ## Development status
 

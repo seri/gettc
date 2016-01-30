@@ -10,42 +10,42 @@ import java.util.List;
 public class TopcoderReaderTest {
     private static double EPSILON = 1e-9;
     TopcoderReader reader;
-    
+
     private void source(String src) {
         reader = new TopcoderReader(new StringReader(src));
     }
 
-    @Test(expected = UnsupportedTypeException.class) 
-    public void unsupportedType() throws IOException {
+    @Test(expected = UnsupportedTypeException.class)
+    public void TestUnsupportedType() throws IOException {
         source("1234567890123456890");
         reader.next(java.math.BigInteger.class);
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedString() throws IOException {
         source("\"I forgot to close the quote");
         String s = (String) reader.next(String.class);
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedNumber() throws IOException {
         source("x123");
         int i = (Integer) reader.next(Integer.class);
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedBoolean() throws IOException {
         source("truz");
         boolean b = (Boolean) reader.next(Boolean.class);
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedArray1() throws IOException {
         source("[1,2");
         List a = (List) reader.next(new TypeRef<List<Integer>>(){}.getType());
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedArray2() throws IOException {
         source("[\"Hello\" xyz]");
         List a = (List) reader.next(new TypeRef<List<String>>(){}.getType());
@@ -63,7 +63,7 @@ public class TopcoderReaderTest {
         source("123.456");
         double d = (Double) reader.next(Double.class);
         assertEquals(123.456, d, EPSILON);
-        
+
         source("'c'");
         char c = (Character) reader.next(Character.class);
         assertEquals('c', c);
@@ -87,13 +87,14 @@ public class TopcoderReaderTest {
         assertEquals("Welcome to \"Code Jam\"  !", message);
     }
 
-    @Test(expected = ParseException.class) 
+    @Test(expected = ParseException.class)
     public void corruptedStringWithQuotes() throws IOException {
         source("\"Welcome to \" No , or ] to end this nightmare?");
         String message = (String) reader.next(String.class);
     }
 
-    @Test public void arrays() throws IOException {
+    @Test
+    public void arrays() throws IOException {
         source("[]");
         List<Integer> a = (List<Integer>) reader.next(new TypeRef<List<Integer>>(){}.getType());
         assertTrue(a.isEmpty());
@@ -119,7 +120,8 @@ public class TopcoderReaderTest {
         assertEquals("With", aa.get(1).get(0));
     }
 
-    @Test public void realLife() throws IOException {
+    @Test
+    public void realLife() throws IOException {
         source("\"Seri\", 'M',\tfaLSe\t,99, C, [\"Welcome to \"Code Jam\" ?\",\n \"\",\n \"Hey!\"]");
         String name = (String) reader.next(String.class); reader.next();
         char gender = (Character) reader.next(Character.class); reader.next();

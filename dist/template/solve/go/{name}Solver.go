@@ -7,7 +7,7 @@ import (
     "topcoder"
 )
 <%
-    engine = GoEngine.new func, vars
+    engine = GoEngine.new(func, vars)
 %>
 func main() {
     if len(os.Args) < 3 {
@@ -18,7 +18,7 @@ func main() {
     var (
         fileHandle *os.File
         errIO error
-        <%= engine.declare.join "\n#{' ' * 8}" %>
+        <%= engine.declare.join("\n#{' ' * 8}") %>
     )
 
     if fileHandle, errIO = os.Open(os.Args[1]); errIO != nil {

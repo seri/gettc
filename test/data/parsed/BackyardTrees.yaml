@@ -1,0 +1,95 @@
+--- !ruby/object:Gettc::Problem
+id: 6620
+name: BackyardTrees
+url: "/tc?module=ProblemDetail&rd=10008&pm=6620"
+source: Single Round Match 328 Round 1 - Division I, Level Three
+statement: "This problem statement contains images that may not display properly if
+  viewed outside of the applet.\n\nYour backyard is a rectangular grid that measures
+  *width* x *height* square meters.  You would like to plant *treeCount* trees using
+  the following rules: \n\n\t- All trees must be planted at integer coordinates on
+  the grid.\n\n\t- All trees must lie on the same straight line.\n\n\t- Each pair
+  of trees must be at least *distance* meters away from each other.\n\nFor example,
+  two (of many) ways in which four trees could be planted on a 10x10 grid if *distance*
+  is 2 are depicted below:\n\n![image](images/BackyardTrees1.png)   ![image](images/BackyardTrees2.png)\n\nReturn
+  the number of distinct ways in which the trees could be planted, modulo 1,000,000,000.
+  \ Two layouts are considered distinct if there exists a point (x, y) such that one
+  layout contains a tree at (x, y) and the other layout does not."
+definitions:
+  Class: BackyardTrees
+  Method: countWays
+  Parameters: int, int, int, int
+  Returns: int
+  Method signature: int countWays(int treeCount, int width, int height, int distance)
+notes: []
+constraints:
+- "*treeCount* will be between 1 and 50, inclusive."
+- "*width* will be between 1 and 500, inclusive."
+- "*height* will be between 1 and 500, inclusive."
+- "*distance* will be between 1 and 50, inclusive."
+examples:
+- !ruby/object:Gettc::Case
+  input: |-
+    2,
+    4,
+    4,
+    1
+  output: '300'
+  reason: There are only two trees, and the distance between any two points with integer
+    coordinates is always at least 1.  Therefore, you can place the two trees at any
+    two points with integer coordinates.  There are 25 such points and this gives
+    you 300 different ways to plant the trees.
+- !ruby/object:Gettc::Case
+  input: |-
+    13,
+    36,
+    48,
+    5
+  output: '2'
+  reason: The diagonal of the backyard has a length of 60, which is just enough to
+    place 13 trees with a distance of 5 between each adjacent pair.  Luckily, these
+    13 points are at integer coordinates, so you can place the trees along either
+    of the two diagonals while satisfying all the rules.
+- !ruby/object:Gettc::Case
+  input: |-
+    5,
+    5,
+    5,
+    1
+  output: '88'
+  reason: ''
+- !ruby/object:Gettc::Case
+  input: |-
+    50,
+    49,
+    49,
+    1
+  output: '102'
+  reason: You can place the trees along the rows or the columns of the grid, as well
+    as on the two diagonals.
+- !ruby/object:Gettc::Case
+  input: |-
+    6,
+    5,
+    5,
+    2
+  output: '0'
+  reason: You can't plant 6 trees on the same line with the necessary distance between
+    them on this grid.
+- !ruby/object:Gettc::Case
+  input: |-
+    10,
+    55,
+    75,
+    5
+  output: '490260662'
+  reason: ''
+systests: []
+images:
+- !ruby/object:Gettc::Image
+  name: !ruby/object:Pathname
+    path: BackyardTrees1.png
+  content: ImageContent
+- !ruby/object:Gettc::Image
+  name: !ruby/object:Pathname
+    path: BackyardTrees2.png
+  content: ImageContent

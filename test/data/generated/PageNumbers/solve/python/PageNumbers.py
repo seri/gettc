@@ -1,0 +1,2 @@
+def getCounts(N):
+    return []

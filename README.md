@@ -1,9 +1,6 @@
-# Fix is underway
+# Download problem has been fixed
 
-Recently, TopCoder has changed their authentication mechanism to OAuth, and the
-current code is no longer able to download anything. I have got a solution, but
-have not quite gotten the time to wrap up. I plan to publish the new bugfix
-version at some point toward the end of January, 2016.
+Gettc 2.0 has shipped with a fix for the authentication bug. Enjoy!
 
 # Introduction
 
@@ -46,10 +43,10 @@ can find the ID for any problem if you look at the URL for
 [that problem's statement](http://community.topcoder.com/stat?c=problem_statement&pm=11127)
 (you need to have a TopCoder account). Output:
 
-    You have given ID = 11127
-    Downloading problem to raw HTML ... Done
-    Parsing problem from raw HTML ... Done
-    Generating problem directory for DigitHoles ... Done
+    DigitHoles was used for Single Round Match 483 Round 1 - Division II, Level One.
+    All done. Start solving with:
+        $ cd DigitHoles/solve/<your_language>
+        $ make demo
 
 Now:
 

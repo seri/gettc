@@ -8,14 +8,14 @@ import org.topcoder.TopcoderReader;
 import org.topcoder.TopcoderWriter;
 import org.topcoder.TypeRef;
 <%
-    engine = JavaEngine.new func, vars 
+    engine = JavaEngine.new(func, vars )
 %>
 public class <%= prob.name %>Solver {
     public static void main(String[] args) {
     try {
         TopcoderReader reader = new TopcoderReader(new FileReader(args[0]));
-<%= 
-    engine.input.gsub(/^/, ' ' * 8) 
+<%=
+    engine.input.gsub(/^/, ' ' * 8)
 %>
         reader.close();
 
@@ -28,5 +28,5 @@ public class <%= prob.name %>Solver {
     } catch (Exception err) {
         err.printStackTrace(System.err);
     }
-    }    
+    }
 }
