@@ -167,7 +167,7 @@ class GettcRunner
     n.times do |i|
       case_id = @failures[i]
       puts "Case #{case_id}:"
-      print_case j
+      print_case(case_id)
     end
   end
 
