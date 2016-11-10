@@ -24,7 +24,13 @@ def load_config
     replace_config
   end
 
-  $account = Account.new(config["username"], config["password"])
+  $account = config["account"]
+end
+
+def save_config
+  File.open(File.join($config_dir, "config.yml"), 'w') { |f|
+    f.write({"account" => $account, "version" => Gem::Version.new(VERSION).version}.to_yaml)
+  }
 end
 
 def init
@@ -73,9 +79,12 @@ gettc reset: Bring all settings to default state.
   else
     gettc(command.to_i)
   end
+
 rescue StandardError => err
   puts err
   exit -1
+ensure
+  save_config
 end
 
 init

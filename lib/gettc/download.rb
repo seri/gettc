@@ -6,6 +6,7 @@ require "json"
 
 require "gettc/account"
 
+
 module Gettc
   class DownloadError < StandardError
   end
@@ -182,6 +183,9 @@ module Gettc
     end
 
     def get_cookie
+      if @account.token
+        return @account.token
+      end
       jwt_token_response = JSON(post_json("http://api.topcoder.com/v2/auth", {
         username: @account.username,
         password: @account.password
@@ -205,7 +209,7 @@ module Gettc
       unless CGI::Cookie.parse(raw_cookie).has_key?("tcsso")
         raise DownloadError.new(raw_cookie, "Server refused to send a tcsso cookie")
       end
-      raw_cookie
+      @account.token = raw_cookie
     end
   end
 end
