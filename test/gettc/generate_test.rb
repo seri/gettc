@@ -61,7 +61,7 @@ class GenerateTest < Test::Unit::TestCase
 
   def count_files(subdir)
     full_path = File.join(@target_dir, @problem["name"], subdir)
-    Dir.new(full_path).entries.reject { |name| [".", ".."].include?(name) }.size
+    File.directory?(full_path) ? Dir.new(full_path).entries.reject { |name| [".", ".."].include?(name) }.size : 0
   end
 
   def assert_file_exists(filename)
