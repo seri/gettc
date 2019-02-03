@@ -17,12 +17,8 @@ module Gettc
       @request = request
       @response = response
 
-      filename = "gettc_http_response-#{Time.now.to_i}.html"
-      File.write(filename, @response.body)
-
       super [ message, "Request: #{get_url(@request)}", http_to_s(@request), @request.body,
-                       "Response: #{@response.class.to_s}", http_to_s(@response),
-                       "Response body written to #{filename}" ].join("\n")
+                       "Response: #{@response.class.to_s}", http_to_s(@response), @response.body ].join("\n")
     end
 
     private
@@ -151,6 +147,27 @@ module Gettc
       nil
     end
 
+    def get_cookie
+      jwt_token_response = JSON(post_json("http://api.topcoder.com/v2/auth", {
+        username: @account.username,
+        password: @account.password
+      }).body)
+      jwt_token = jwt_token_response["token"]
+      raise AuthTokenError.new(@account, jwt_token_response, "Failed to acquire a JWT token") unless jwt_token
+
+      response = post_json("https://api.topcoder.com/v3/authorizations", {
+        param: {
+          externalToken: jwt_token
+        }
+      })
+      raw_cookie = response["set-cookie"]
+
+      unless raw_cookie.include?("tcsso=")
+        raise CookieError.new(raw_cookie, "Server refused to send a tcsso cookie")
+      end
+      raw_cookie
+    end
+
     def connect(uri)
       uri = URI.parse(uri) unless uri.is_a?(URI)
       options = { use_ssl: uri.scheme == 'https' }
@@ -179,33 +196,6 @@ module Gettc
         request.body = params.to_json
         http.request(request)
       end
-    end
-
-    def get_cookie
-      jwt_token_response = JSON(post_json("http://api.topcoder.com/v2/auth", {
-        username: @account.username,
-        password: @account.password
-      }).body)
-      jwt_token = jwt_token_response["token"]
-      raise AuthTokenError.new(@account, jwt_token_response, "Failed to acquire a JWT token") unless jwt_token
-
-      refresh_token_response = JSON(post_json("http://api.topcoder.com/v2/reauth", {
-        token: jwt_token
-      }).body)
-      refresh_token = refresh_token_response["token"]
-      raise AuthTokenError.new(@account, refresh_token_response, "Failed to acquire a Refresh token") unless refresh_token
-
-      response = post_json("https://api.topcoder.com/v3/authorizations", {
-        param: {
-          externalToken: refresh_token
-        }
-      })
-      raw_cookie = response["set-cookie"]
-
-      unless CGI::Cookie.parse(raw_cookie).has_key?("tcsso")
-        raise DownloadError.new(raw_cookie, "Server refused to send a tcsso cookie")
-      end
-      raw_cookie
     end
   end
 end
